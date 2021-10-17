@@ -1,5 +1,19 @@
 import {useState} from 'react'
 
+function cssToObject (string){
+	let charsArray = string.split('')
+	
+	string.split('').map((character, index) => {
+		if(character === '-' && index != 0){
+			charsArray[index+1] = charsArray[index+1].toUpperCase()
+		}
+		
+	})
+	
+	let resultString = charsArray.filter(character => character != '-').join('')
+	return resultString
+}
+
 function objectToStyle(object, semi) {
     const keys = Object.keys(object)
     const values = Object.values(object)
