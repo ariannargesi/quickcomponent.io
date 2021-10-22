@@ -1,6 +1,10 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
-function cssToObject (string){
+function cssToCamelCase (string){
+    /*
+    * input: "border-radius" 
+    * output: borderRadius
+    * */
 	let charsArray = string.split('')
 	
 	string.split('').map((character, index) => {
@@ -35,6 +39,17 @@ function objectToStyle(object, semi) {
     return main
 }
 
+function generateStyles(){
+    let cssProperties = require('./data/css-properties.json')
+    console.log(cssProperties)
+    const allKeys = Object.keys(cssProperties)
+    const styles = {}
+    allKeys.map(key => {
+       styles[cssToCamelCase(key)] = cssProperties[key].initial
+    })
+    return styles 
+}
+
 function App() {
     const [code, setCode] = useState('')
     const [state, setState] = useState({
@@ -47,6 +62,9 @@ function App() {
         backgroundColor: 'white'
     })
 
+    useEffect(() => {
+        setState(generateStyles())
+    }, [])
     
     return (
         <div className="App" style={{
