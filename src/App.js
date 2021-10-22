@@ -73,25 +73,17 @@ function App() {
             <h1>Component builder</h1>
             <div className="pure-g">
                 <div className="pure-u-1-3">
-                    <div>
-                        <label htmlFor="">Width</label>
-                        <input type="number" onChange={(e) => setState({...state, width: e.target.value + 'px'})}/>
-                    </div>
-                    <div>
-                        <label htmlFor="">Height</label>
-                        <input type="number" onChange={(e) => setState({...state, height: e.target.value + 'px'})}/>
-                    </div>
-                    <div>
-                        <label htmlFor="">Radius</label>
-                        <input type="number" onChange={(e) => setState({...state, borderRadius: e.target.value + 'px'})}/>
-                    </div>
-                    <div>
-                        <label htmlFor="">Background</label>
-                        <input type="text" onChange={(e) => setState({...state, background: e.target.value})}/>
-                    </div>
-                    <div>
-                        <label htmlFor="">Border width</label>
-                        <input type="number" onChange={(e) => setState({...state, borderWidth: e.target.value + 'px'})}/>
+                    <div style={{height: '100vh', overflow: 'scroll'}}>
+                    {
+                        Object.keys(require('./data/css-properties.json')).map(key => {
+                            return (
+                                <div >
+                                    <label htmlFor="">{key}</label>
+                                    <input type="number" onChange={(e) => setState({...state, width: e.target.value + 'px'})}/>
+                                </div>            
+                            )
+                        })
+                    }
                     </div>
                 </div>
                 <div className="pure-u-2-3"
@@ -101,12 +93,12 @@ function App() {
                     </div>
                 </div>
             </div>
-            <button onClick={() => setCode(objectToStyle(state, true))} >Get css</button>
-            <button onClick={() => setCode(objectToStyle(state, false))} >Get sass</button>
+            {/*<button onClick={() => setCode(objectToStyle(state, true))} >Get css</button>*/}
+            {/*<button onClick={() => setCode(objectToStyle(state, false))} >Get sass</button>*/}
             
-            <div>
-                <textarea value={code} style={{height: '400px'}}></textarea>
-            </div>
+            {/*<div>*/}
+            {/*    <textarea value={code} style={{height: '400px'}}></textarea>*/}
+            {/*</div>*/}
         </div>
     );
 }
