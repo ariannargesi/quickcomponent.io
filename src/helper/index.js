@@ -70,13 +70,13 @@ export function getCssValues(propertyName) {
 
 export const findNodeInTree = (tree, key, callback) => {
     tree.forEach(item => {
-           if(item.key === key)
-               callback(item)
-           else if(item.children)
-               findNodeInTree(item.children, key, callback)
-      })
-  }
-     
+        if (item.key === key)
+            callback(item)
+        else if (item.children)
+            findNodeInTree(item.children, key, callback)
+    })
+}
+
 
 export function deleteNodeInTree(tree, key) {
     tree.forEach((item, index) => {
@@ -87,16 +87,33 @@ export function deleteNodeInTree(tree, key) {
     })
 }
 
-export function addNodeInTree(tree, dropKey, dropPosition, node, dropToGap){
+export function addNodeInTree(tree, dropKey, dropPosition, node, dropToGap) {
     tree.forEach(item => {
-        if(item.key === dropKey){
+        if (item.key === dropKey) {
             console.log('drop to gap from hleper: ' + dropToGap)
-            if(dropToGap){
+            if (dropToGap) {
                 tree.splice(dropPosition, 0, node)
             } else item.children.splice(dropPosition, 0, node)
         }
-            
-        else if(item.children)
+
+        else if (item.children)
             addNodeInTree(item.children, dropKey, dropPosition, node, dropToGap)
+    })
+}
+
+export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
+    tree.forEach((item) => {
+        if (item.key === key) {
+            const style = item.props.style
+            item.props = {
+                ...item.props,
+                style: {
+                    ...style,
+                    [propertyName]: prpoertyValue
+                }
+            }
+        }
+        else if (item.children)
+            addStyleInNode(item.children, key, propertyName, prpoertyValue)
     })
 }

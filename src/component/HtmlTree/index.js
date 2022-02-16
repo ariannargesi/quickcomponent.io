@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit'
 import { Tree } from 'antd'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { moveElementInTree } from '../../redux/slice'
+import { moveElementInTree, changeSelectedElement } from '../../redux/slice'
 
 function formatData(html) {
         html.map((item, index) => {
@@ -14,12 +14,12 @@ function formatData(html) {
             }         
         })
      return html 
-   }
+}
 
 
 const HtmlTree = () => {
     const dispatch = useDispatch()
-    let html = useSelector(state => state.html)
+    let html = useSelector(state => state.html.map)
     
     html = formatData(JSON.parse(JSON.stringify(html)))
 
@@ -38,11 +38,16 @@ const HtmlTree = () => {
         }))
     }
 
+    const onSelect = (value) => {
+        dispatch(changeSelectedElement({key: value[0]}))
+    }
+
     return (
         <Tree
             treeData={html}
             draggable
             onDrop={onDrop}
+            onSelect={onSelect}
         />
     )
 }

@@ -20,6 +20,7 @@ module.exports = {
     ],
     "rules": {
         "no-unused-vars": "warn",
-        "react/jsx-key": "warn"
+        "react/jsx-key": "warn",
+        "no-prototype-builtins": 'warn'
     }
 };
