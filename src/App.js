@@ -3,7 +3,7 @@ import React from 'react'
 import "./styles.css";
 import HtmlTree from './component/HtmlTree'
 import ComponentView from './component/ComponentView'
-import StylePannel from './component/StylePannel'
+import StyleList from './component/StyleList'
 function App() {
     const [showContent, setShowContent] = useState(false);
     const toggleContent = () => setShowContent(!showContent);
@@ -17,7 +17,7 @@ function App() {
             <div className='pure-g' >
                 <div className="pure-u-1-4">
                     <div style={{width: '800px'}}>
-                        <StylePannel />
+                        <StyleList/>
                     </div>
                     
                 </div>
