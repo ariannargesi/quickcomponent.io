@@ -1,0 +1,39 @@
+            .cssProperty {
+                padding: 16px;
+                /* border-radius: 10px; */
+                background: rgba(219, 219, 219, 0.85);
+                border-bottom: 2px solid rgba(128, 128, 128, 0.493);
+                position: relative;
+            }
+            
+            .header {
+                display: flex;
+                align-items: center;
+            }
+            
+            .header>span {
+                font-size: 15px;
+                display: inline-block;
+                width: 150px;
+                position: relative;
+            }
+            
+            .inputPicker {
+                border: 2px solid white;
+                border-radius: 10px;
+                width: 150px;
+                padding: 5px;
+                padding-left: 10px;
+                border: 3px solid rgba(128, 128, 128, 0.493);
+                border: none;
+                outline: none
+            }
+            
+            .colorPickerContainer {
+                position: absolute;
+                top: 0;
+                z-index: 4;
+                background-color: white;
+                padding: 10px;
+                border-radius: 10px;
+            }

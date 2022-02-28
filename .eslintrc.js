@@ -21,6 +21,14 @@ module.exports = {
     "rules": {
         "no-unused-vars": "warn",
         "react/jsx-key": "warn",
-        "no-prototype-builtins": 'warn'
-    }
+        "no-prototype-builtins": 'warn',
+    },
+    "overrides":[
+        {
+            "files": ["*.ts", "*.tsx"],
+            "rules": {
+                "no-undef": "off"
+            }
+        }
+    ]
 };

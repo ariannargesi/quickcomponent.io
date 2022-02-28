@@ -7,10 +7,10 @@ const StyleList = () => {
 
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
-            <StyleSearch 
+            {/* <StyleSearch 
                 value={state} 
                 onChange={e => setState(e.target.value)}
-            />
+            /> */}
             <StylePanel searchQuery={state}/>
         </div>
     )

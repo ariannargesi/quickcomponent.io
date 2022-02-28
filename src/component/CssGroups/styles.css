@@ -1,0 +1,17 @@
+.group {
+    border-radius: 10px;
+}
+
+.group .header {
+    text-align: left;
+    padding: 8px;
+    background-color: rgb(31, 102, 255);
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.712);
+}
+
+.group .body {}
