@@ -21,6 +21,6 @@ Radio.propTypes = {
     list: propTypes.arrayOf(propTypes.string),
     onChange: propTypes.func,
     active: propTypes.number,
-    style?: string
+    style: propTypes.string
 }
 

@@ -144,7 +144,7 @@ const Export = (props: any) => {
     return (
         <>
         <h1 style={{fontSize:'30px'}}>Component settings</h1>
-        <div className='pure-g' style={{width: '1200px', margin: '0 auto'}} >
+        <div className='pure-g' style={{width: '1200px', margin: '0 scroll'}} >
                 
                 <div className='pure-u-1-2 layout' style={{ height: '700px',overflow:'auto'}}>
                     <div style={{padding: '15px 0', paddingLeft: '10px'}}>
@@ -157,42 +157,29 @@ const Export = (props: any) => {
                         // onChange={e => { setScriptLang(e.target.value) }}
                     />
                      */}
-                     <RadioF list={['Yes', 'No']} onChange={() => {}} active={0} />
+                     <RadioF style='gray' list={['Yes', 'No']} onChange={() => {}} active={'Yes'} />
                     </div>
+
                     <div style={{width: '95%', height: '1px', background: "#eee", float: 'left'}}></div>
                     <div style={{padding: '15px 0', paddingLeft: '10px'}}>
                     <h2 style={{marginRight: "20px"}}>Do you use Typescript?</h2>
-                    <Radio.Group style={{marginLeft: '20px'}}
-                    size='large'
-                        options={scriptOptions}
-                        // value={scriptLang}
-                        buttonStyle="solid"
-                        // onChange={e => { setScriptLang(e.target.value) }}
-                    />
+                    <RadioF style='gray' list={['Yes', 'No']} onChange={() => {}} active={'Yes'} />
                     </div>
                     <div style={{width: '95%', height: '1px', background: "#eee", float: 'left'}}></div>
                     <div style={{padding: '15px 0', paddingLeft: '10px'}}>
                     <h2 style={{marginRight: "20px"}}>Do you use SASS or CSS?</h2>
-                    <Radio.Group style={{marginLeft: '20px'}}
-                    size='large'
-                        options={scriptOptions}
-                        // value={scriptLang}
-                        buttonStyle="solid"
-                        // onChange={e => { setScriptLang(e.target.value) }}
-                    />
+                    <RadioF style='gray' list={['Yes', 'No']} onChange={() => {}} active={'Yes'} />
                     </div>
                     <div style={{width: '95%', height: '1px', background: "#eee", float: 'left'}}></div>
                     
                 
                     <div style={{padding: '15px 0', paddingLeft: '10px'}}>
                     <h2 style={{marginRight: "20px"}}>Select export type for your component </h2>
-                    <Radio.Group style={{marginLeft: '20px'}}
-                    size='large'
-                        options={['Named export', 'Default Export']}
-                        // value={scriptLang}
-                        buttonStyle="solid"
-                        // onChange={e => { setScriptLang(e.target.value) }}
-                    />
+                    <RadioF style='gray' list={['Named export', 'Default export']} onChange={() => {}} active={'Default export'} />
+                    </div>
+                    <div style={{width: '200px'}}>
+                        <label>Component name</label>
+                        <Input placeholder='App.js' value={'App'} />
                     </div>
                     <div style={{width: '95%', height: '1px', background: "#eee", float: 'left'}}></div>
 
