@@ -3,13 +3,12 @@ import styles from './styles.module.sass'
 import Editor from '../Editor'
 
 interface Props {
-    source: string[]
+    code: string 
 }
 
 const CodeView = (props: Props) =>{
 
-    const source = props.source 
-    // const scriptCode = getSourceCode(source)
+  
 
     return (
         <div>
@@ -18,7 +17,7 @@ const CodeView = (props: Props) =>{
             <button>Download All</button>
             <div><button>CSS</button>
             <button>JS</button></div>
-            <Editor/>
+            <Editor code={props.code}/>
         </div>
     )
 }

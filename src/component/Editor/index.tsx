@@ -5,7 +5,12 @@ import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css"; //Example style, you can use another
 import './styles.css'
-const Editor = () => {
+
+interface Props {
+  code: string 
+}
+
+const Editor = (props: Props) => {
   const [code, setCode] = React.useState(
     `function add(a, b) {\n  return a + b;\n}`
   );
@@ -19,18 +24,20 @@ const Editor = () => {
 
 
   return (
-    <CodeEditor
-      value={code}
-      onValueChange={(code) => setCode(code)}
-      highlight={code => hightlightWithLineNumbers(code, languages.js)}
-      textareaId="codeArea"
-      className="editor"
-      padding={10}
-      style={{
-        fontFamily: '"Fira code", "Fira Mono", monospace',
-        fontSize: 16,
-      }}
-    />
+    // <CodeEditor
+    //   value={props.code}
+    //   onValueChange={(code) => setCode(code)}
+    //   highlight={code => hightlightWithLineNumbers(code, languages.js)}
+    //   textareaId="codeArea"
+    //   className="editor"
+    //   padding={10}
+    //   style={{
+    //     fontFamily: '"Fira code", "Fira Mono", monospace',
+    //     fontSize: 16,
+    //     height: 409
+    //   }}
+    // />
+    <textarea value={props.code} style={{width: '100%'}}/>
   );
 }
 

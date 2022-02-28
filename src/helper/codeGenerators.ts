@@ -1,5 +1,5 @@
 import { Script } from "vm"
-
+import {nanoid} from 'nanoid'
 export enum StyleFormats {
     CSS = "css",
     SASS = "sass" 
@@ -67,4 +67,21 @@ export const getPropTypes = (fileFormat: ScriptFormats, propsList: PropsList[], 
 export const importPropTypes = ():string =>{ 
     return "import PropTypes from 'prop-types'"
 }   
+
+export function getImport (x) {
+	const hooks = ['useState', 'useEffect', 'useRef']
+	if(x.indexOf(':') == -1)
+		return "import React from 'react'"
+	else {
+		const hooksIndex = x.split(':')[1]
+		const arr = JSON.parse(hooksIndex)
+		let hooksString = ''
+		arr.forEach((item, index) => {
+			hooksString+= hooks[item]
+			if(index != arr.length-1)
+				hooksString+= ','
+		})
+		return `import React, {${hooksString}} from 'react'`	
+	}
+}
 

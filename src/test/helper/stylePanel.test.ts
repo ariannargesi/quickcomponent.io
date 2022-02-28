@@ -1,4 +1,4 @@
-import { PickerTypes } from "../../helper/stylePanel"
+import { PickerTypes } from "../../helper/stylesPanel"
 
 const {isKeyword, getPickerType} = require('../../helper/stylePanel')
 

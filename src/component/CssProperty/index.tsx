@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import styles from './index.module.css'
 import Slider from "@mui/material/Slider";
 import Radio from '../Radio'
-import { isKeyword, getPickerType, PickerTypes, getListValues } from '../../helper/stylePanel'
+import { isKeyword, getPickerType, PickerTypes, getListValues } from '../../helper/stylesPanel'
 
 // gradient picker default value
 const gradient = {
