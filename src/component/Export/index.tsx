@@ -1,11 +1,8 @@
-import React, { Children, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CodeView from '../CodeView'
-import { Radio, Checkbox, Divider, Input, Button, Modal } from 'antd';
-import { ExportTypes, ScriptFormats, StyleFormats, getImportStyle, getImport, getMainComponent } from '../../helper/codeGenerators'
-import { defaultProps } from 'react-select/dist/declarations/src/Select';
-import { Plus, Trash } from 'react-feather'
-const CheckboxGroup = Checkbox.Group;
-
+import {Checkbox } from 'antd';
+import generateCode, { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
+import { useSelector } from 'react-redux'
 import RadioF from '../Radio'
 import PropConfig from '../PropConfig';
 interface BoxProp {
@@ -33,23 +30,16 @@ const Box = (props: BoxProp) => {
    )
 }
 
-
-
-const plainOptions = ['useState', 'useEffect', 'useRef'];
-
-
 const Export = (props: any) => {
+
+    const [code, setCode] = React.useState('')
 
     const [state, setState] = useState({
         styleFormat: StyleFormats.SASS,
         scriptFormat: ScriptFormats.JS,
         exportType: ExportTypes.Named,
+        propsList: []
     })
-
-
-    const [visible, setVisible] = useState(false);
-
-    const [propsList, setPropsList] = useState([])
 
     const [inputs, setInput] = useState({
         fileName: 'App',
@@ -57,20 +47,13 @@ const Export = (props: any) => {
         styleName: 'style'
     })
 
-
-    const [code, setCode] = React.useState('')
-
-    const add = (str: string): void => {
-        setCode(code + str + '\n')
-
-    }
+       // @ts-ignore: Unreachable code error
+    const map = useSelector(state => state.html.map)
 
     useEffect(() => {
-        add(getImport(''))
-        add(getImportStyle(StyleFormats.SASS, 'style'))
-        add(getMainComponent(ExportTypes.Default, ScriptFormats.JS, [], 'App'))
+        const code = generateCode(state, map)
+        setCode(code)
     }, [])
-
     return (
         <>
             <h1 style={{ fontSize: '30px' }}>Component settings</h1>
@@ -85,18 +68,6 @@ const Export = (props: any) => {
                             active={'Yes'}
                         />        
                     </Box>
-                    <Modal
-                        title="Config props"
-                        centered
-                        visible={visible}
-                        onOk={() => setVisible(false)}
-                        footer={false}
-                        onCancel={() => setVisible(false)}
-                        width={600}
-                    >
-                        <PropConfig onConfirm={(value) => {}}/>
-                    </Modal>
-
                 </div>
                 <div className='pure-u-1-2'>
                     <CodeView code={code} />

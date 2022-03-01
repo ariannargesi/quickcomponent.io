@@ -3,7 +3,6 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@chakra-ui/react": "^1.8.5",
         "@emotion/react": "11",
         "@emotion/styled": "11",
         "@mui/material": "^5.4.3",
@@ -21,6 +20,7 @@
         "eslint-plugin-react": "^7.28.0",
         "framer-motion": "6",
         "node-sass": "^7.0.1",
+        "prettier": "2.5.1",
         "prismjs": "^1.27.0",
         "react": "^17.0.2",
         "react-color": "^2.19.3",

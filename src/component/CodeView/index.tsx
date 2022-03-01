@@ -12,7 +12,7 @@ const CodeView = (props: Props) =>{
 
     return (
         <div>
-            
+            <h1></h1>
             <button>Copy this file</button>
             <button>Download All</button>
             <div><button>CSS</button>

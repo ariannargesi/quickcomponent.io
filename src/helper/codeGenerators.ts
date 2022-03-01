@@ -1,5 +1,6 @@
 import { Script } from "vm"
 import {nanoid} from 'nanoid'
+import arrayToJSX from '../helper/arrayToJSX'
 export enum StyleFormats {
     CSS = "css",
     SASS = "sass" 
@@ -22,7 +23,7 @@ export interface PropsList {
 }
 
 export const getImportStyle = (format: StyleFormats, fileName = 'style'):string => {
-    return `import ./${fileName}.${format}`   
+    return `import './${fileName}.${format}'\n`   
 }
 
 export const getMainComponent = (exportType: ExportTypes, fileFormat: ScriptFormats, propsList: PropsList[], componentName = 'App'): string => {
@@ -71,7 +72,7 @@ export const importPropTypes = ():string =>{
 export function getImport (x) {
 	const hooks = ['useState', 'useEffect', 'useRef']
 	if(x.indexOf(':') == -1)
-		return "import React from 'react'"
+		return "import React from 'react'\n"
 	else {
 		const hooksIndex = x.split(':')[1]
 		const arr = JSON.parse(hooksIndex)
@@ -81,7 +82,20 @@ export function getImport (x) {
 			if(index != arr.length-1)
 				hooksString+= ','
 		})
-		return `import React, {${hooksString}} from 'react'`	
+		return `import React, {${hooksString}} from 'react'\n`	
 	}
 }
 
+export default (config,map): string => {
+    let str = ''
+
+    str += getImport('')
+    str += getImportStyle(StyleFormats.SASS, 'style')
+
+    const mainComponent = getMainComponent(ExportTypes.Default, ScriptFormats.JS, [], 'App')
+    const jsx = arrayToJSX(map)
+
+    str+= placeJSXInComponentString(mainComponent, jsx).replace('#PROPS', '')
+
+    return str 
+}
