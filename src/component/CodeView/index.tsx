@@ -1,23 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector, RootStateOrAny } from 'react-redux'
 import styles from './styles.module.sass'
 import Editor from '../Editor'
-
+import { useDispatch } from 'react-redux'
+import {toggleEditorView} from '../../redux/slice'
 interface Props {
-    code: string 
+    script?: string,
+    style?: string 
 }
 
 const CodeView = (props: Props) =>{
 
-  
+    const dispatch = useDispatch()
+
+    const state = useSelector((state:RootStateOrAny) => state.html)
+    const scriptFileName = state.config.scriptFileName+'.'+state.config.scriptFormat
+    const styleFileName = state.config.styleFileName+'.'+state.config.styleFormat
+
+    const changeView = () => {
+        dispatch(toggleEditorView())
+    }
+
+    // file format 
+    // file content 
 
     return (
         <div>
-            <h1></h1>
-            <button>Copy this file</button>
-            <button>Download All</button>
-            <div><button>CSS</button>
-            <button>JS</button></div>
-            <Editor code={props.code}/>
+            <div>
+                <button onClick={changeView}>{scriptFileName}</button>
+                <button onClick={changeView}>{styleFileName}</button>
+            </div>
+            <Editor/>
         </div>
     )
 }

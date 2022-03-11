@@ -5,7 +5,6 @@ export enum PickerTypes {
     List = 'List',
     Color = 'Color',
     Input = 'Input' 
-    
 }
 
 export const getPickerType = (syntax: string): PickerTypes => { 
@@ -17,8 +16,6 @@ export const getPickerType = (syntax: string): PickerTypes => {
         return PickerTypes.Input 
     else if(syntax.indexOf(' | ') != -1)
         return PickerTypes.List
-    
-    
     else return PickerTypes.Input  
 }
 

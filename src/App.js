@@ -15,7 +15,6 @@ function App() {
 
     return (
         <div className="App">
-            <Header/>
             <div className='pure-g' >
             <div className="pure-u-1-4">
             <div className="pure-u-1-4">
@@ -30,6 +29,7 @@ function App() {
                 </div>
                 
                 <div className="pure-u-1-3">
+                    
                     <HtmlTree />
                 </div>
                 <div className="pure-u-1-3">

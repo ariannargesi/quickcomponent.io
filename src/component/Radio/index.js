@@ -6,11 +6,11 @@ import './styles.css'
 
 const Radio = (props) => {
 
-    const { list, onChange, active, style } = props 
+    const { options, onChange, activeIndex, style } = props 
     
     return (
         <ul className={style === 'gray' ? 'radioType1' : 'radioType2'}>
-            {list && list.map((item, index) => <li className={item === active ? 'active' : null} onClick={() => onChange(item)}>{item}</li>)}
+            {options && options.map((item, index) => <li className={index === activeIndex ? 'active' : null} onClick={() => onChange(item)}>{item}</li>)}
         </ul>
     )
 }
@@ -18,9 +18,9 @@ const Radio = (props) => {
 export default Radio 
 
 Radio.propTypes = {
-    list: propTypes.arrayOf(propTypes.string),
+    options: propTypes.arrayOf(propTypes.string),
     onChange: propTypes.func,
-    active: propTypes.number,
-    style: propTypes.string
+    activeIndex: propTypes.number,
+    style: propTypes.string 
 }
 

@@ -8,15 +8,26 @@ import prettier from 'prettier/standalone'
 import babylon from "prettier/parser-babel";
 
 import './styles.css'
+import { useSelector, RootStateOrAny } from "react-redux";
 
-interface Props {
-  code: string 
-}
 
-const Editor = (props: Props) => {
-  const [code, setCode] = React.useState(
-    `function add(a, b) {\n  return a + b;\n}`
-  );
+
+const Editor = () => {
+
+  let style = {
+    fileFormat: null,
+    fileContent: null
+  }
+
+  const code = useSelector((state: RootStateOrAny) => {
+    if(state.html.editorView === 'script')
+      return state.html.scriptContent
+    else {
+      style.fileFormat =  state.html.styleFormat
+      style.fileContent = state.styleContent
+      return state.html.styleContent 
+    }
+  })
 
   const hightlightWithLineNumbers = (input, language) =>
     highlight(input, language)
@@ -27,9 +38,8 @@ const Editor = (props: Props) => {
 
   return (
     <CodeEditor
-      value={prettier.format(props.code, { semi: false, parser: 'babel',  plugins: [babylon] })}
-      // value={props.code}
-      onValueChange={(code) => setCode(code)}
+      value={code}
+      onValueChange={() => {}}
       highlight={code => hightlightWithLineNumbers(code, languages.js)}
       textareaId="codeArea"
       className="editor"

@@ -7,8 +7,8 @@ export enum StyleFormats {
 }
 
 export enum ScriptFormats {
-    TS,
-    JS 
+    TS = 'ts',
+    JS = 'js' 
 }
 
 export enum ExportTypes {
@@ -98,4 +98,23 @@ export default (config,map): string => {
     str+= placeJSXInComponentString(mainComponent, jsx).replace('#PROPS', '')
 
     return str 
+}
+
+
+
+const generateCss = (map): string =>{
+    return ''
+}
+
+const generateSass = (map): string => {
+    return ;
+}
+
+export const generateStyle = (config, map): string => {
+    let res = ''
+    if(config.StyleFormats === 'SASS')
+        res = generateSass(map)
+    else
+         res = generateCss(map)
+    return res 
 }

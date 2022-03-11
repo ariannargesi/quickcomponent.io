@@ -1,3 +1,4 @@
+import {nanoid} from 'nanoid'
 export function cssToCamelCase(string) {
     /*
      * input: "border-radius"
@@ -87,7 +88,7 @@ export function deleteNodeInTree(tree, key) {
     })
 }
 
-export function addNodeInTree(tree, dropKey, dropPosition, node, dropToGap) {
+export function addNodeInPosition(tree, dropKey, dropPosition, node, dropToGap) {
     tree.forEach(item => {
         if (item.key === dropKey) {
             console.log('drop to gap from hleper: ' + dropToGap)
@@ -97,7 +98,7 @@ export function addNodeInTree(tree, dropKey, dropPosition, node, dropToGap) {
         }
 
         else if (item.children)
-            addNodeInTree(item.children, dropKey, dropPosition, node, dropToGap)
+            addNodeInPosition(item.children, dropKey, dropPosition, node, dropToGap)
     })
 }
 
@@ -107,6 +108,7 @@ export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
             const style = item.props.style
             item.props = {
                 ...item.props,
+                className: item.title + '_' + nanoid(6),
                 style: {
                     ...style,
                     [propertyName]: prpoertyValue
@@ -115,5 +117,23 @@ export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
         }
         else if (item.children)
             addStyleInNode(item.children, key, propertyName, prpoertyValue)
+    })
+}
+
+export function addNodeInTree(tree, key, node) {
+    tree.forEach((item, index) => {
+        if (item.key === key)
+            item.children.push(node)
+        else if (item.children)
+            addNodeInTree(item.children, key)
+    })
+}
+
+export function updateNodeTitle(tree, key, value) {
+    tree.forEach((item, index) => {
+        if (item.key === key)
+            item.text = value 
+        else if (item.children)
+        updateNodeTitle(item.children, key, value)
     })
 }

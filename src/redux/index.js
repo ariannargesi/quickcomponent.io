@@ -1,6 +1,8 @@
 import {createStore, combineReducers } from "redux"
 import { composeWithDevTools } from "redux-devtools-extension"
 import html from './slice'
+import Export from './slice/Export'
+import ui from './ui'
 const reducer = (state = {tables: [], aceLiveActive: null}, action) => {
     const newState = {...state}
     switch (action.type){
@@ -16,7 +18,9 @@ const reducer = (state = {tables: [], aceLiveActive: null}, action) => {
 
 const store = createStore(combineReducers({
      reducer,
-        html 
+     html,
+     export: Export,
+     ui
 }), composeWithDevTools())
 
 export default store
