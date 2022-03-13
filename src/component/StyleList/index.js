@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 
 const StyleList = () => {
     const [state, setState] = useState(null)
-
+    
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
             {/* <StyleSearch 

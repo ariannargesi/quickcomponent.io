@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { applyStyle } from '../../redux/slice'
+import { useDispatch, useSelector } from 'react-redux'
+import { applyStyle, updateSearchQuery } from '../../redux/slice'
 import { cssToCamelCase, objectToStyle, generateStyles, isPureCssValue, getCssValues } from '../../helper'
 import Item from '../CssProperty'
 import cssGroups from '../../data/css-groups'
 import properties from '../../data/css-properties.json'
 import styles from './styles.module.css'
-
 const cssKeys = Object.keys(properties)
+
 import Group from '../CssGroups'
 const list = []
 for (let x = 0; x < cssGroups.length; x++) {
@@ -21,12 +21,13 @@ for (let x = 0; x < cssGroups.length; x++) {
     list.push(temp)
 }
 
+
 const StylePannel = () => {
     const dispatch = useDispatch()
     const [showContent, setShowContent] = useState(false);
     const toggleContent = () => setShowContent(!showContent);
-    const [code, setCode] = useState("");
-    const [state, setState] = useState()
+    // @ts-ignore
+    const {query, exact } = useSelector(state => state.html.searchQuery)
 
     // return (
     //     <div className="pure-u-1-3">
@@ -64,7 +65,31 @@ const StylePannel = () => {
     // )
     return (
         <div className={styles.container}>
-            {list.map((subList, index) => (
+            <input
+                placeholder='Search'
+                value={query}
+                onChange={e => dispatch(updateSearchQuery({value: e.target.value, exact: false}))}
+            />
+            {query && 
+                cssKeys.filter(key => key.indexOf(query) > -1).map(item => {
+                    item = properties[item]
+                    return (
+                        <Item
+                            name={item.name}
+                            syntax={item.syntax}
+                            onChange={(value) => {
+                                dispatch(applyStyle({
+                                    key: cssToCamelCase(item.name),
+                                    value
+                                }))
+                            }}
+                        />
+
+                    )
+                }
+            )}
+
+            {!query && list.map((subList, index) => (
                 <Group label={cssGroups[index]}>
                     {subList.map(item => {
                         return (

@@ -14,8 +14,8 @@ const CodeView = (props: Props) =>{
     const dispatch = useDispatch()
 
     const state = useSelector((state:RootStateOrAny) => state.html)
-    const scriptFileName = state.config.scriptFileName+'.'+state.config.scriptFormat
-    const styleFileName = state.config.styleFileName+'.'+state.config.styleFormat
+    const scriptFileName = state.config.scriptFileName+'.'+state.config.scriptType
+    const styleFileName = state.config.styleFileName+'.'+state.config.styleType
 
     const changeView = () => {
         dispatch(toggleEditorView())

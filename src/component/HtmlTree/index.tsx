@@ -6,6 +6,7 @@ import { moveElementInTree, changeSelectedElement, updateTreeInputValue, clearIn
 import Action from './Action'
 import { toggleElementsDrawer } from '../../redux/ui'
 import Drawer from './Drawer'
+import { type } from 'os'
 
 
 function formatData(html) {
@@ -30,7 +31,7 @@ const Title = (props: {data: any}) => {
     const {data} = props 
     
     const handleChange = (e) => {
-        const value = e.target.value 
+        const value = e.target.value  
         dispatch(updateTreeInputValue({
             value
         }))
@@ -43,7 +44,7 @@ const Title = (props: {data: any}) => {
     if(data.key === inputAtKey)
         return (
             <>
-                <input value={data.title} onChange={handleChange}  />
+                <input  onChange={handleChange}  />
                 <button onClick={claerInputAtKey}>Okay</button>    
             </>
         )

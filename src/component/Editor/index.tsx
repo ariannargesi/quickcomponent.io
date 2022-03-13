@@ -21,11 +21,11 @@ const Editor = () => {
 
   const code = useSelector((state: RootStateOrAny) => {
     if(state.html.editorView === 'script')
-      return state.html.scriptContent
+      return state.html.output.script 
     else {
-      style.fileFormat =  state.html.styleFormat
-      style.fileContent = state.styleContent
-      return state.html.styleContent 
+      style.fileFormat =  state.html.config.scriptType 
+      style.fileContent = state.html.output.script
+      return state.html.output.style  
     }
   })
 

@@ -4,12 +4,59 @@ import generateScript, { ExportTypes, ScriptFormats, StyleFormats, generateStyle
 import React from 'react'
 import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
 
-function log(x) {
-  console.log(current(x))
+interface TextObject {
+  text: string,
+  key: string
 }
 
-const initialState = {
+interface ComponentObject {
+  title: string,
+  text?: string
+  key: string,
+  props: object,
+  children: ComponentObject[] | TextObject[]
+}
+
+interface Config {
+  config: {
+    usingTextFile: boolean,
+    scriptType: ScriptFormats,
+    styleType: StyleFormats,
+    scriptFileName: string,
+    styleFileName: string,
+    exportType: ExportTypes,
+    propsList: any[],
+    componentName: string
+  }
+
+}
+
+interface Output {
+  output: {
+    style: string,
+    script: string,
+    commands: { description: string, command: string }[]
+  }
+}
+
+interface State extends Config, Output {
+  selectedKey: string,
+  searchQuery: {
+    value: string,
+    exact: boolean
+  },
+  addChildTo: string,
+  inputKey: string,
+  map: ComponentObject[],
+  editorView: string 
+}
+
+const initialState: State = {
   selectedKey: 'TpBr6w7RzTKfFA0Um2BW5',
+  searchQuery: {
+    value: '',
+    exact: false
+  },
   addChildTo: null,
   inputKey: null,
   map: [
@@ -23,7 +70,7 @@ const initialState = {
           key: nanoid(),
           props: {},
           children: [{ text: 'Hello world', key: nanoid() }],
-          
+
         },
         {
           title: "h2",
@@ -57,17 +104,20 @@ const initialState = {
     }
   ],
   config: {
-    testFile: true,
-    scriptFormat: ScriptFormats.TS,
+    usingTextFile: true,
+    scriptType: ScriptFormats.TS,
     scriptFileName: "index",
-    styleFormat: StyleFormats.SASS,
+    styleType: StyleFormats.SASS,
     styleFileName: 'style',
     exportType: ExportTypes.Default,
     propsList: [],
     componentName: 'App',
   },
-  scriptContent: "afddf",
-  styleContent: "adsfdf",
+  output: {
+    style: '',
+    script: '',
+    commands: []
+  },
   editorView: 'script'
 }
 
@@ -85,7 +135,7 @@ const counterSlice = createSlice({
     changeSelectedElement: (state, action) => {
       state.selectedKey = action.payload.key
     },
-    deleteNode: (state,action) => {
+    deleteNode: (state, action) => {
       deleteNodeInTree(state.map, action.payload.key)
     },
     applyStyle: (state, action) => {
@@ -95,26 +145,30 @@ const counterSlice = createSlice({
     updateConfig: (state, action) => {
       state.config[action.payload.key] = action.payload.value
       // this function only return the code for you to can see it 
-      state.scriptContent = generateScript(state.config, state.map)
-      state.styleContent = generateStyle(state.config, state.map) 
+      state.output.script = generateScript(state.config, state.map)
+      state.output.style = generateStyle(state.config, state.map)
     },
     toggleEditorView: (state) => {
       state.editorView = state.editorView === 'script' ? 'style' : 'script'
     },
     selectElementForAddingChild: (state, action) => {
-      state.addChildTo = action.payload.key 
+      state.addChildTo = action.payload.key
     },
     addNodeInTree: (state, action) => {
       addNode(state.map, state.addChildTo, action.payload.element)
     },
     showInputAtKey: (state, action) => {
-      state.inputKey = action.payload.key 
+      state.inputKey = action.payload.key
     },
     clearInputAtKey: (state) => {
       state.inputKey = null
     },
     updateTreeInputValue: (state, action) => {
       updateNodeTitle(state.map, state.inputKey, action.payload.value)
+    },
+    updateSearchQuery: (state, action) => {
+      const { value, exact } = action.payload
+      state.searchQuery.value = value
     }
   },
 })
@@ -130,7 +184,8 @@ export const {
   selectElementForAddingChild,
   showInputAtKey,
   clearInputAtKey,
-  updateTreeInputValue
+  updateTreeInputValue,
+  updateSearchQuery
 
 } = counterSlice.actions
 export default counterSlice.reducer

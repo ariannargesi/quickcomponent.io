@@ -112,7 +112,7 @@ const generateSass = (map): string => {
 
 export const generateStyle = (config, map): string => {
     let res = ''
-    if(config.StyleFormats === 'SASS')
+    if(config.styleType === 'SASS')
         res = generateSass(map)
     else
          res = generateCss(map)

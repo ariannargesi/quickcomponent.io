@@ -2,7 +2,7 @@ import React from 'react'
 
 const arrayToComponent = (html) => {
      return html.map((el, index) => {
-        if(el.text) return el.text        
+        if(typeof el.text === 'string') return el.text        
         return React.createElement(el.title,{style: el.props.style}, arrayToComponent(el.children))
     })
 };
