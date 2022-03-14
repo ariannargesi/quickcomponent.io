@@ -3,6 +3,7 @@ import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as a
 import generateScript, { ExportTypes, ScriptFormats, StyleFormats, generateStyle } from '../../helper/codeGenerators'
 import React from 'react'
 import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
+import { allowedNodeEnvironmentFlags } from 'process';
 
 interface TextObject {
   text: string,
@@ -48,7 +49,8 @@ interface State extends Config, Output {
   addChildTo: string,
   inputKey: string,
   map: ComponentObject[],
-  editorView: string 
+  editorView: string,
+  refs: any[]
 }
 
 const initialState: State = {
@@ -59,6 +61,7 @@ const initialState: State = {
   },
   addChildTo: null,
   inputKey: null,
+  refs: [], 
   map: [
     {
       title: "div",
@@ -168,7 +171,10 @@ const counterSlice = createSlice({
     },
     updateSearchQuery: (state, action) => {
       const { value, exact } = action.payload
-      state.searchQuery.value = value
+      state.searchQuery.value = value 
+    },
+    addRef: (state, action) => {
+      state.refs.push(action.payload.ref)
     }
   },
 })
@@ -185,7 +191,8 @@ export const {
   showInputAtKey,
   clearInputAtKey,
   updateTreeInputValue,
-  updateSearchQuery
+  updateSearchQuery,
+  addRef
 
 } = counterSlice.actions
 export default counterSlice.reducer

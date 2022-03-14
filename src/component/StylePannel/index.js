@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { applyStyle, updateSearchQuery } from '../../redux/slice'
+import { addRef, applyStyle } from '../../redux/slice'
+import {updateSearchQuery} from '../../redux/slice/Export'
 import { cssToCamelCase, objectToStyle, generateStyles, isPureCssValue, getCssValues } from '../../helper'
 import Item from '../CssProperty'
 import cssGroups from '../../data/css-groups'
@@ -26,8 +27,9 @@ const StylePannel = () => {
     const dispatch = useDispatch()
     const [showContent, setShowContent] = useState(false);
     const toggleContent = () => setShowContent(!showContent);
+    const [refs, setRefs] = useState([])
     // @ts-ignore
-    const {query, exact } = useSelector(state => state.html.searchQuery)
+    const [query, setQuery] = useState('')
 
     // return (
     //     <div className="pure-u-1-3">
@@ -68,10 +70,10 @@ const StylePannel = () => {
             <input
                 placeholder='Search'
                 value={query}
-                onChange={e => dispatch(updateSearchQuery({value: e.target.value, exact: false}))}
+                onChange={e => setQuery(e.target.value)}
             />
-            {query && 
-                cssKeys.filter(key => key.indexOf(query) > -1).map(item => {
+            { 
+                cssKeys.filter(key => query ? key.indexOf(query) > -1 : true).map(item => {
                     item = properties[item]
                     return (
                         <Item
@@ -89,7 +91,7 @@ const StylePannel = () => {
                 }
             )}
 
-            {!query && list.map((subList, index) => (
+            {/* {!query && list.map((subList, index) => (
                 <Group label={cssGroups[index]}>
                     {subList.map(item => {
                         return (
@@ -107,7 +109,8 @@ const StylePannel = () => {
                         )
                     })}
                 </Group>
-            ))}</div>
+            ))} */}
+            </div>
     )
 }
 

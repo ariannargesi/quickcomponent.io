@@ -7,6 +7,7 @@ import QuickStyle from './component/QuickStyle'
 import ComponentView from './component/ComponentView'
 import StyleList from './component/StyleList'
 import Temp from './component/Temp'
+import {Link} from 'react-router-dom'
 function App() {
     const [showContent, setShowContent] = useState(false);
     const toggleContent = () => setShowContent(!showContent);
@@ -16,6 +17,20 @@ function App() {
 
     return (
         <div className="App">
+            <Link to='/export'>
+                <button style={{
+                    position:' absolute',
+                    right: '50px',
+                    bottom:'50px',
+                    background: 'purple',
+                    borderRadius: "15px",
+                    color: 'white',
+                    padding: '16px 32px',
+                    border: 'none',
+                    fontSize: "18px"
+                }}> Export</button>
+            </Link>
+            
             <div className='pure-g' >
             <div className="pure-u-1-4">
             <div className="pure-u-1-4">

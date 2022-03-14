@@ -17,7 +17,11 @@ const initialState =  {
         exportType: ExportTypes.Default,
         propsList: [],
         componentName: 'App',
-    }
+    },
+    searchQuery: {
+      value: '',
+      exact: false
+    },
 }
 
 const counterSlice = createSlice({
@@ -27,9 +31,13 @@ const counterSlice = createSlice({
       updateConfig: (state, action) => {
         state.config[action.payload.key] = action.payload.value 
         const str = generateCode(state.config)
+      },
+      updateSearchQuery: (state, action) => {
+        const { value, exact } = action.payload
+        state.searchQuery.value = value 
       }
     },
 })
 
-export const {updateConfig} = counterSlice.actions
+export const {updateConfig, updateSearchQuery} = counterSlice.actions
 export default counterSlice.reducer

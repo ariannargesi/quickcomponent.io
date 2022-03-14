@@ -201,16 +201,16 @@ const InputPicker = (props: PickerProps) => {
 } 
 
 
+
 const Picker = (props: MainProps): JSX.Element => {
     const pickerType: PickerTypes = getPickerType(props.syntax)
-
 
     const handleChange = () => {
 
     }
 
     return (
-        <>
+        <div>
             {pickerType === PickerTypes.Range &&
                 <RangePicker name={props.name} onChange={props.onChange} />
             }
@@ -223,8 +223,7 @@ const Picker = (props: MainProps): JSX.Element => {
             {pickerType === PickerTypes.Input &&
                 <InputPicker name={props.name} onChange={props.onChange} />
             }
-        </>
+        </div>
     )
-} 
-
- export default Picker  
+}
+export default Picker  
