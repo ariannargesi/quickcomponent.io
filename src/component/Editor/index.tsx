@@ -23,8 +23,6 @@ const Editor = () => {
     if(state.html.editorView === 'script')
       return state.html.output.script 
     else {
-      style.fileFormat =  state.html.config.scriptType 
-      style.fileContent = state.html.output.script
       return state.html.output.style  
     }
   })

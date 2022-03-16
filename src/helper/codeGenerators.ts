@@ -269,20 +269,21 @@ const generateCSS = (map: ComponentObject[]): string => {
     return str 
 }
 
-const generateSASS = (map:ComponentObject[]): string => {
+function generateSASS (map: ComponentObject[]): string {
     let str = ''
-    function arrayToComponent(html, indent = 0){
-        if(Array.isArray(html) === false) return 
-            return html.map((el) => {
-                let indentStr = indentGenerator(indent)
-                if(el.props === undefined) return 
-                if(el.props.style) {
-                    str+= `${indentStr}.${el.props.className}\n${objectToStyle(el.props.style, false, indent+4)}`
-                }
-        arrayToComponent(el.children, indent + 2)
-    })}
-    arrayToComponent(map, 0)    
-    return str 
-}
+  const arrayToComponent = (html, indent = 0) => {
+      if(Array.isArray(html) === false) return 
+      return html.forEach((el) => {
+        let indentStr = indentGenerator(indent)
+        if(el.props === undefined) return 
+        if(el.props.style) {
+          str+= `${indentStr}.${el.props.className}\n${objectToStyle(el.props.style, false, indent+4)}`
+        }
+      arrayToComponent(el.children, indent + 2)
+     })
+  };
+  arrayToComponent(map)
+  return str   
+  }
 
 

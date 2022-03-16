@@ -113,7 +113,7 @@ const initialState: State = {
     scriptFileName: "index",
     hooksList: [],
     propDeclerationType: PropTypesDecleration.Interface,
-    styleType: StyleFormats.SASS,
+    styleType: StyleFormats.CSS,
     styleFileName: 'style',
     exportType: ExportTypes.Default,
     propsList: [],
@@ -151,6 +151,8 @@ const counterSlice = createSlice({
     },
     updateConfig: (state, action) => {
       state.config[action.payload.key] = action.payload.value
+      
+      state.output.style = styleGenerator(state.map, state.config.styleType)
       state.output.script = scriptGenerator({
         componentName: state.config.componentName,
         hooksList: state.config.hooksList,
@@ -161,10 +163,10 @@ const counterSlice = createSlice({
         scriptType: state.config.scriptType,
         styleType: state.config.styleType
       })
-      state.output.style = styleGenerator(state.map, state.config.styleType)
+
     },
     toggleEditorView: (state) => {
-      state.editorView = state.editorView === 'script' ? 'style' : 'script'
+      state.editorView = state.editorView === 'script' ? 'script' : 'style'
     },
     selectElementForAddingChild: (state, action) => {
       state.addChildTo = action.payload.key
