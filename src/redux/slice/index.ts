@@ -166,7 +166,7 @@ const counterSlice = createSlice({
 
     },
     toggleEditorView: (state) => {
-      state.editorView = state.editorView === 'script' ? 'script' : 'style'
+      state.editorView = state.editorView === 'script' ? 'style' : 'script'
     },
     selectElementForAddingChild: (state, action) => {
       state.addChildTo = action.payload.key
