@@ -1,16 +1,16 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
 import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, updateNodeTitle } from '../../helper'
-import generateScript, { ExportTypes, ScriptFormats, StyleFormats, generateStyle } from '../../helper/codeGenerators'
+import generateScript, { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
 import React from 'react'
 import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
 import { allowedNodeEnvironmentFlags } from 'process';
-
+import scriptGenerator, {PropTypesDecleration, styleGenerator} from '../../helper/codeGenerators'
 interface TextObject {
   text: string,
   key: string
 }
 
-interface ComponentObject {
+export interface ComponentObject {
   title: string,
   text?: string
   key: string,
@@ -18,18 +18,18 @@ interface ComponentObject {
   children: ComponentObject[] | TextObject[]
 }
 
-interface Config {
-  config: {
-    usingTextFile: boolean,
+export interface Config {
+    usingTestFile: boolean,
     scriptType: ScriptFormats,
     styleType: StyleFormats,
     scriptFileName: string,
     styleFileName: string,
     exportType: ExportTypes,
     propsList: any[],
-    componentName: string
-  }
-
+    hooksList: string[],
+    componentName: string,
+    propDeclerationType: PropTypesDecleration,
+    propDisctruction: boolean 
 }
 
 interface Output {
@@ -40,12 +40,13 @@ interface Output {
   }
 }
 
-interface State extends Config, Output {
+export interface State extends Output {
   selectedKey: string,
   searchQuery: {
     value: string,
     exact: boolean
   },
+  config: Config,
   addChildTo: string,
   inputKey: string,
   map: ComponentObject[],
@@ -107,14 +108,17 @@ const initialState: State = {
     }
   ],
   config: {
-    usingTextFile: true,
+    usingTestFile: true,
     scriptType: ScriptFormats.TS,
     scriptFileName: "index",
+    hooksList: [],
+    propDeclerationType: PropTypesDecleration.Interface,
     styleType: StyleFormats.SASS,
     styleFileName: 'style',
     exportType: ExportTypes.Default,
     propsList: [],
     componentName: 'App',
+    propDisctruction: true 
   },
   output: {
     style: '',
@@ -147,9 +151,17 @@ const counterSlice = createSlice({
     },
     updateConfig: (state, action) => {
       state.config[action.payload.key] = action.payload.value
-      // this function only return the code for you to can see it 
-      state.output.script = generateScript(state.config, state.map)
-      state.output.style = generateStyle(state.config, state.map)
+      state.output.script = scriptGenerator({
+        componentName: state.config.componentName,
+        hooksList: state.config.hooksList,
+        map: state.map,
+        propType: state.config.propDeclerationType,
+        propsDistruction: state.config.propDisctruction,
+        propsList: state.config.propsList,
+        scriptType: state.config.scriptType,
+        styleType: state.config.styleType
+      })
+      state.output.style = styleGenerator(state.map, state.config.styleType)
     },
     toggleEditorView: (state) => {
       state.editorView = state.editorView === 'script' ? 'style' : 'script'

@@ -1,4 +1,4 @@
-import { ExportTypes,ScriptFormats, StyleFormats, getImportStyle, getMainComponent, getPropTypes } from '../../helper/codeGenerators'
+import { ExportTypes,ScriptFormats, StyleFormats, getImportStyle, getPropTypes } from '../../helper/codeGenerators'
 
 const componentName = 'Header'
 const propsList = [

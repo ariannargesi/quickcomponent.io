@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRef, applyStyle } from '../../redux/slice'
 import {updateSearchQuery} from '../../redux/slice/Export'
-import { cssToCamelCase, objectToStyle, generateStyles, isPureCssValue, getCssValues } from '../../helper'
+import { cssToCamelCase, objectToStyle, isPureCssValue, getCssValues } from '../../helper'
 import Item from '../CssProperty'
 import cssGroups from '../../data/css-groups'
 import properties from '../../data/css-properties.json'
@@ -67,7 +67,7 @@ const StylePannel = () => {
     // )
     return (
         <div className={styles.container}>
-            <input
+            <input  
                 placeholder='Search'
                 value={query}
                 onChange={e => setQuery(e.target.value)}

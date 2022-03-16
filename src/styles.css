@@ -82,3 +82,7 @@ body {
     height: 50%;
     border: 1px solid red;
 }
+
+.props-config-table {
+    text-align: left!important;
+}

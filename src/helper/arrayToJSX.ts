@@ -1,12 +1,8 @@
-const arrayToComponent = (html):string => {
+const arrayToJSx = (html) => {
     return html.map((el, index) => {
        if(el.text) return el.text     
-       return `<${el.title}>${arrayToComponent(el.children)}</${el.title}>`
+       return `<${el.title} ${el.props?.className ? `className='${el.props.className}'` : ''}>${arrayToJSx(el.children)}</${el.title}>`
    })
 };
 
-const removeExtraCommas = (str: string): string => {
-    const componentString = arrayToComponent(str)[0]
-    return componentString.replace(/>,</g, '><')
-}
-export default removeExtraCommas
+export default arrayToJSx

@@ -1,13 +1,17 @@
-import React from 'react'
+
+import React, { useEffect } from 'react'
 import { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
 import Radio from '../Radio'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
-import { updateConfig } from '../../redux/slice'
+import { updateConfig, Config } from '../../redux/slice'
 import Box from './Box'
+import PropConfig from '../../component/PropConfig'
+import codeGenerators from '../../helper/codeGenerators'
 
 const CompnentConfig = () => {
 
-    const config = useSelector((state: RootStateOrAny) => state.html.config)
+
+    const config = useSelector((state: RootStateOrAny) => state.html.config) as Config 
     const dispatch = useDispatch()
     const handleChange = (key, value) => {
         dispatch(updateConfig({
@@ -18,12 +22,15 @@ const CompnentConfig = () => {
 
     return (
         <>
+            <PropConfig 
+                onConfirm={value => {handleChange('propsList', value)}}
+            />
             <Box title='Do you need a test file?'>
                 <Radio
                     style='gray'
                     options={['Yes', 'No']}
-                    onChange={(e) => { handleChange('testFile', e === 'Yes' ? true : false) }}
-                    activeIndex={config.testFile ? 0 : 1}
+                    onChange={(e) => { handleChange('usingTestFile', e === 'Yes' ? true : false) }}
+                    activeIndex={config.usingTestFile ? 0 : 1}
                 />
             </Box>
             <Box title='Do you use Typescript?'>
@@ -31,10 +38,10 @@ const CompnentConfig = () => {
                     style='gray'
                     options={['Yes', "No, I'm using javascript"]}
                     onChange={(e) => { 
-                        handleChange('script', e === 'Yes' 
+                        handleChange('scriptType', e === 'Yes' 
                         ? ScriptFormats.TS : ScriptFormats.JS) 
                     }}
-                    activeIndex={config.script === ScriptFormats.TS ? 0 : 1}
+                    activeIndex={config.scriptType === ScriptFormats.TS ? 0 : 1}
                 />
             </Box>
             <Box title='Do you use SASS for your styles?'>
@@ -42,21 +49,21 @@ const CompnentConfig = () => {
                     style='gray'
                     options={['Yes', "No, I'm using CSS"]}
                     onChange={(e) => { 
-                        handleChange('style', e === 'Yes' 
+                        handleChange('styleType', e === 'Yes' 
                         ? StyleFormats.SASS : StyleFormats.CSS)
                      }}
-                    activeIndex={config.style === StyleFormats.SASS ? 0 : 1}
+                    activeIndex={config.styleType === StyleFormats.SASS ? 0 : 1}
                 />
             </Box>
-            <Box title='Do you like default export or named export?'>
+            <Box title='Do you like props distruction?'>
                 <Radio
                     style='gray'
-                    options={['Default export', "Named export"]}
+                    options={['Yes', "No"]}
                     onChange={(e) => { 
-                        handleChange('exportType', e === 'Default export' 
-                        ? ExportTypes.Default : ExportTypes.Named)
-                    }}
-                    activeIndex={config.exportType === ExportTypes.Default ? 0 : 1}
+                        handleChange('propDisctruction', e === 'Yes' 
+                        ? true : false)
+                     }}
+                    activeIndex={config.propDisctruction === true ? 0 : 1}
                 />
             </Box>
         </>

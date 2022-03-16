@@ -9,12 +9,7 @@ import StyleList from './component/StyleList'
 import Temp from './component/Temp'
 import {Link} from 'react-router-dom'
 function App() {
-    const [showContent, setShowContent] = useState(false);
-    const toggleContent = () => setShowContent(!showContent);
-    const [code, setCode] = useState("");
-
-
-
+  
     return (
         <div className="App">
             <Link to='/export'>
@@ -29,8 +24,7 @@ function App() {
                     border: 'none',
                     fontSize: "18px"
                 }}> Export</button>
-            </Link>
-            
+            </Link>          
             <div className='pure-g' >
             <div className="pure-u-1-4">
             <div className="pure-u-1-4">
