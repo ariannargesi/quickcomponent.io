@@ -1,8 +1,11 @@
 import React from "react";
 import CodeEditor from "react-simple-code-editor";
-import { highlight, languages } from "prismjs/components/prism-core";
+import { highlight, languages } from "prismjs";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
+import 'prismjs/plugins/unescaped-markup/prism-unescaped-markup.css'
+import 'prismjs/plugins/unescaped-markup/prism-unescaped-markup.js'
+
 import "prismjs/themes/prism.css"; //Example style, you can use another
 import prettier from 'prettier/standalone'
 import babylon from "prettier/parser-babel";
@@ -30,7 +33,7 @@ const Editor = () => {
   })
 
   const hightlightWithLineNumbers = (input, language) =>
-    highlight(input, language)
+    highlight(input, language, )
       .split("\n")
       .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
       .join("\n");
@@ -58,15 +61,16 @@ const Editor = () => {
     <CodeEditor
       value={code}
       onValueChange={() => {}}
-      highlight={code => hightlightWithLineNumbers(code, languages.js)}
+      highlight={code => hightlightWithLineNumbers(code, state.editorView === 'script' ? languages.js : languages.css  )}
       textareaId="codeArea"
       className="editor"
+
       lang={lang}
       padding={10}
       style={{
-        fontFamily: '"Fira code", "Fira Mono", monospace',
+        fontFamily: '"Source Sans Pro"',
         fontSize: 16,
-        height: 409
+        height: '85vh',
       }}
     />
   );

@@ -49,7 +49,7 @@ const CodeView = (props: Props) =>{
     
 
     return (
-        <div>
+        <div  >
             <div>
                 <button onClick={handleDownload} >Download</button>
                 <button onClick={showScript}>{scriptFileName}</button>

@@ -35,7 +35,7 @@ const CompnentConfig = () => {
       };
 
     return (
-        <>
+        <div style={{backgroundColor: 'white'}}>
             <PropConfig 
                 onConfirm={value => {handleChange('propsList', value)}}
             />
@@ -83,7 +83,7 @@ const CompnentConfig = () => {
             <Box title='Select your hooks (import statment)'>
                 <CheckboxGroup options={plainOptions} value={config.hooksList} onChange={onChange} />
             </Box>
-        </>
+        </div>
     )
 }
 

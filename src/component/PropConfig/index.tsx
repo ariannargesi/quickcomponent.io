@@ -20,9 +20,6 @@ const typesList = propTypesKeys.filter(key => {
     return false
 })
 
-
-
-console.log(typesList)
 typesList.push('any')
 
 // form initial state
@@ -39,7 +36,6 @@ const PropConfig = (props: Prop) => {
     const [form, setForm] = useState(initialForm)
 
     const handleChange = (e) => {
-        console.log(e)
         setForm(prev => {
             return {
                 ...prev,
@@ -123,7 +119,7 @@ const PropConfig = (props: Prop) => {
                     </div>
                     <Button onClick={handleAddProp}>Add</Button>
                 </div>
-                    {propsList.length != 0 && (
+                    {  propsList.length != 0 && (
                         <div>
                         <table style={{ width: '70%', margin: '20px 0' }}>
                             <tr>

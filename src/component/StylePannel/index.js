@@ -7,6 +7,7 @@ import Item from '../CssProperty'
 import cssGroups from '../../data/css-groups'
 import properties from '../../data/css-properties.json'
 import styles from './styles.module.css'
+import { Input } from 'antd'
 const cssKeys = Object.keys(properties)
 
 import Group from '../CssGroups'
@@ -67,8 +68,11 @@ const StylePannel = () => {
     // )
     return (
         <div className={styles.container}>
-            <input  
+            <Input  
+                className={styles.input}
                 placeholder='Search'
+                size='large'
+                allowClear
                 value={query}
                 onChange={e => setQuery(e.target.value)}
             />

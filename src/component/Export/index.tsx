@@ -2,41 +2,47 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import CodeView from '../CodeView'
 import ComponentConfig from '../CompnentConfig'
-import {generateCode} from '../../redux/slice'
-//1-test file
-// if user need a test file just add a new file to download output. 
-//if user use typescript, file name must be [component name].test.ts 
-//if user use javascript name must be [component name].test.js
-
-//2-script type
-// if user use typescript file extention must be tsx and component must have type of React.Node 
-// if user use javascript file extension must be js and just return a basic js component 
-
-
-
-
+import { generateCode } from '../../redux/slice'
+import {  ChevronLeft } from 'react-feather'
+import { useNavigate } from 'react-router-dom'
+const style = {
+    container: {
+        width: '1200px',
+        margin: '0 auto',
+        height: '100vh',
+    },
+    flex: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    }
+}
 
 const Export = (props: any) => {
-        
+
     const dispatch = useDispatch()
-
-
+    const navigate = useNavigate()
     useEffect(() => {
         dispatch(generateCode())
     }, [])
 
+    const goBack = () => {
+        navigate(-1)
+    }
+
     return (
-        <>
-            <h1 style={{ fontSize: '30px' }}>Component settings</h1>
-            <div className='pure-g' style={{ width: '1200px', margin: '0 scroll' }} >
-                <div className='pure-u-1-2 layout' style={{ height: '700px', overflow: 'auto' }}>
-                    <ComponentConfig/>
-                </div>
-                <div className='pure-u-1-2'>
-                    <CodeView/>
+        <div style={style.container}>
+            <ChevronLeft 
+                size={40} 
+                onClick={goBack}
+            />
+            <div style={style.flex}>
+                <ComponentConfig  />
+                <div style={{ width: '550px' }}>
+                    <CodeView />
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
