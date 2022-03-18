@@ -10,7 +10,7 @@ import Export from './component/Export'
 const root = document.getElementById('root')
 ReactDOM.render(<Provider store={store}>
     <HashRouter>
-    <Routes></Routes>
+    <Routes>
 
         <Route path="/" element={<App />} />
         <Route path="/export" element={<Export />} />

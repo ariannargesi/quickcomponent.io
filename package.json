@@ -52,6 +52,7 @@
         "test:watch": "jest --watch",
         "eject": "react-scripts eject"
     },
+    "homepage": ".",
     "eslintConfig": {
         "extends": [
             "react-app",
