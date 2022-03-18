@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {cssToCamelCase, findNodeInTree} from '../../helper'
 import { applyStyle } from '../../redux/slice'
 import CssPropertiy from '../../component/CssProperty'
+import { selectClasses } from '@mui/material'
 
 
 const properties = require('../../data/css-properties.json')
@@ -49,6 +50,9 @@ function getStyles (key: string, html): any {
     findNodeInTree(html, key, (value) => {
         res = value 
     })
+
+    console.log(res)
+
     return res.props?.style
 
 }
@@ -61,6 +65,7 @@ const QuickStyle: React.FC = () => {
     const map = useSelector(state => state.html.map)
     const styles = getStyles(selektedKey, map)
 
+    console.log(selektedKey)
     if(styles === undefined)
         return <span>You dont have styles at the moment</span>
 
@@ -68,13 +73,14 @@ const QuickStyle: React.FC = () => {
     const keys = Object.keys(styles)
     return (
         <div className='html-tree'>
-            {keys.map(key => {
+            { keys && keys.map(key => {
                 const name: string = cssToCamelCase(key)
                 const value: string = styles[key]
                 return <Item title={`${name}:${value}`}/>
             })}
         </div>
     )
+
 }
 
 export default QuickStyle

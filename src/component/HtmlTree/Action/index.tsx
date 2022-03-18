@@ -30,9 +30,9 @@ const Action = (props: Props) => {
             <div>
             <Plus onClick={addChild} size={iconSize}/>
             </div>
-            <div>
+            {/* <div>
             <Copy onClick={copyElement} size={iconSize}/>
-            </div>
+            </div> */}
             <div>
             <Trash onClick={removeElement} size={iconSize}/>
             </div>

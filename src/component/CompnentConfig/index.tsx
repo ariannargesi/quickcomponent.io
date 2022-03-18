@@ -1,5 +1,6 @@
 
 import React, { useEffect } from 'react'
+import {Checkbox} from 'antd'
 import { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
 import Radio from '../Radio'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
@@ -8,8 +9,16 @@ import Box from './Box'
 import PropConfig from '../../component/PropConfig'
 import codeGenerators from '../../helper/codeGenerators'
 
+
+const plainOptions = ['useState', 'useEffect', 'useRef', 'useCallback', 'useMemo'];
+const defaultCheckedList = ['useState'];
+const CheckboxGroup = Checkbox.Group;
+
+
 const CompnentConfig = () => {
 
+    const [indeterminate, setIndeterminate] = React.useState(true);
+    const [checkAll, setCheckAll] = React.useState(false);
 
     const config = useSelector((state: RootStateOrAny) => state.html.config) as Config 
     const dispatch = useDispatch()
@@ -19,6 +28,11 @@ const CompnentConfig = () => {
             value
         }))
     }
+
+    const onChange = list => {
+        console.log(list)
+        dispatch(handleChange('hooksList', list))
+      };
 
     return (
         <>
@@ -65,6 +79,9 @@ const CompnentConfig = () => {
                      }}
                     activeIndex={config.propDisctruction === true ? 0 : 1}
                 />
+            </Box>
+            <Box title='Select your hooks (import statment)'>
+                <CheckboxGroup options={plainOptions} value={config.hooksList} onChange={onChange} />
             </Box>
         </>
     )

@@ -18,6 +18,13 @@ export interface ComponentObject {
   children: ComponentObject[] | TextObject[]
 }
 
+export interface Prop {
+  propName: string,
+  propType: string, 
+  propDefaultValue?: string,
+  required?: boolean 
+}
+
 export interface Config {
     usingTestFile: boolean,
     scriptType: ScriptFormats,
@@ -25,7 +32,7 @@ export interface Config {
     scriptFileName: string,
     styleFileName: string,
     exportType: ExportTypes,
-    propsList: any[],
+    propsList: Prop[],
     hooksList: string[],
     componentName: string,
     propDeclerationType: PropTypesDecleration,
@@ -149,9 +156,21 @@ const counterSlice = createSlice({
       const { key, value } = action.payload
       addStyleInNode(state.map, state.selectedKey, key, value)
     },
+    generateCode: (state) => {
+      state.output.style = styleGenerator(state.map, state.config.styleType)
+      state.output.script = scriptGenerator({
+        componentName: state.config.componentName,
+        hooksList: state.config.hooksList,
+        map: state.map,
+        propType: state.config.propDeclerationType,
+        propsDistruction: state.config.propDisctruction,
+        propsList: state.config.propsList,
+        scriptType: state.config.scriptType,
+        styleType: state.config.styleType
+      })
+    },
     updateConfig: (state, action) => {
       state.config[action.payload.key] = action.payload.value
-      
       state.output.style = styleGenerator(state.map, state.config.styleType)
       state.output.script = scriptGenerator({
         componentName: state.config.componentName,
@@ -165,8 +184,8 @@ const counterSlice = createSlice({
       })
 
     },
-    toggleEditorView: (state) => {
-      state.editorView = state.editorView === 'script' ? 'style' : 'script'
+    toggleEditorView: (state, action) => {
+      state.editorView = action.payload.value
     },
     selectElementForAddingChild: (state, action) => {
       state.addChildTo = action.payload.key
@@ -206,7 +225,8 @@ export const {
   clearInputAtKey,
   updateTreeInputValue,
   updateSearchQuery,
-  addRef
+  addRef, 
+  generateCode
 
 } = counterSlice.actions
 export default counterSlice.reducer

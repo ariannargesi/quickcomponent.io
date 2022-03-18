@@ -25,9 +25,7 @@ const CodeView = (props: Props) =>{
     const styleFileName = state.config.styleFileName+'.'+state.config.styleType
     const {scriptType, styleType, componentName} = state.config 
 
-    const changeView = () => {
-        dispatch(toggleEditorView())
-    }
+    
 
     
 
@@ -40,15 +38,22 @@ const CodeView = (props: Props) =>{
         });
     }
 
-    // file format 
-    // file content 
+    const showScript = () => {
+        dispatch(toggleEditorView({value: 'script'}))
+    }
+
+    const showStyle = () => {
+        dispatch(toggleEditorView({value: 'style'}))
+    }
+
+    
 
     return (
         <div>
             <div>
                 <button onClick={handleDownload} >Download</button>
-                <button onClick={changeView}>{scriptFileName}</button>
-                <button onClick={changeView}>{styleFileName}</button>
+                <button onClick={showScript}>{scriptFileName}</button>
+                <button onClick={showStyle}>{styleFileName}</button>
             </div>
             <Editor/>
         </div>

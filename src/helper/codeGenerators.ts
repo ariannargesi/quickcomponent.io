@@ -1,7 +1,8 @@
 import { Script } from "vm"
 import {nanoid} from 'nanoid'
 import arrayToJSx from '../helper/arrayToJSX'
-import { ComponentObject } from "../redux/slice"
+import { ComponentObject, Prop } from "../redux/slice"
+import { current } from "@reduxjs/toolkit"
 export enum StyleFormats {
     CSS = "css",
     SASS = "sass" 
@@ -17,18 +18,13 @@ export enum ExportTypes {
     Default
 }
 
-export interface PropsList {
-    propName: string,
-    propType: string, 
-    propDefaultValue?: string,
-    required?: boolean 
-}
+
 
 export const getImportStyle = (format: StyleFormats, fileName = 'style'):string => {
     return `import './${fileName}.${format}'\n`   
 }
 
-export const getMainComponent = (exportType: ExportTypes, fileFormat: ScriptFormats, propsList: PropsList[], componentName = 'App'): string => {
+export const getMainComponent = (exportType: ExportTypes, fileFormat: ScriptFormats, propsList: Prop[], componentName = 'App'): string => {
     let propsString = getPropTypes(ScriptFormats.JS, propsList, 'App')
     let res  = ''
     if(exportType === ExportTypes.Default && propsList.length === 0)
@@ -45,7 +41,7 @@ export const placeJSXInComponentString = (componentString: string, JSX:string): 
     return componentString.replace('#JSX', JSX)
 }
 
-export const getPropTypes = (fileFormat: ScriptFormats, propsList: PropsList[], componentName?:string): string => {    let res = ''
+export const getPropTypes = (fileFormat: ScriptFormats, propsList: Prop[], componentName?:string): string => {    let res = ''
     if(fileFormat === ScriptFormats.JS){
         res+= `${componentName}.propTypes {\n`
         propsList.forEach((item, index) => {
@@ -96,7 +92,7 @@ export enum PropTypesDecleration {
 
 interface Config {
     componentName: string,
-    propsList: PropsList[],
+    propsList: Prop[],
     scriptType: ScriptFormats,
     styleType: StyleFormats,
     propsDistruction: boolean,
@@ -115,6 +111,8 @@ export default (config: Config) => {
         hooksList, 
         map
     } = config
+
+    // console.log(current(propsList))
 
     // My original component
     let component = ''
@@ -136,9 +134,9 @@ export default (config: Config) => {
 
 
     if (styleType === 'sass')
-        component += `import ./style.sass`
+        component += `import "./style.sass"`
     else if (styleType === 'css')
-        component += `import ./style.css`
+        component += `import "./style.css"`
 
 
 

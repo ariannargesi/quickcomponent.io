@@ -78,7 +78,8 @@ const HtmlTree: React.ReactNode = () => {
     }
 
     const handleElementSelect = (value) => {
-        dispatch(changeSelectedElement({ key: value[0] }))
+        if(value.length != 0)
+            dispatch(changeSelectedElement({ key: value[0] }))
     }
 
     const toggleDrawer = () => {

@@ -13,15 +13,6 @@ interface Prop {
 interface AddPropsProp {
     onChange: any
 }
-
-const AddProps = (props: AddPropsProp) => {
-    let name
-    let type
-    let defaultValue
-
-
-}
-
 const propTypesKeys = Object.keys(PropTypes)
 const typesList = propTypesKeys.filter(key => {
     if (PropTypes[key].name === 'bound checkType')
@@ -36,8 +27,8 @@ typesList.push('any')
 
 // form initial state
 const initialForm = {
-    name: '',
-    type: 'any',
+    propName: '',
+    propType: 'any',
     required: false
 }
 
@@ -91,8 +82,8 @@ const PropConfig = (props: Prop) => {
                             {propsList.map((item, index) => {
                                 return (
                                     <tr>
-                                        <td>{item.name}</td>
-                                        <td>{item.type}</td>
+                                        <td>{item.propName}</td>
+                                        <td>{item.propType}</td>
                                         <td>{item.required}</td>
                                     </tr>
                                 )
@@ -113,11 +104,11 @@ const PropConfig = (props: Prop) => {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
                         <label htmlFor="name">Name</label>
-                        <Input value={form.name} onChange={e => handleChange({ name: e.target.value })} />
+                        <Input value={form.propName} onChange={e => handleChange({ propName: e.target.value })} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <label htmlFor="name">Name</label>
-                        <Select defaultValue={form.type} onChange={e => handleChange({ type: e })} style={{ width: 120 }}>
+                        <Select defaultValue={form.propType} onChange={e => handleChange({ propType: e })} style={{ width: 120 }}>
                             {typesList.map(item => {
                                 return (
                                     <Option value={item}>{item}</Option>
@@ -143,8 +134,8 @@ const PropConfig = (props: Prop) => {
                             {propsList.map((item, index) => {
                                 return (
                                     <tr>
-                                        <td>{item.name}</td>
-                                        <td>{item.type}</td>
+                                        <td>{item.propName}</td>
+                                        <td>{item.propType}</td>
                                         <td>{item.required}</td>
                                         <td><Trash onClick={() => handleDelete(index)} /></td>
                                     </tr>

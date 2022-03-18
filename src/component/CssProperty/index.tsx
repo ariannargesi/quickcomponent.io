@@ -72,7 +72,7 @@ const RangePicker = (props: PickerProps) => {
                 />
                 <Radio
                     active={unit}
-                    list={['px', 'rem', '%', 'vm', 'vh']}
+                    options={['px', 'rem', '%', 'vm', 'vh']}
                     onChange={(e) => {
                         setUnit(e)
                         props.onChange(sliderLatestValue + unit)

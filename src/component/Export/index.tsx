@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import CodeView from '../CodeView'
 import ComponentConfig from '../CompnentConfig'
-
+import {generateCode} from '../../redux/slice'
 //1-test file
 // if user need a test file just add a new file to download output. 
 //if user use typescript, file name must be [component name].test.ts 
@@ -17,6 +18,13 @@ import ComponentConfig from '../CompnentConfig'
 
 const Export = (props: any) => {
         
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(generateCode())
+    }, [])
+
     return (
         <>
             <h1 style={{ fontSize: '30px' }}>Component settings</h1>
