@@ -1,6 +1,5 @@
 import ColoredBox from '../ColoredBox'
-import { ColorPicker as ReacetColorPicker } from 'react-color-gradient-picker';
-import 'react-color-gradient-picker/dist/index.css';
+
 import Select from 'react-select'
 import React, { useState } from 'react'
 import styles from './index.module.css'
@@ -47,7 +46,7 @@ interface MainProps extends PickerProps {
     syntax: string
 }
 let sliderLatestValue = '0' 
-const RangePicker = (props: PickerProps) => {
+ export const RangePicker = (props: PickerProps) => {
 
     const [unit, setUnit] = React.useState('px')
 
@@ -68,14 +67,6 @@ const RangePicker = (props: PickerProps) => {
                         const target = e.target as HTMLInputElement
                         props.onChange(target.value +unit)
                         sliderLatestValue = target.value 
-                    }}
-                />
-                <Radio
-                    active={unit}
-                    options={['px', 'rem', '%', 'vm', 'vh']}
-                    onChange={(e) => {
-                        setUnit(e)
-                        props.onChange(sliderLatestValue + unit)
                     }}
                 />
             </div>
@@ -172,14 +163,7 @@ const ColorPicker = (props: PickerProps) => {
                             onChange={handleChange}
                         />
                     </label>
-                    <ReacetColorPicker
-                        onStartChange={onChange}
-                        onChange={onChange}
-                        onEndChange={onChange}                     
-                        color={isGradient ? undefined : color}
-                        gradient={isGradient ? gradient : undefined}
-                        isGradient={isGradient}
-                    />
+           
                     <button onClick={handleCancel}>Okay</button>       
             <button onClick={handleCancel}>Cancel</button>       
                 </div>

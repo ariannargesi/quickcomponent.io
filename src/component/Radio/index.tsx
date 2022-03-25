@@ -2,9 +2,14 @@ import React from 'react'
 import propTypes from 'prop-types'
 import './styles.css'
  
+interface Props {
+    options: string[],
+    onChange: any,
+    activeIndex: number,
+    style: string  
+}
 
-
-const Radio = (props) => {
+const Radio = (props: Props) => {
 
     const { options, onChange, activeIndex, style } = props 
     
@@ -16,11 +21,3 @@ const Radio = (props) => {
 }
 
 export default Radio 
-
-Radio.propTypes = {
-    options: propTypes.arrayOf(propTypes.string),
-    onChange: propTypes.func,
-    activeIndex: propTypes.number,
-    style: propTypes.string 
-}
-

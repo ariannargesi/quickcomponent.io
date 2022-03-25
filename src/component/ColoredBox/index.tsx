@@ -12,14 +12,13 @@ const ColorBox = (props: Props) => {
     }
 
     return (
-        <div style={{ width: "100%", textAlign: 'right' }}>
+        <div>
             <div style={{
                 backgroundColor: props.color,
                 width: '30px',
                 height: '30px',
                 borderRadius: '10px',
                 cursor: 'pointer',
-                float: 'right',
             }} onClick={props.onClick} />
         </div>
     )
