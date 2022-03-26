@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Drawer as AntDrawer, List } from 'antd'
 import { toggleElementsDrawer } from '../../../redux/ui'
-import { addNodeInTree, showInputAtKey } from '../../../redux/slice'
+import { addNodeInTree, showInputAtKey} from '../../../redux/slice'
 import elementsList from '../../../data/html-elements'
 import { nanoid } from '@reduxjs/toolkit'
 
@@ -13,12 +13,14 @@ import store from '../../../redux'
 function generateTextBasedElement (name:string) {
    name = name.toLowerCase()
    const innerTextKey = nanoid()
+   const elementKey = nanoid()
+
    // Error here
    store.dispatch(showInputAtKey({key: innerTextKey}))
    return {
        title: name,
        props: {},
-       key: nanoid(),
+       key: elementKey,
        children: [{ text: 'Text', key: innerTextKey }]
    }
 }

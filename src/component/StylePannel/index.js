@@ -34,16 +34,16 @@ const StylePannel = () => {
     
     return (
         <div className={styles.container}>
-            {/* <WidthAndHeight />       */}
+            <WidthAndHeight />      
             <MarginAndPadding/>
-            {/* <BoxShadow/> */}
-            {/* <ColorPicker/> */}
-            {/* <Positions/> */}
-            {/* <Colors/> */}
-            {/* <BorderRadius/> */}
-            {/* <TextAlign/> */}
-            {/* <Display /> */}
-            {/* <Border /> */}
+            <BoxShadow/> 
+            <ColorPicker/>
+            <Positions/>
+            <Colors/>
+            <BorderRadius/>
+            <TextAlign/>
+            <Display />
+            <Border /> 
         </div>
     )
 }

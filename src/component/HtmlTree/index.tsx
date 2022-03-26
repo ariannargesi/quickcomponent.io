@@ -1,13 +1,13 @@
 import { nanoid } from '@reduxjs/toolkit'
 import { Tree } from 'antd'
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey } from '../../redux/slice'
+import { updateExpandedkeys , moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey } from '../../redux/slice'
+
 import Action from './Action'
 import { toggleElementsDrawer } from '../../redux/ui'
-import Drawer from './Drawer'
 import { type } from 'os'
-
+import './style.sass'
 
 function formatData(html) {
     html.map((item, index) => {
@@ -41,10 +41,14 @@ const Title = (props: {data: any}) => {
         dispatch(clearInputAtKey())
     }
 
+
+
+
+
     if(data.key === inputAtKey)
         return (
             <>
-                <input  onChange={handleChange}  />
+                <input  onChange={handleChange} autoFocus  />
                 <button onClick={claerInputAtKey}>Okay</button>    
             </>
         )
@@ -59,6 +63,8 @@ const HtmlTree: React.ReactNode = () => {
     const dispatch = useDispatch()
     //@ts-ignore
     let html = useSelector(state => state.html.map)
+    //@ts-ignore
+    const expandedKey = useSelector(state => state.html.expandedKey)
     //@ts-ignore
     let showHtmlList = useSelector(state => state.ui.showElementDrawer)
     html = formatData(JSON.parse(JSON.stringify(html)))
@@ -86,13 +92,18 @@ const HtmlTree: React.ReactNode = () => {
         dispatch(toggleElementsDrawer())
     }
 
+  
+
     return (
-        <div className='html-tree site-drawer-render-in-current-wrapper'>
-            <Drawer/>
+        <div className='html-tree'>
             <Tree
                 showIcon={true}
                 showLine={true}
                 treeData={html}
+                expandedKeys={expandedKey}
+                onExpand={value => {
+                    dispatch(updateExpandedkeys(value))
+                }}
                 draggable
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelect}  

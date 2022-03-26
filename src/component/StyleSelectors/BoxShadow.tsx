@@ -142,7 +142,6 @@ const WidthAndHeight = () => {
                 name='adsfs'
                 values={null}
                     onChange={value => {
-                        console.log(value)
                         updateShadow(4, value)
                     }}
                 />

@@ -8,7 +8,9 @@ import 'prismjs/plugins/unescaped-markup/prism-unescaped-markup.js'
 
 import "prismjs/themes/prism.css"; //Example style, you can use another
 import prettier from 'prettier/standalone'
-import babylon from "prettier/parser-babel";
+import babel from "prettier/parser-babel"
+import css from 'prettier/parser-postcss'
+
 import { Config, State } from '../../redux/slice'
 import { StyleFormats, ScriptFormats } from '../../helper/codeGenerators'
 import './styles.css'
@@ -55,16 +57,28 @@ const Editor = () => {
       lang = 'CSS'
   }
 
-  
+
+  let finalValue 
+
+  if(state.editorView === 'style'){
+    if(state.config.styleType === StyleFormats.SASS)
+      finalValue = code 
+    else {
+      finalValue = prettier.format(code, {parser: 'css', plugins: [css]})
+    }
+  }
+  else if(state.editorView === 'script'){
+    finalValue = prettier.format(code, {parser: 'babel', plugins: [babel]})
+  }
+
 
   return (
     <CodeEditor
-      value={code}
+      value={finalValue}
       onValueChange={() => {}}
       highlight={code => hightlightWithLineNumbers(code, state.editorView === 'script' ? languages.js : languages.css  )}
       textareaId="codeArea"
       className="editor"
-
       lang={lang}
       padding={10}
       style={{

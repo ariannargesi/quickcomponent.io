@@ -6,7 +6,7 @@ import HtmlTree from './component/HtmlTree'
 import QuickStyle from './component/QuickStyle'
 import ComponentView from './component/ComponentView'
 import StyleList from './component/StyleList'
-import Temp from './component/Temp'
+import Drawer from './component/HtmlTree/Drawer'
 import {Link} from 'react-router-dom'
 function App() {
   
@@ -25,28 +25,20 @@ function App() {
                     fontSize: "18px"
                 }}> Export</button>
             </Link>          
-            <div className='pure-g' >
-            <div className="pure-u-1-4">
-            <div className="pure-u-1-4">
-                    <div style={{width: '350px'}}>
-                        <StyleList/>
-                    </div>
-                    
+
+                <div style={{display: 'flex'}}>
+                <div style={{width: '25%'}}>
+                    <StyleList/>
                 </div>
-                    <div style={{width: '800px'}}>
-                    {/* <Temp/> */}
-                    </div>
-                </div>
-                
-                <div className="pure-u-1-3">
+                <div style={{width: '25%'}}>
                     <HtmlTree />
                     <QuickStyle />
+                    <Drawer/>
                 </div>
-                <div className="pure-u-1-3">
+                <div style={{width: '50%'}}>
                     <ComponentView />
                 </div>
-            </div>
-
+                </div>
 
 
         </div>

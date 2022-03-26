@@ -137,7 +137,6 @@ const ColorPicker = (props: PickerProps) => {
 
     const onChange = (e) => {
         props.onChange(e.style)
-        console.log(e.style)
     }
 
     const handleCancel = () => {

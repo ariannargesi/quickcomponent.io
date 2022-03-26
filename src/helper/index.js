@@ -91,7 +91,6 @@ export function deleteNodeInTree(tree, key) {
 export function addNodeInPosition(tree, dropKey, dropPosition, node, dropToGap) {
     tree.forEach(item => {
         if (item.key === dropKey) {
-            console.log('drop to gap from hleper: ' + dropToGap)
             if (dropToGap) {
                 tree.splice(dropPosition, 0, node)
             } else item.children.splice(dropPosition, 0, node)
@@ -123,9 +122,9 @@ export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
 export function addNodeInTree(tree, key, node) {
     tree.forEach((item, index) => {
         if (item.key === key)
-            item.children.push(node)
+            item.children.push(node)            
         else if (item.children)
-            addNodeInTree(item.children, key)
+            addNodeInTree(item.children, key, node)
     })
 }
 
@@ -135,5 +134,14 @@ export function updateNodeTitle(tree, key, value) {
             item.text = value 
         else if (item.children)
         updateNodeTitle(item.children, key, value)
+    })
+}
+
+export function removeStyleFromTree(tree, key, property){
+    tree.forEach(item => {
+        if (item.key === key)
+            delete item.props.style[property]
+        else if (item.children)
+            removeStyleFromTree(item.children, key, property)
     })
 }

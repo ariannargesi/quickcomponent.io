@@ -1,5 +1,5 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
-import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, updateNodeTitle } from '../../helper'
+import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode,removeStyleFromTree, updateNodeTitle } from '../../helper'
 import generateScript, { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
 import React from 'react'
 import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
@@ -26,9 +26,9 @@ export interface Prop {
 }
 
 export interface Config {
-    usingTestFile: boolean,
-    scriptType: ScriptFormats,
+usingTestFile: boolean,
     styleType: StyleFormats,
+    scriptType: ScriptFormats,
     scriptFileName: string,
     styleFileName: string,
     exportType: ExportTypes,
@@ -49,6 +49,7 @@ interface Output {
 
 export interface State extends Output {
   selectedKey: string,
+  expandedKey: string []  
   searchQuery: {
     value: string,
     exact: boolean
@@ -63,6 +64,7 @@ export interface State extends Output {
 
 const initialState: State = {
   selectedKey: 'TpBr6w7RzTKfFA0Um2BW5',
+  expandedKey: [],
   searchQuery: {
     value: '',
     exact: false
@@ -74,7 +76,17 @@ const initialState: State = {
     {
       title: "div",
       key: "TpBr6w7RzTKfFA0Um2BW5",
-      props: {},
+      props: {
+        className: 'container',
+        style: {
+         
+          background: 'white',
+          padding: '25px',
+          width: '100%',
+          borderRadius: '38px',
+          boxShadow: '0px 10px 15px -3px rgb(0 0 0 / 10%)'    
+        }
+      },
       children: [
         {
           title: "h1",
@@ -88,7 +100,12 @@ const initialState: State = {
           key: nanoid(),
           props: {},
 
-          children: [{ text: 'Hello world', key: nanoid() }]
+          children: [{  title: "h2",
+          key: nanoid(),
+          props: {},
+
+          children: [{ text: 'Mewwww!!!', key: 'cat' }]
+        }]
         },
         {
           title: "h3",
@@ -109,7 +126,7 @@ const initialState: State = {
           key: nanoid(),
           props: {},
 
-          children: [{ text: 'Hello world', key: nanoid() }]
+          children: [{ text: 'Hello world', key: 'my-ff' }]
         },
       ]
     }
@@ -191,7 +208,12 @@ const counterSlice = createSlice({
       state.addChildTo = action.payload.key
     },
     addNodeInTree: (state, action) => {
-      addNode(state.map, state.addChildTo, action.payload.element)
+        const elemetn = action.payload.element 
+        const elementKey = elemetn.key 
+        const elementChildren = elemetn.children 
+        state.expandedKey.push(state.addChildTo, elementKey)
+        addNode(state.map, state.addChildTo, action.payload.element)
+     
     },
     showInputAtKey: (state, action) => {
       state.inputKey = action.payload.key
@@ -208,6 +230,14 @@ const counterSlice = createSlice({
     },
     addRef: (state, action) => {
       state.refs.push(action.payload.ref)
+    },
+    removeStyle: (state, action) => {
+      const property = action.payload 
+      removeStyleFromTree(state.map, state.selectedKey, property)
+    },
+    updateExpandedkeys: (state, action) => {
+      console.log(action.payload)
+      state.expandedKey =  action.payload
     }
   },
 })
@@ -226,15 +256,11 @@ export const {
   updateTreeInputValue,
   updateSearchQuery,
   addRef, 
-  generateCode
+  generateCode,
+  removeStyle,
+  updateExpandedkeys
 
 } = counterSlice.actions
 export default counterSlice.reducer
 
 
-const ojb = {
-  name: 'adfd',
-  fun: () => {
-    console.log(ojb.name)
-  }
-}

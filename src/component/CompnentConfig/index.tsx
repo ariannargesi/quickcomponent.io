@@ -30,7 +30,6 @@ const CompnentConfig = () => {
     }
 
     const onChange = list => {
-        console.log(list)
         dispatch(handleChange('hooksList', list))
       };
 

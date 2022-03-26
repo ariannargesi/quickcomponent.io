@@ -1,10 +1,6 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
 import  generateCode, {ExportTypes, ScriptFormats, StyleFormats} from '../../../helper/codeGenerators'
 
-function log (x) {
-  console.log(current(x))
-}
-
 const initialState =  {
     files: [
         {fileName: 'style.sass', content: 'hello world'},

@@ -112,7 +112,6 @@ export default (config: Config) => {
         map
     } = config
 
-    // console.log(current(propsList))
 
     // My original component
     let component = ''
