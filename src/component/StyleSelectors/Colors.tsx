@@ -10,7 +10,6 @@ const Colors = () => {
         <>
             <ColorPicker
                 name='Color'
-                allowGradient
                 onChange={value => 
                     dispatch(applyStyle({
                         key: 'color',
@@ -19,7 +18,7 @@ const Colors = () => {
                 }
             />
             <ColorPicker
-                name='Background'
+                name='Background color'
                 allowGradient
                 onChange={value => 
                     dispatch(applyStyle({

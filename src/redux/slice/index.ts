@@ -1,10 +1,10 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
-import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode,removeStyleFromTree, updateNodeTitle } from '../../helper'
+import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, removeStyleFromTree, updateNodeTitle } from '../../helper'
 import generateScript, { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
 import React from 'react'
 import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
 import { allowedNodeEnvironmentFlags } from 'process';
-import scriptGenerator, {PropTypesDecleration, styleGenerator} from '../../helper/codeGenerators'
+import scriptGenerator, { PropTypesDecleration, styleGenerator } from '../../helper/codeGenerators'
 interface TextObject {
   text: string,
   key: string
@@ -20,23 +20,23 @@ export interface ComponentObject {
 
 export interface Prop {
   propName: string,
-  propType: string, 
+  propType: string,
   propDefaultValue?: string,
-  required?: boolean 
+  required?: boolean
 }
 
 export interface Config {
-usingTestFile: boolean,
-    styleType: StyleFormats,
-    scriptType: ScriptFormats,
-    scriptFileName: string,
-    styleFileName: string,
-    exportType: ExportTypes,
-    propsList: Prop[],
-    hooksList: string[],
-    componentName: string,
-    propDeclerationType: PropTypesDecleration,
-    propDisctruction: boolean 
+  usingTestFile: boolean,
+  styleType: StyleFormats,
+  scriptType: ScriptFormats,
+  scriptFileName: string,
+  styleFileName: string,
+  exportType: ExportTypes,
+  propsList: Prop[],
+  hooksList: string[],
+  componentName: string,
+  propDeclerationType: PropTypesDecleration,
+  propDisctruction: boolean
 }
 
 interface Output {
@@ -47,9 +47,10 @@ interface Output {
   }
 }
 
-export interface State extends Output {
+export interface App extends Output {
+  openDrawer: boolean,
   selectedKey: string,
-  expandedKey: string []  
+  expandedKey: string[]
   searchQuery: {
     value: string,
     exact: boolean
@@ -62,7 +63,8 @@ export interface State extends Output {
   refs: any[]
 }
 
-const initialState: State = {
+const initialState: App = {
+  openDrawer: false,
   selectedKey: 'TpBr6w7RzTKfFA0Um2BW5',
   expandedKey: [],
   searchQuery: {
@@ -71,20 +73,20 @@ const initialState: State = {
   },
   addChildTo: null,
   inputKey: null,
-  refs: [], 
+  refs: [],
   map: [
     {
       title: "div",
       key: "TpBr6w7RzTKfFA0Um2BW5",
       props: {
-        className: 'container',
+        className: 'fafd',
         style: {
-         
+
           background: 'white',
           padding: '25px',
           width: '100%',
           borderRadius: '38px',
-          boxShadow: '0px 10px 15px -3px rgb(0 0 0 / 10%)'    
+          boxShadow: '0px 10px 15px -3px rgb(0 0 0 / 10%)'
         }
       },
       children: [
@@ -100,12 +102,13 @@ const initialState: State = {
           key: nanoid(),
           props: {},
 
-          children: [{  title: "h2",
-          key: nanoid(),
-          props: {},
+          children: [{
+            title: "h2",
+            key: nanoid(),
+            props: {},
 
-          children: [{ text: 'Mewwww!!!', key: 'cat' }]
-        }]
+            children: [{ text: 'Mewwww!!!', key: 'cat' }]
+          }]
         },
         {
           title: "h3",
@@ -142,7 +145,7 @@ const initialState: State = {
     exportType: ExportTypes.Default,
     propsList: [],
     componentName: 'App',
-    propDisctruction: true 
+    propDisctruction: true
   },
   output: {
     style: '',
@@ -208,14 +211,21 @@ const counterSlice = createSlice({
       state.addChildTo = action.payload.key
     },
     addNodeInTree: (state, action) => {
-        const elemetn = action.payload.element 
-        const elementKey = elemetn.key 
-        const elementChildren = elemetn.children 
+      if (state.map.length === 0){
+        state.map.push(action.payload.element)
+        state.selectedKey = action.payload.element.key 
+      }
+      else {
+        const elemetn = action.payload.element
+        const elementKey = elemetn.key
+        const elementChildren = elemetn.children
         state.expandedKey.push(state.addChildTo, elementKey)
         addNode(state.map, state.addChildTo, action.payload.element)
-     
+      }
+
+
     },
-    showInputAtKey: (state, action) => {
+    setInputAtKey: (state, action) => {
       state.inputKey = action.payload.key
     },
     clearInputAtKey: (state) => {
@@ -226,18 +236,21 @@ const counterSlice = createSlice({
     },
     updateSearchQuery: (state, action) => {
       const { value, exact } = action.payload
-      state.searchQuery.value = value 
+      state.searchQuery.value = value
     },
     addRef: (state, action) => {
       state.refs.push(action.payload.ref)
     },
     removeStyle: (state, action) => {
-      const property = action.payload 
+      const property = action.payload
       removeStyleFromTree(state.map, state.selectedKey, property)
     },
     updateExpandedkeys: (state, action) => {
       console.log(action.payload)
-      state.expandedKey =  action.payload
+      state.expandedKey = action.payload
+    },
+    toggleDrawer: (state) => {
+      state.openDrawer = !state.openDrawer
     }
   },
 })
@@ -251,15 +264,15 @@ export const {
   deleteNode,
   addNodeInTree,
   selectElementForAddingChild,
-  showInputAtKey,
+  setInputAtKey,
   clearInputAtKey,
   updateTreeInputValue,
   updateSearchQuery,
-  addRef, 
+  addRef,
   generateCode,
   removeStyle,
-  updateExpandedkeys
-
+  updateExpandedkeys,
+  toggleDrawer
 } = counterSlice.actions
 export default counterSlice.reducer
 

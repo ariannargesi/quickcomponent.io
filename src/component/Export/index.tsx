@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import CodeView from '../CodeView'
 import ComponentConfig from '../CompnentConfig'
+import Footer from '../Footer'
 import { generateCode } from '../../redux/slice'
 import {  ChevronLeft } from 'react-feather'
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +19,7 @@ const style = {
     }
 }
 
-const Export = (props: any) => {
+const Export = (props: any)=> {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -32,16 +33,16 @@ const Export = (props: any) => {
 
     return (
         <div style={style.container}>
-            <ChevronLeft 
-                size={40} 
-                onClick={goBack}
-            />
+            
             <div style={style.flex}>
-                <ComponentConfig  />
-                <div style={{ width: '550px' }}>
+            <div style={{ width: '50vw', height: '100vh'}}>
+                    <ComponentConfig  />
+                </div>
+                <div style={{ width: '50vw', height: '100vh'}}>
                     <CodeView />
                 </div>
             </div>
+            {/* <Footer/> */}
         </div>
     )
 }

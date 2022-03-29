@@ -17,7 +17,7 @@ const TextAlign = () => {
     }
 
     return (
-        <div className={style.textAlign}>
+        <div className={[style.container, style.textAlign].join(' ')}>
             <span className={style.label}>Text align: </span>
             <div className={style.buttons}>
                 <AlignLeft 

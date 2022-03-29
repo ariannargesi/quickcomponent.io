@@ -6,6 +6,9 @@ import { ChevronDown, ChevronUp } from 'react-feather'
 import { Collapse } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 import { applyStyle} from '../../redux/slice'
+import useApplyStyle from '../../hooks/useApplyStyle'
+import useStyleValue from '../../hooks/useStyleValue'
+
 const { Panel } = Collapse;
 
 const removeTwoLastLetters = (str: string): number => {
@@ -16,10 +19,14 @@ const removeTwoLastLetters = (str: string): number => {
 
 const WidthAndHeight = () => {
     const dispatch = useDispatch()
+    const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
 
-    const marginString = '2px 2px 3px 4px'
-    const marginSplit = marginString.split(' ')
+    const marginString = useStyleValue('margin') || '0px' 
+    let marginSplit = marginString.split(' ')
+
+    
+
 
     let marginDefaultValues = {
         top: '0px',bottom: '0px', right: '0px', left: '0px'
@@ -76,19 +83,14 @@ const WidthAndHeight = () => {
         let finalMargin 
         if(finalValue)
             finalMargin = finalValue 
-        else finalMargin = `
-        ${marginDefaultValues.top} ${marginDefaultValues.right} ${marginDefaultValues.bottom} ${marginDefaultValues.left}`
-
-        dispatch(applyStyle({
-            key: 'margin',
-            value: finalMargin 
-        }))
-
+        else finalMargin = `${marginDefaultValues.top} ${marginDefaultValues.right} ${marginDefaultValues.bottom} ${marginDefaultValues.left}`
+        console.log(finalMargin)
+        applyStyle('margin', finalMargin)
     }
 
     return (
         <>
-            <div className={style.container}>
+            <div className={style.container} style={{borderBottom: '1px solid #eee'}}>
                 <div className={style.top}>
                     <span>Margin:</span>
                 </div>
@@ -112,7 +114,7 @@ const WidthAndHeight = () => {
                 {showMore && (
                     <>
                     <div className={style.flex}>
-                        <span>Top</span>
+                        <span>Top:</span>
                         <div>
                             <Slider
                                 size={"small"}
@@ -128,7 +130,7 @@ const WidthAndHeight = () => {
                         </div>
                     </div>
                     <div className={style.flex}>
-                        <span>Left</span>
+                        <span>Left:</span>
                         <div>
                             <Slider
                                 size={"small"}
@@ -144,7 +146,7 @@ const WidthAndHeight = () => {
                         </div>
                     </div>
                     <div className={style.flex}>
-                        <span>Right</span>
+                        <span>Right:</span>
                         <div>
                             <Slider
                                 size={"small"}
@@ -160,7 +162,7 @@ const WidthAndHeight = () => {
                         </div>
                     </div>
                     <div className={style.flex}>
-                        <span>Bottom</span>
+                        <span>Bottom:</span>
                         <div>
                             <Slider
                                 size={"small"}

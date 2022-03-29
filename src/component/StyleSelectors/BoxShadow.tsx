@@ -5,18 +5,19 @@ import { Collapse } from 'antd';
 import { useSelector, useDispatch } from 'react-redux'
 import style from './style.module.sass'
 import Radio from '../Radio'
-import { applyStyle } from '../../redux/slice'
 import ColorPicker from '../ColorPicker'
-
+import useApplyStyle from '../../hooks/useApplyStyle';
+import useStyleValue from '../../hooks/useStyleValue';
 const { Panel } = Collapse;
 
 const WidthAndHeight = () => {
+    const applyStyle = useApplyStyle()
 
     const dispatch = useDispatch()
     const [showMore, setShowMore] = useState(false)
 
     const units = ['px', '%', 'rem']
-    let shadow = '2px 2px 2px 4px rgba(128,154,145, 0.5)'
+    let shadow =  useStyleValue('boxShadow') || '2px 2px 2px 4px rgba(128,154,145, 0.5)'
     let shadowPieces: string[] = shadow.split('px')
 
     const horzontalOffest: string = shadowPieces[0] 
@@ -49,11 +50,9 @@ const WidthAndHeight = () => {
         }
         
         let shadowString : string = shadowPieces.join('px ')
-
-        dispatch(applyStyle({
-            key: 'boxShadow',
-            value: shadowString
-        }))
+        console.log(shadowString)
+         applyStyle('boxShadow', shadowString)
+       
     }
 
 
@@ -64,7 +63,7 @@ const WidthAndHeight = () => {
                 {showMore ? <ChevronDown/> : <ChevronRight/>}
           </div>
           {showMore && (
-            <div>
+            <div className={style.content}>
                 <div>
                     <div>
                         Horizontal offset:

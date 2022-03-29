@@ -1,8 +1,37 @@
+$bg : #4f4f4f  
+$header-height: 40px 
 .header 
-    border-bottom: 1px solid black
-    a
-        display: inline-block
-        color: blue
-        text-decuration: none
-        font-size: 22px
-        margin: 10px
+    background-color: $bg 
+    height: $header-height
+    position: relative
+    display: flex 
+    align-items: center 
+    padding: 0 32px 
+    > a 
+        margin: 0 16px 
+    .github 
+        width: $header-height * 2
+        height: $header-height * 2
+        background-color: $bg 
+        border-radius: 50px   
+        display: flex 
+        align-items: center 
+        justify-content: center 
+        position: absolute 
+        right: 50px 
+        top: 0 
+        &:before
+            content: '💖'
+            position: absolute
+            transition: 200ms 
+            font-size: 12px 
+            opacity: 0
+        &:hover 
+            cursor: pointer 
+            &::before
+                opacity: 1                 
+                margin-top: 150px  
+                font-size: 35px 
+
+            
+        

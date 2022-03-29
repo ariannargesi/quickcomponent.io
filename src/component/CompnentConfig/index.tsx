@@ -1,18 +1,17 @@
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import {Checkbox} from 'antd'
-import { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
+import { ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
 import Radio from '../Radio'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { updateConfig, Config } from '../../redux/slice'
 import Box from './Box'
 import PropConfig from '../../component/PropConfig'
-import codeGenerators from '../../helper/codeGenerators'
-
-
-const plainOptions = ['useState', 'useEffect', 'useRef', 'useCallback', 'useMemo'];
-const defaultCheckedList = ['useState'];
+import styles from './styles.module.sass'
 const CheckboxGroup = Checkbox.Group;
+
+
+const hooksList = ['useState', 'useEffect', 'useRef', 'useCallback', 'useMemo'];
 
 
 const CompnentConfig = () => {
@@ -20,7 +19,7 @@ const CompnentConfig = () => {
     const [indeterminate, setIndeterminate] = React.useState(true);
     const [checkAll, setCheckAll] = React.useState(false);
 
-    const config = useSelector((state: RootStateOrAny) => state.html.config) as Config 
+    const config = useSelector((state: RootStateOrAny) => state.app.config) as Config 
     const dispatch = useDispatch()
     const handleChange = (key, value) => {
         dispatch(updateConfig({
@@ -34,7 +33,7 @@ const CompnentConfig = () => {
       };
 
     return (
-        <div style={{backgroundColor: 'white'}}>
+        <div className={styles.container}>
             <PropConfig 
                 onConfirm={value => {handleChange('propsList', value)}}
             />
@@ -80,7 +79,7 @@ const CompnentConfig = () => {
                 />
             </Box>
             <Box title='Select your hooks (import statment)'>
-                <CheckboxGroup options={plainOptions} value={config.hooksList} onChange={onChange} />
+                <CheckboxGroup options={hooksList} value={config.hooksList} onChange={onChange} />
             </Box>
         </div>
     )

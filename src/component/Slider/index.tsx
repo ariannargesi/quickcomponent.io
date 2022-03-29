@@ -2,7 +2,7 @@ import React from 'react'
 import Slider, { SliderTypeMap } from '@mui/material/Slider'
 
 interface Props{
-    label: string 
+    label?: string 
     value: number,
     onChange: any 
 }
@@ -11,7 +11,7 @@ const App = (props: Props) => {
     
     return (
         <div>
-            <span>{props.label}</span>
+            {props.label && <span>{props.label}</span> }
             <Slider 
                 value={props.value}
                 onChange={({target}) => {

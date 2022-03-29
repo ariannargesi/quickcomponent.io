@@ -6,21 +6,13 @@ import WidthAndHeight from '../StyleSelectors/WidthAndHeight'
 import MarginAndPadding from '../StyleSelectors/MarginAndPadding'
 import BoxShadow from '../StyleSelectors/BoxShadow'
 import Positions from '../StyleSelectors/Positions'
-import Colors from '../StyleSelectors/Colors'
-import ColorPicker from '../ColorPicker'
+import Display from '../StyleSelectors/Display'
 import BorderRadius from '../StyleSelectors/BorderRadius'
 import TextAlign from '../StyleSelectors/TextAlign'
-import Display from '../StyleSelectors/Display'
 import Border from '../StyleSelectors/Border'
+import FontSize from '../StyleSelectors/FontSize'
+import Colors from '../StyleSelectors/Colors'
 import styles from './styles.module.css'
-
-
-
-
-
-
-
-
 
 const StylePannel = () => {
     const dispatch = useDispatch()
@@ -34,16 +26,7 @@ const StylePannel = () => {
     
     return (
         <div className={styles.container}>
-            <WidthAndHeight />      
-            <MarginAndPadding/>
-            <BoxShadow/> 
-            <ColorPicker/>
-            <Positions/>
-            <Colors/>
-            <BorderRadius/>
-            <TextAlign/>
-            <Display />
-            <Border /> 
+
         </div>
     )
 }

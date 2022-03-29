@@ -1,9 +1,10 @@
 import React from 'react'
-import style from './style.module.sass'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { applyStyle } from '../../redux/slice'
 import Select from '../Select'
-
+import useStyleValue from '../../hooks/useStyleValue'
+import styles from '../StyleSelectors/style.module.sass'
 
 
 
@@ -36,8 +37,10 @@ const justifyContentOptions = [
 const Display = () => {
     const dispatch = useDispatch()
 
-    const display = 'flex'
-
+    const display = useStyleValue('display')
+    const alignItems = useStyleValue('alignItems')
+    const justifyContent = useStyleValue('justifyContent')
+    const flexDirection = useStyleValue('flexDirection')
     const handleChange = (key, value) => {
         dispatch(applyStyle({
             key,
@@ -46,33 +49,37 @@ const Display = () => {
     }
 
     return (
-        <>
+        <div className={styles.container}>
             <Select
                 label='Display'
                 options={displayOptions}
+                value={display}
                 onChange={value => handleChange('display', value)}
             />
             {display === 'flex' && (
-                <>
+                <div style={{marginLeft: '8px', paddingLeft: '8px', borderLeft:'1px solid darkgray'}}>
                     <Select
                         label='Flex direction'
+                        value={flexDirection}
                         options={flexDirectionOptions}
                         onChange={value => handleChange('flexDirection', value)}
                     />
                     <Select
                         label='Justify content'
+                        value={justifyContent}
                         options={justifyContentOptions}
                         onChange={value => handleChange('justifyContent', value)}
                     />
 
                     <Select
                         label='Align items'
+                        value={alignItems}
                         options={alignItemsOptions}
                         onChange={value => handleChange('AlignItems', value)}
                     />
-                </>
+                </div>
             )}
-        </>
+        </div>
     )
 }
 

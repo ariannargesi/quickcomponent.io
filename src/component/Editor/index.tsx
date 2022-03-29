@@ -1,92 +1,112 @@
-import React from "react";
-import CodeEditor from "react-simple-code-editor";
-import { highlight, languages } from "prismjs";
-import "prismjs/components/prism-clike";
-import "prismjs/components/prism-javascript";
-import 'prismjs/plugins/unescaped-markup/prism-unescaped-markup.css'
-import 'prismjs/plugins/unescaped-markup/prism-unescaped-markup.js'
+import React, { useState, useEffect } from "react";
 
-import "prismjs/themes/prism.css"; //Example style, you can use another
+import { Clipboard, Check } from 'react-feather'
 import prettier from 'prettier/standalone'
 import babel from "prettier/parser-babel"
 import css from 'prettier/parser-postcss'
-
-import { Config, State } from '../../redux/slice'
+import { Config, App } from '../../redux/slice'
 import { StyleFormats, ScriptFormats } from '../../helper/codeGenerators'
 import './styles.css'
 import { useSelector, RootStateOrAny } from "react-redux";
+import styles from './styles.module.sass'
 
+import AceEditor from "react-ace";
 
+import "ace-builds/src-noconflict/mode-tsx";
+import "ace-builds/src-noconflict/mode-jsx";
+import "ace-builds/src-noconflict/mode-css";
+import "ace-builds/src-noconflict/mode-sass";
+import "ace-builds/src-noconflict/theme-dracula";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 const Editor = () => {
+  const [copy, setCopy] = useState(false)
 
   let style = {
     fileFormat: null,
     fileContent: null
   }
   //@ts-ignore
-  const state = useSelector(state => state.html) as State
+  const state = useSelector(state => state.app) as App
   const code = useSelector((state: RootStateOrAny) => {
-    if(state.html.editorView === 'script')
-      return state.html.output.script 
+    if (state.app.editorView === 'script')
+      return state.app.output.script
     else {
-      return state.html.output.style  
+      return state.app.output.style
     }
   })
 
-  const hightlightWithLineNumbers = (input, language) =>
-    highlight(input, language, )
-      .split("\n")
-      .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
-      .join("\n");
-    
+
 
   let lang
 
-  
-  if(state.editorView === 'script'){
-    if(state.config.scriptType ===  ScriptFormats.TS )
-     lang = 'TSX'
-    else if(state.config.scriptType === ScriptFormats.JS)
-     lang = 'JSX'
+
+  if (state.editorView === 'script') {
+    if (state.config.scriptType === ScriptFormats.TS)
+      lang = 'tsx'
+    else if (state.config.scriptType === ScriptFormats.JS)
+      lang = 'jsx'
   }
-  else if(state.editorView === 'style'){
-    if(state.config.styleType === StyleFormats.SASS)
-      lang = 'SASS'
-    else if(state.config.styleType === StyleFormats.CSS)
-      lang = 'CSS'
+  else if (state.editorView === 'style') {
+    if (state.config.styleType === StyleFormats.SASS)
+      lang = 'sass'
+    else if (state.config.styleType === StyleFormats.CSS)
+      lang = 'css'
   }
 
 
-  let finalValue 
+  let finalValue
 
-  if(state.editorView === 'style'){
-    if(state.config.styleType === StyleFormats.SASS)
-      finalValue = code 
+
+  if (state.editorView === 'style') {
+    if (state.config.styleType === StyleFormats.SASS)
+      finalValue = code
     else {
-      finalValue = prettier.format(code, {parser: 'css', plugins: [css]})
+      finalValue = prettier.format(code, { parser: 'css', plugins: [css] })
     }
   }
-  else if(state.editorView === 'script'){
-    finalValue = prettier.format(code, {parser: 'babel', plugins: [babel]})
+  else if (state.editorView === 'script') {
+    finalValue = prettier.format(code, { parser: 'babel', plugins: [babel] })
+  }
+
+
+
+  useEffect(() => {
+    setCopy(false)
+  }, [state])
+
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(finalValue).then(function() {
+      setCopy(true)
+    }, function() {
+      alert('failed')
+    });
   }
 
 
   return (
-    <CodeEditor
-      value={finalValue}
-      onValueChange={() => {}}
-      highlight={code => hightlightWithLineNumbers(code, state.editorView === 'script' ? languages.js : languages.css  )}
-      textareaId="codeArea"
-      className="editor"
-      lang={lang}
-      padding={10}
-      style={{
-        fontFamily: '"Source Sans Pro"',
-        fontSize: 16,
-        height: '85vh',
-      }}
-    />
+    <div className={styles.container}>
+      <AceEditor
+        mode={lang}
+        theme="dracula"
+        value={finalValue}
+        name="text-editor"
+        fontSize={15}
+        highlightActiveLine
+        style={{
+          lineHeight: '25px',
+         
+          
+        }}
+        editorProps={{}}
+      />
+      {copy ?
+       <Check className={styles.copyButton} color='green'/>
+       :
+      <Clipboard className={styles.copyButton} onClick={handleCopy} color={'white'} />
+      }
+    </div>
   );
 }
 

@@ -1,9 +1,8 @@
 import React from 'react'
-import {Copy, Plus, Trash} from 'react-feather'
-import style from './style.module.sass'
-import { deleteNode, selectElementForAddingChild } from '../../../redux/slice'
-import { toggleElementsDrawer } from '../../../redux/ui'
-
+import {Clipboard, Plus, Trash} from 'react-feather'
+import './styles.sass'
+import { deleteNode, selectElementForAddingChild, toggleDrawer } from '../../../redux/slice'
+import useToggleDrawer from '../../../hooks/useToggleDrawer'
 import { useDispatch } from 'react-redux'
 interface Props {
 
@@ -11,31 +10,23 @@ interface Props {
 }
 
 const Action = (props: Props) => {
+    const toggleDrawer = useToggleDrawer()
     const dispatch = useDispatch()
-    const iconSize = 20
+    const iconSize = 17
     const key = props.elementKey
     function addChild (){
         dispatch(selectElementForAddingChild({key}))
-        dispatch(toggleElementsDrawer())
+        
     }
     function removeElement(){
         dispatch(deleteNode({key}))
     }
-    function copyElement(){
-
-    } 
+    
 
     return (
-        <div className={style.container}>
-            <div>
+        <div className={'tree-item-action'}>
             <Plus onClick={addChild} size={iconSize}/>
-            </div>
-            {/* <div>
-            <Copy onClick={copyElement} size={iconSize}/>
-            </div> */}
-            <div>
             <Trash onClick={removeElement} size={iconSize}/>
-            </div>
         </div>
 
     )

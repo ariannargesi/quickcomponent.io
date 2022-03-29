@@ -1,14 +1,13 @@
-import { nanoid } from '@reduxjs/toolkit'
 import { Tree } from 'antd'
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateExpandedkeys , moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey } from '../../redux/slice'
-
+import { updateExpandedkeys, moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey, setInputAtKey } from '../../redux/slice'
+import useEmptyTree from '../../hooks/useEmptyTree'
 import Action from './Action'
-import { toggleElementsDrawer } from '../../redux/ui'
-import { type } from 'os'
-import './style.sass'
-
+import useToggleDrawer from '../../hooks/useToggleDrawer'
+import { Plus } from 'react-feather'
+import styles from './styles.module.sass'
+import EmptyTree from '../EmptyTree'
 function formatData(html) {
     html.map((item, index) => {
         if (Array.isArray(item.children)) {
@@ -24,14 +23,14 @@ function formatData(html) {
     return html
 }
 
-const Title = (props: {data: any}) => {
+const Title = (props: { data: any }) => {
     const dispatch = useDispatch()
     // @ts-ignore
-    const inputAtKey = useSelector(state => state.html.inputKey)
-    const {data} = props 
-    
+    const inputAtKey = useSelector(state => state.app.inputKey)
+    const { data } = props
+
     const handleChange = (e) => {
-        const value = e.target.value  
+        const value = e.target.value
         dispatch(updateTreeInputValue({
             value
         }))
@@ -43,30 +42,38 @@ const Title = (props: {data: any}) => {
 
 
 
-
-
-    if(data.key === inputAtKey)
+    if (data.key === inputAtKey)
         return (
             <>
-                <input  onChange={handleChange} autoFocus  />
-                <button onClick={claerInputAtKey}>Okay</button>    
+                <input onChange={handleChange} onKeyPress={event => {
+                    if (event.key === 'Enter') {
+                        dispatch(clearInputAtKey())
+                    }
+                }} autoFocus />
+                <button onClick={claerInputAtKey}>Okay</button>
             </>
         )
 
     return (
-        <span>{data.title}</span>
+        <span onClick={() => {
+            dispatch(setInputAtKey({
+                key: data.key
+            }))
+        }}>{data.title}</span>
     )
 }
 
 
 const HtmlTree: React.ReactNode = () => {
+
+    const toggleDrawer = useToggleDrawer()
+    const emptyTree = useEmptyTree()
     const dispatch = useDispatch()
     //@ts-ignore
-    let html = useSelector(state => state.html.map)
+    let html = useSelector(state => state.app.map)
     //@ts-ignore
-    const expandedKey = useSelector(state => state.html.expandedKey)
+    const expandedKey = useSelector(state => state.app.expandedKey)
     //@ts-ignore
-    let showHtmlList = useSelector(state => state.ui.showElementDrawer)
     html = formatData(JSON.parse(JSON.stringify(html)))
 
     const handleElementsDragAndDrop = (info) => {
@@ -84,18 +91,16 @@ const HtmlTree: React.ReactNode = () => {
     }
 
     const handleElementSelect = (value) => {
-        if(value.length != 0)
+        if (value.length != 0)
             dispatch(changeSelectedElement({ key: value[0] }))
     }
 
-    const toggleDrawer = () => {
-        dispatch(toggleElementsDrawer())
+    const handleClick = () => {
+        toggleDrawer()
     }
-
-  
-
     return (
-        <div className='html-tree'>
+        <div className={styles.container}>
+            <h2 className={styles.title}>Elements</h2>
             <Tree
                 showIcon={true}
                 showLine={true}
@@ -106,10 +111,9 @@ const HtmlTree: React.ReactNode = () => {
                 }}
                 draggable
                 onDrop={handleElementsDragAndDrop}
-                onSelect={handleElementSelect}  
+                onSelect={handleElementSelect}
                 titleRender={nodeData => <Title data={nodeData} />}
             />
-           
         </div>
     )
 }

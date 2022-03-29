@@ -3,7 +3,7 @@ import arrayToComponent from '../../helper/arrayToComponent'
 import React from 'react'
 
 const ComponentView = () => {
-    const html = useSelector(state => state.html.map)
+    const html = useSelector(state => state.app.map)
     const component = arrayToComponent(html)
 
     return (

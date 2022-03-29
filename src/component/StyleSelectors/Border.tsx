@@ -40,7 +40,7 @@ const Border = () => {
     return (
         <>
                 
-                <Slider
+                {/* <Slider
                     label={'border with'}
                     value={0}
                     onChange={value => handleChange(0, value)}
@@ -54,7 +54,7 @@ const Border = () => {
                 name='Border Color'
                 values={null}
                 onChange={value => handleChange(2, value)}
-            />
+            /> */}
         </>
     )   
 }

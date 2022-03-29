@@ -1,4 +1,4 @@
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid'
 export function cssToCamelCase(string) {
     /*
      * input: "border-radius"
@@ -122,7 +122,7 @@ export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
 export function addNodeInTree(tree, key, node) {
     tree.forEach((item, index) => {
         if (item.key === key)
-            item.children.push(node)            
+            item.children.push(node)
         else if (item.children)
             addNodeInTree(item.children, key, node)
     })
@@ -131,13 +131,13 @@ export function addNodeInTree(tree, key, node) {
 export function updateNodeTitle(tree, key, value) {
     tree.forEach((item, index) => {
         if (item.key === key)
-            item.text = value 
+            item.text = value
         else if (item.children)
-        updateNodeTitle(item.children, key, value)
+            updateNodeTitle(item.children, key, value)
     })
 }
 
-export function removeStyleFromTree(tree, key, property){
+export function removeStyleFromTree(tree, key, property) {
     tree.forEach(item => {
         if (item.key === key)
             delete item.props.style[property]
@@ -145,3 +145,26 @@ export function removeStyleFromTree(tree, key, property){
             removeStyleFromTree(item.children, key, property)
     })
 }
+
+export function getUnit(str: string): string {
+    if (str === undefined)
+        return 'px'
+    let unit = ''
+    str.split('').forEach(char => {
+        if (isNaN(Number(char)))
+            unit += char
+    })
+    return unit
+}
+
+export function getNumbericValue(str: string): number {
+    if (str === undefined)
+        return 0
+    let value = ''
+    str.split('').forEach(char => {
+        if (!isNaN(Number(char)))
+            value += char
+    })
+    return Number(value)
+}
+

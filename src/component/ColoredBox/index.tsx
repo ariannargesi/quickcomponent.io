@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './styles.module.sass'
 
 interface Props {
     color: string,
@@ -7,12 +8,9 @@ interface Props {
 
 const ColorBox = (props: Props) => {
 
-    const style = {
-
-    }
 
     return (
-        <div>
+        <div className={styles.container}>
             <div style={{
                 backgroundColor: props.color,
                 width: '30px',

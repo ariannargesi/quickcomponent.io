@@ -1,11 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Drawer as AntDrawer, List } from 'antd'
-import { toggleElementsDrawer } from '../../../redux/ui'
-import { addNodeInTree, showInputAtKey} from '../../../redux/slice'
+import { addNodeInTree, setInputAtKey} from '../../../redux/slice'
 import elementsList from '../../../data/html-elements'
 import { nanoid } from '@reduxjs/toolkit'
-
+import useToggleDrawer from '../../../hooks/useToggleDrawer'
 import store from '../../../redux'
 
 
@@ -16,7 +15,7 @@ function generateTextBasedElement (name:string) {
    const elementKey = nanoid()
 
    // Error here
-   store.dispatch(showInputAtKey({key: innerTextKey}))
+   store.dispatch(setInputAtKey({key: innerTextKey}))
    return {
        title: name,
        props: {},
@@ -26,11 +25,11 @@ function generateTextBasedElement (name:string) {
 }
 
 const Drawer = () => {
+    const toggleDrawer = useToggleDrawer()
     //@ts-ignore
-    const visible = useSelector(state => state.ui.showElementDrawer)
+    const visible = useSelector(state => state.app.openDrawer)
     const dispatch = useDispatch()
 
-    const toggleDrawer = () => dispatch(toggleElementsDrawer())
 
     const handleAddingChild = (name) => {
         dispatch(addNodeInTree({
@@ -44,10 +43,8 @@ const Drawer = () => {
             title="Elements List"
             placement="left"
             closable={false}
-            onClose={toggleDrawer}
             visible={visible}
             getContainer={false}
-            style={{ position: 'absolute' }}
         >
             <List
                 size="small"

@@ -5,16 +5,17 @@ const Component = (props: {
     label: string,
     onChange: any,
     options: any,
-    defaultValue?: string
+    value: string | number 
+    
 }) => {
     return (
         <div>
             <span className={style.label}>{props.label}</span>
             <Select
                 style={{ width: 120 }}
+                value={props.value}
                 onChange={props.onChange}
                 options={props.options}
-                defaultValue={props.defaultValue}
             />
         </div>
     )
