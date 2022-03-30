@@ -1,7 +1,8 @@
 .container 
-    padding: 16px 
-    margin: 8px 0 
-
+    padding: 8px 16px 
+.alignCenter 
+    display: flex 
+    align-content: center 
     
 .iconUp 
     svg 
@@ -20,8 +21,6 @@
     display: flex 
     align-content: center
     background-color: white 
-    padding: 8px 
-    margin: 8px 0 
 .colorPickerHeader 
     display: flex 
     
@@ -42,11 +41,15 @@
         .active
             background-color: white
 .content 
-    padding: 16px 
+    padding: 0 8px 
+    margin-left: 8px 
+    border-left: 1px solid darkgray 
 
 .colorPickerBody 
     background-color: white 
     border-radius: 10px 
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1)
 
-    
+.header 
+    display: flex 
+    justify-content: space-between

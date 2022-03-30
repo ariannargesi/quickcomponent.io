@@ -81,8 +81,6 @@ const initialState: App = {
       props: {
         className: 'fafd',
         style: {
-
-          background: 'white',
           padding: '25px',
           width: '100%',
           borderRadius: '38px',

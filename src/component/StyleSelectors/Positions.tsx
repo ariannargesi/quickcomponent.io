@@ -29,6 +29,7 @@ const Positions = () => {
             <span className={style.label}>Position</span>
             <Select
                 style={{ width: '120px' }}
+                value={position}
                 options={options}
                 onChange={value => {
                     applyStyle('position', value)

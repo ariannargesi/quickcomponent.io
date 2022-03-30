@@ -8,6 +8,8 @@ import { updateConfig, Config } from '../../redux/slice'
 import Box from './Box'
 import PropConfig from '../../component/PropConfig'
 import styles from './styles.module.sass'
+import { ChevronLeft } from 'react-feather'
+import { useNavigate } from 'react-router'
 const CheckboxGroup = Checkbox.Group;
 
 
@@ -15,9 +17,16 @@ const hooksList = ['useState', 'useEffect', 'useRef', 'useCallback', 'useMemo'];
 
 
 const CompnentConfig = () => {
-
+    const navigate = useNavigate()
+    
     const [indeterminate, setIndeterminate] = React.useState(true);
     const [checkAll, setCheckAll] = React.useState(false);
+
+
+    const goBack = () => {
+        navigate(-1)
+    }
+
 
     const config = useSelector((state: RootStateOrAny) => state.app.config) as Config 
     const dispatch = useDispatch()
@@ -34,6 +43,9 @@ const CompnentConfig = () => {
 
     return (
         <div className={styles.container}>
+
+            <ChevronLeft onClick={goBack} />
+
             <PropConfig 
                 onConfirm={value => {handleChange('propsList', value)}}
             />
@@ -42,10 +54,10 @@ const CompnentConfig = () => {
                     style='gray'
                     options={['Yes', 'No']}
                     onChange={(e) => { handleChange('usingTestFile', e === 'Yes' ? true : false) }}
-                    activeIndex={config.usingTestFile ? 0 : 1}
+                    activeItem={config.usingTestFile ? 'Yes' : 'No'}
                 />
             </Box>
-            <Box title='Do you use Typescript?'>
+            <Box title='Script language?'>
                 <Radio
                     style='gray'
                     options={['Yes', "No, I'm using javascript"]}
@@ -53,7 +65,7 @@ const CompnentConfig = () => {
                         handleChange('scriptType', e === 'Yes' 
                         ? ScriptFormats.TS : ScriptFormats.JS) 
                     }}
-                    activeIndex={config.scriptType === ScriptFormats.TS ? 0 : 1}
+                    activeItem={config.scriptType === ScriptFormats.TS ? 'Yes' : "No, I'm using javascript"}
                 />
             </Box>
             <Box title='Do you use SASS for your styles?'>
@@ -64,7 +76,7 @@ const CompnentConfig = () => {
                         handleChange('styleType', e === 'Yes' 
                         ? StyleFormats.SASS : StyleFormats.CSS)
                      }}
-                    activeIndex={config.styleType === StyleFormats.SASS ? 0 : 1}
+                    activeItem={config.styleType === StyleFormats.SASS ? 'Yes' :  "No, I'm using CSS"}
                 />
             </Box>
             <Box title='Do you like props distruction?'>
@@ -75,7 +87,7 @@ const CompnentConfig = () => {
                         handleChange('propDisctruction', e === 'Yes' 
                         ? true : false)
                      }}
-                    activeIndex={config.propDisctruction === true ? 0 : 1}
+                    activeItem={config.propDisctruction === true ? 'Yes' : 'No'}
                 />
             </Box>
             <Box title='Select your hooks (import statment)'>

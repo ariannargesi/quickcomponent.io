@@ -1,25 +1,29 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import style from './style.module.sass'
+import styles from './style.module.sass'
 import Radio from '../Radio'
-import { Slider } from 'antd'
-
-const units = ['px', 'rem']
+import useApplyStyle from '../../hooks/useApplyStyle'
+import useStyleValue from '../../hooks/useStyleValue'
+import { getNumbericValue, getUnit } from '../../helper'
+import Slider from '../Slider'
 
 const FontSize = () => {
-    const dispatch = useDispatch()
+
+    const applyStyle = useApplyStyle()
+    const fontSize = useStyleValue('fontSize') || '16px'
+    const fontSizeUnit = getUnit(fontSize)
+    const fontSizeValue = getNumbericValue(fontSize)
+
     return (
-        <>
-        <div className={style.container}>
-            <div className={style.top}>
-                <span>Width:</span>
-                <Radio style={null} options={units} activeIndex={0} onChange={() => {}}/>
-            </div>
-            <div className={style.body}>
-               <input type="number" />
-            </div>
+        <div className={styles.container}>
+            <Slider
+                label='Font size'
+                value={fontSizeValue}
+                onChange={value => {
+                    applyStyle('fontSize', value + fontSizeUnit)
+                }}
+            />
         </div>
-        </>
     )
 }
 

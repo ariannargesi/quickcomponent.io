@@ -1,4 +1,4 @@
-import { Tree } from 'antd'
+import { Tree, Input } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateExpandedkeys, moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey, setInputAtKey } from '../../redux/slice'
@@ -8,6 +8,7 @@ import useToggleDrawer from '../../hooks/useToggleDrawer'
 import { Plus } from 'react-feather'
 import styles from './styles.module.sass'
 import EmptyTree from '../EmptyTree'
+
 function formatData(html) {
     html.map((item, index) => {
         if (Array.isArray(item.children)) {
@@ -17,7 +18,6 @@ function formatData(html) {
 
         else if (item.text) {
             item.title = item.text
-            delete item.text
         }
     })
     return html
@@ -36,7 +36,7 @@ const Title = (props: { data: any }) => {
         }))
     }
 
-    const claerInputAtKey = () => {
+    const clear = () => {
         dispatch(clearInputAtKey())
     }
 
@@ -45,20 +45,20 @@ const Title = (props: { data: any }) => {
     if (data.key === inputAtKey)
         return (
             <>
-                <input onChange={handleChange} onKeyPress={event => {
+                <Input onChange={handleChange} onBlur={() => clear()} onKeyPress={event => {
                     if (event.key === 'Enter') {
-                        dispatch(clearInputAtKey())
+                        clear()
                     }
                 }} autoFocus />
-                <button onClick={claerInputAtKey}>Okay</button>
             </>
         )
 
     return (
         <span onClick={() => {
-            dispatch(setInputAtKey({
-                key: data.key
-            }))
+            if(data.text)
+                dispatch(setInputAtKey({
+                    key: data.key
+                }))
         }}>{data.title}</span>
     )
 }

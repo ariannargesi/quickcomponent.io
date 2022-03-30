@@ -8,7 +8,7 @@ const useStyleValue = (name: string): string | undefined => {
     findNodeInTree(map, selectedKey, res => {
         value = res
     })
-    const styles = value.props.style 
+    const styles = value.props?.style 
     if(styles)
         return styles[name]
     else undefined

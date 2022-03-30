@@ -75,7 +75,7 @@ const Display = () => {
                         label='Align items'
                         value={alignItems}
                         options={alignItemsOptions}
-                        onChange={value => handleChange('AlignItems', value)}
+                        onChange={value => handleChange('alignItems', value)}
                     />
                 </div>
             )}

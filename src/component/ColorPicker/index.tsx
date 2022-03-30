@@ -8,9 +8,12 @@ import { Button, Checkbox } from 'antd'
 interface PickerProps {
     name: string
     onChange: any,
-    values?: string[],
+    value?: string 
+    values?: any, 
     allowGradient?: boolean
 }
+
+
 
 const gradient = {
     points: [
@@ -51,12 +54,20 @@ const ColorPicker = (props: PickerProps) => {
     }
 
 
-    const onChange = (e) => {
-        setIsGradient(e.target.checked)
-    }
+    const onChange = (attrs, name) => {
+        console.log(attrs, name);
+    };
 
     const handleCancel = () => {
         setShowPicker(false)
+    }
+
+    const handleStyleChange = value => {
+        props.onChange(value.style.replaceAll(' ', ''))
+    }
+
+    const handleCheckBoxChange = (e) => {
+        setIsGradient(!isGradient)
     }
 
     return (
@@ -65,7 +76,7 @@ const ColorPicker = (props: PickerProps) => {
                 <span className={styles.label}>{props.name}</span>
                 <ColoredBox
                     onClick={handleColorBoxClick}
-                    color='red'
+                    color={props.value}
                 />
             </div>
             {showPicker && (
@@ -75,15 +86,15 @@ const ColorPicker = (props: PickerProps) => {
                             <span className={styles.label}>Gradient: </span>
                                 <Checkbox
                                     value={isGradient}
-                                    onChange={onChange}
+                                    onChange={handleCheckBoxChange}
                                 />
                         </div>
                     )}
 
                     <ReacetColorPicker
-                        onStartChange={onChange}
-                        onChange={onChange}
-                        onEndChange={onChange}
+                        onStartChange={handleStyleChange}
+                        onChange={handleStyleChange}       
+                        onEndChange={handleStyleChange}
                         color={isGradient ? undefined : color}
                         gradient={isGradient ? gradient : undefined}
                         isGradient={isGradient}

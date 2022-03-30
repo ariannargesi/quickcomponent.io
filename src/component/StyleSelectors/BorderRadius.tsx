@@ -1,24 +1,22 @@
 import React from 'react'
-import Slider from '@mui/material/Slider'
-import { useDispatch } from 'react-redux'
-import { applyStyle } from '../../redux/slice'
-
+import Slider from '../../component/Slider'
+import useApplyStyle from '../../hooks/useApplyStyle'
+import useStyleValue from '../../hooks/useStyleValue'
+import { getNumbericValue } from '../../helper'
+import styles from '../StyleSelectors/style.module.sass'
 const BorderRadius = () => {
-    const dispatch = useDispatch()
+    const applyStyle = useApplyStyle()
+    const borderRadius = useStyleValue('borderRadius')
     return (
-        <>
+        <div className={styles.container}>
         <span>Border radius</span>
         <Slider
-            size='small'
-            onChange={event => {
-                const value = (event.target as HTMLInputElement).value 
-                dispatch(applyStyle({
-                    key: 'borderRadius',
-                    value: value 
-                }))
+            value={getNumbericValue(borderRadius)}
+            onChange={value => {
+                applyStyle('borderRadius', value + 'px')
             }}
         />
-        </>
+        </div>
     )
 }
 

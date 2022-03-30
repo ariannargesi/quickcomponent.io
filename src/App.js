@@ -39,8 +39,8 @@ function App() {
                             <StyleList />
                         </div>
                         <div style={{ width: '25%' }}>
-                            {/* <HtmlTree /> */}
-                            {/* <QuickStyle /> */}
+                            <HtmlTree />
+                            <QuickStyle />
                         </div>
                         <div style={{ width: '50%' }}>
                             <ComponentView />

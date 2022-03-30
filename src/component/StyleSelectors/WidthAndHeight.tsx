@@ -7,16 +7,10 @@ import useApplyStyle from '../../hooks/useApplyStyle'
 import { getUnit, getNumbericValue as getValue } from '../../helper'
 const units = ['px', '%', 'rem']
 
-const styles = {
-    header: {
-        display: 'flex',
-        justifyContent: 'space-between'
-    }
-}
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
-    const width = useStyleValue('width')
+    const width = useStyleValue('width') 
     const widthUnit = getUnit(width)
     const widthValue = getValue(width)
     const height = useStyleValue('height')
@@ -25,7 +19,7 @@ const WidthAndHeight = () => {
     return (
         <>
             <div className={style.container}>
-                <div style={styles.header}>
+                <div className={style.header}>
                     <span>Width:</span>
                     <Radio options={units} activeItem={widthUnit} onChange={(value) => {
                         applyStyle('width', widthValue + value)
@@ -33,6 +27,8 @@ const WidthAndHeight = () => {
                 </div>
                 <div className={style.body}>
                     <Slider
+                        min={0}
+                        max={500}
                         value={widthValue}
                         onChange={(value) => {
                             applyStyle('width', value + widthUnit)
@@ -41,7 +37,7 @@ const WidthAndHeight = () => {
                 </div>
             </div>
             <div className={style.container}>
-                <div style={styles.header}>
+                <div className={style.header}>
                     <span>Height:</span>
                     <Radio options={units} activeItem={heightUnit} onChange={(value) => {
                         applyStyle('height', heightValue + value)
@@ -49,6 +45,8 @@ const WidthAndHeight = () => {
                 </div>
                 <div className={style.body}>
                     <Slider
+                        min={0}
+                        max={500}
                         value={heightValue}
                         onChange={(value) => {
                             applyStyle('height', value + heightUnit)

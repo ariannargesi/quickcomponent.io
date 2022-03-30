@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Slider from "@mui/material/Slider";
+import Slider from "../Slider";
 import { ChevronDown, ChevronUp, ChevronRight } from 'react-feather'
 import { Collapse } from 'antd';
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,23 +8,23 @@ import Radio from '../Radio'
 import ColorPicker from '../ColorPicker'
 import useApplyStyle from '../../hooks/useApplyStyle';
 import useStyleValue from '../../hooks/useStyleValue';
-const { Panel } = Collapse;
+
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
 
     const dispatch = useDispatch()
-    const [showMore, setShowMore] = useState(false)
+    const [showMore, setShowMore] = useState(true)
 
     const units = ['px', '%', 'rem']
     let shadow =  useStyleValue('boxShadow') || '2px 2px 2px 4px rgba(128,154,145, 0.5)'
     let shadowPieces: string[] = shadow.split('px')
 
-    const horzontalOffest: string = shadowPieces[0] 
-    const verticalOffste: string = shadowPieces[1] 
-    const blurRadius: string = shadowPieces[2] 
-    const spreadRadius: string = shadowPieces[3] 
-    const color: string = shadowPieces[3]
+    const horzontalOffest = Number(shadowPieces[0])
+    const verticalOffste = Number(shadowPieces[1] )
+    const blurRadius = Number(shadowPieces[2] )
+    const spreadRadius = Number(shadowPieces[3] )
+    const color = shadowPieces[3]
     
     const handleToggle = () => setShowMore(!showMore)
 
@@ -58,94 +58,64 @@ const WidthAndHeight = () => {
 
     return (
         <>
-          <div className={style.boxShadow} onClick={handleToggle}>
+          <div className={[style.container].join(' ')} >
+              <div onClick={handleToggle} style={{display: 'flex', alignItems: 'center'}}>
                 <span>Box shadow</span> 
                 {showMore ? <ChevronDown/> : <ChevronRight/>}
-          </div>
+                </div>
           {showMore && (
+              <>
             <div className={style.content}>
-                <div>
-                    <div>
-                        Horizontal offset:
-                    </div>
-                    <div>
-                        <Slider
-                            size={"small"}
-                            defaultValue={Number(horzontalOffest)}
-                            max={500}
-                            aria-label={"Small"}
-                            valueLabelDisplay={"auto"}
-                            onChange={(e: Event) => {
-                                const value = (e.target as HTMLInputElement).value 
-                                updateShadow(0, value)
-                            }}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Vertical offset:
-                    </div>
-                    <div>
-                        <Slider
-                            size={"small"}
-                            defaultValue={Number(verticalOffste)}
-                            max={500}
-                            aria-label={"Small"}
-                            valueLabelDisplay={"auto"}
-                            onChange={(e: Event) => {
-                                const value = (e.target as HTMLInputElement).value 
-                                updateShadow(1, value)
-                            }}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Blur radius
-                    </div>
-                    <div>
-                        <Slider
-                            size={"small"}
-                            defaultValue={Number(blurRadius)}
-                            max={500}
-                            aria-label={"Small"}
-                            valueLabelDisplay={"auto"}
-                            onChange={(e: Event) => {
-                                const value = (e.target as HTMLInputElement).value 
-                                updateShadow(2, value)
-                            }}
+                <Slider
+                    labelInline
+                    min={-100}
 
-                        />
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Spread radius:
-                    </div>
-                    <div>
-                        <Slider
-                            size={"small"}
-                            defaultValue={Number(spreadRadius)}
-                            max={500}
-                            aria-label={"Small"}
-                            valueLabelDisplay={"auto"}
-                            onChange={(e: Event) => {
-                                const value = (e.target as HTMLInputElement).value 
-                                updateShadow(3, value)
-                            }}
-                        />
-                    </div>
-                </div>
-               <ColorPicker
-                name='adsfs'
+                    label='X'
+                    value={horzontalOffest}
+                    onChange={value => {
+                        updateShadow(0, value)
+                    }}
+                />
+                <Slider
+                                    min={-100}
+
+                    labelInline
+                    label='Y'
+                    value={verticalOffste}
+                    onChange={value => {
+                        updateShadow(1, value)
+                    }}
+                />
+                <Slider
+                    labelInline
+                    label='radius'
+                    value={blurRadius}
+                    onChange={value => {
+                        updateShadow(2, value)
+                    }}
+                />
+                <Slider
+                    labelInline
+                    label='spread'
+                    value={spreadRadius}
+                    onChange={value => {
+                        updateShadow(3, value)
+                    }}
+                />
+                
+              
+            </div>
+            <ColorPicker
+                name='Shadow color'
                 values={null}
                     onChange={value => {
                         updateShadow(4, value)
                     }}
                 />
-            </div>
+            </>
           )}
+            </div>
+
         </>
     )
 }
