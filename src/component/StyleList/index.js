@@ -6,13 +6,9 @@ const StyleList = () => {
     const [state, setState] = useState(null)
     
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-            {/* <StyleSearch 
-                value={state} 
-                onChange={e => setState(e.target.value)}
-            /> */}
+       
             <StylePanel searchQuery={state}/>
-        </div>
+       
     )
 }
 

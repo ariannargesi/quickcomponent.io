@@ -248,6 +248,7 @@ const counterSlice = createSlice({
       state.expandedKey = action.payload
     },
     toggleDrawer: (state) => {
+      console.log('Im running')
       state.openDrawer = !state.openDrawer
     }
   },

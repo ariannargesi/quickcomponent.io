@@ -8,7 +8,6 @@ export default [
     'H6',
     'P',
     'Span',
-    'Link',
     'Ul',
     'Ol',
     'Li'

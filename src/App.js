@@ -16,11 +16,16 @@ function App() {
         <div className="App">
             <Header />
 
-            {treeIsEmpty ?
-                <EmptyTree />
-                :
-                <>
-                    <Link to='/export'>
+            {treeIsEmpty ? <EmptyTree/> : <div className="main-container">
+            <StyleList />
+                <div style={{width: '300px'}}>
+                    <HtmlTree />
+                    <QuickStyle />
+                </div> 
+                <ComponentView /></div>}
+                <Drawer /> 
+
+           <Link to='/export'>
                         <button style={{
                             position: ' absolute',
                             right: '50px',
@@ -33,22 +38,7 @@ function App() {
                             fontSize: "18px"
                         }}> Export</button>
                     </Link>
-
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ width: '25%' }}>
-                            <StyleList />
-                        </div>
-                        <div style={{ width: '25%' }}>
-                            <HtmlTree />
-                            <QuickStyle />
-                        </div>
-                        <div style={{ width: '50%' }}>
-                            <ComponentView />
-                        </div>
-                    </div>
-                </>
-            }
-            <Drawer />
+            
 
         </div>
     )

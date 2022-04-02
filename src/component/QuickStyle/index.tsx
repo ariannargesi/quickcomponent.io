@@ -76,6 +76,7 @@ const QuickStyle: React.FC = () => {
                         return <Item title={`${name}:${value}`} />
                     })
                 }
+                
             </div>
         </div>
     )

@@ -8,13 +8,17 @@ const ComponentView = () => {
 
     return (
         <div style={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+           padding: '16px',
+           height: '100%',
+           display: 'flex',
+           flex: '1',
+           flexDirection: 'column',
+           overflow: 'hidden'
         }}>
-            {component}
+            <h2>Component view</h2>
+            <div style={{height: '100%',     overflow: 'scroll', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px'}}>
+                {component}
+            </div>
         </div>
     )
 }

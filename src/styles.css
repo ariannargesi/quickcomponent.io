@@ -83,3 +83,17 @@
     .picker-area {
         padding: 0!important;
     }
+    
+    .main-container {
+        height: calc(100vh - 40px);
+        display: flex;
+    }
+    
+    div::-webkit-scrollbar {
+        width: 0.5em;
+    }
+    
+    div::-webkit-scrollbar-thumb {
+        background-color: rgb(131, 131, 131);
+        border-radius: 10px;
+    }

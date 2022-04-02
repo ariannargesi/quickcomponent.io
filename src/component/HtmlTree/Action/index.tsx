@@ -16,6 +16,7 @@ const Action = (props: Props) => {
     const key = props.elementKey
     function addChild (){
         dispatch(selectElementForAddingChild({key}))
+        toggleDrawer()
         
     }
     function removeElement(){
