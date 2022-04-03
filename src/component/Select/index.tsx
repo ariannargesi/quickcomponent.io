@@ -3,9 +3,9 @@ import {Select} from 'antd'
 import style from '../StyleSelectors/style.module.sass'
 const Component = (props: {
     label: string,
-    onChange: any,
+    onChange: (value: string | number) => void,
     options: any,
-    value: string | number 
+    value: string | number
     
 }) => {
     return (

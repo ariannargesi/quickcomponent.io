@@ -1,6 +1,6 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
 import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, removeStyleFromTree, updateNodeTitle } from '../../helper'
-import generateScript, { ExportTypes, ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
+import generateScript, { ExportTypes, ScriptFormats, StyleFormats, EditorView } from '../../helper/codeGenerators'
 import React from 'react'
 import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
 import { allowedNodeEnvironmentFlags } from 'process';
@@ -10,12 +10,12 @@ interface TextObject {
   key: string
 }
 
-export interface ComponentObject {
+export interface ComponentMember {
   title: string,
   text?: string
   key: string,
   props: object,
-  children: ComponentObject[] | TextObject[]
+  children: ComponentMember[] | TextObject[]
 }
 
 export interface Prop {
@@ -58,8 +58,8 @@ export interface App extends Output {
   config: Config,
   addChildTo: string,
   inputKey: string,
-  map: ComponentObject[],
-  editorView: string,
+  map: ComponentMember[],
+  editorView: EditorView,
   refs: any[]
 }
 
@@ -150,7 +150,7 @@ const initialState: App = {
     script: '',
     commands: []
   },
-  editorView: 'script'
+  editorView: EditorView.Script
 }
 
 const counterSlice = createSlice({

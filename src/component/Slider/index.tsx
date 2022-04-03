@@ -1,10 +1,10 @@
 import React from 'react'
-import Slider, { SliderTypeMap } from '@mui/material/Slider'
+import Slider from '@mui/material/Slider'
 
 interface Props{
     label?: string 
     value: number,
-    onChange: any,
+    onChange: (value: number) => void,
     min?: number,
     max?: number,
     labelInline?: boolean 
@@ -26,7 +26,7 @@ const App = (props: Props) => {
                 max={props.max}
                 value={props.value}
                 onChange={({target}) => {
-                    const value = (target as HTMLInputElement).value
+                    const value = Number((target as HTMLInputElement).value)
                     props.onChange(value)
                 }}
             />

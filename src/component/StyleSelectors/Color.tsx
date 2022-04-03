@@ -10,7 +10,7 @@ const Color = () => {
     const color = useStyleValue('color')
     return (
         <ColorPicker
-            name='Color'
+            label='Color'
             value={color}
             onChange={value => {
                 applyStyle('color', value)

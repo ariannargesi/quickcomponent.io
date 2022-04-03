@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { ComponentObject } from "../redux/slice"
+import { ComponentMember } from "../redux/slice"
 import { RootState } from '../redux'
 const useEmptyTree = () => {
    const map = useSelector((state: RootState) => state.app.map)

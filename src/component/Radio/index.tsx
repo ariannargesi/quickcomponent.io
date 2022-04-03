@@ -1,22 +1,24 @@
 import React from 'react'
-import propTypes from 'prop-types'
-import './styles.css'
- 
+import './styles.sass'
 interface Props {
     options: string[],
-    onChange: any,
+    onChange: (value: string) => void,
     activeItem?: string | number,
-    style?: string,
-    activeIndex?: number 
+    type?: string,
 }
 
 const Radio = (props: Props) => {
-
-    const { options, onChange, activeItem, style } = props 
-    
     return (
-        <ul className={style === 'gray' ? 'radioType1' : 'radioType2'}>
-            {options && options.map((item, index) => <li className={item === activeItem ? 'active' : null} onClick={() => onChange(item)}>{item}</li>)}
+        <ul className={props.type === 'gray' ? 'big' : 'small'}>
+            {
+                props.options && props.options.map((item) =>
+                    <li
+                        className={item === props.activeItem ? 'active' : null}
+                        onClick={() => props.onChange(item)}
+                    >
+                        {item}
+                    </li>)
+            }
         </ul>
     )
 }

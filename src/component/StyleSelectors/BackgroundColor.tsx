@@ -10,11 +10,11 @@ const BackgroundColor = () => {
     const color = useStyleValue('background')
     return (
         <ColorPicker
-            name='Background color'
+            label='Background color'
             allowGradient
             value={color}
             onChange={value => {
-                applyStyle('background', value)
+                applyStyle('backgroundColor', value)
             }}
         />
     )

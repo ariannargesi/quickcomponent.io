@@ -54,7 +54,7 @@ const Margin = () => {
     }
     const handleToggle = () => setShowMore(!showMore)
 
-    const handleChange = (direction: string, value: string) => {
+    const handleChange = (direction: string, value: number) => {
         let finalValue = null
         switch (direction) {
             case 'all':

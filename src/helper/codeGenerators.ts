@@ -1,7 +1,7 @@
 import { Script } from "vm"
 import {nanoid} from 'nanoid'
 import arrayToJSx from '../helper/arrayToJSX'
-import { ComponentObject, Prop } from "../redux/slice"
+import { ComponentMember, Prop } from "../redux/slice"
 import { current } from "@reduxjs/toolkit"
 export enum StyleFormats {
     CSS = "css",
@@ -18,6 +18,10 @@ export enum ExportTypes {
     Default
 }
 
+export enum EditorView {
+    Script,
+    Style
+}
 
 
 export const getImportStyle = (format: StyleFormats, fileName = 'style'):string => {
@@ -98,7 +102,7 @@ interface Config {
     propsDistruction: boolean,
     propType: PropTypesDecleration,
     hooksList: string[],
-    map: ComponentObject[]
+    map: ComponentMember[]
 }
 export default (config: Config) => {
     const {
@@ -241,7 +245,7 @@ function objectToStyle(object, semi, indent = undefined) {
     return main;
 }
 
-export const styleGenerator = (map: ComponentObject[], styleType: StyleFormats): string => {
+export const styleGenerator = (map: ComponentMember[], styleType: StyleFormats): string => {
     if(styleType === StyleFormats.SASS)
         return generateSASS(map)
     else if(styleType === StyleFormats.CSS)
@@ -250,7 +254,7 @@ export const styleGenerator = (map: ComponentObject[], styleType: StyleFormats):
 
 
 
-const generateCSS = (map: ComponentObject[]): string => {
+const generateCSS = (map: ComponentMember[]): string => {
     let str = ''
     function giveMeCSS (html) {
         if(Array.isArray(html) === false) return 
@@ -266,7 +270,7 @@ const generateCSS = (map: ComponentObject[]): string => {
     return str 
 }
 
-function generateSASS (map: ComponentObject[]): string {
+function generateSASS (map: ComponentMember[]): string {
     let str = ''
   const arrayToComponent = (html, indent = 0) => {
       if(Array.isArray(html) === false) return 

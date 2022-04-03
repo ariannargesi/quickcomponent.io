@@ -19,7 +19,7 @@ const Border = () => {
     let borderWidth: string = borderSplit[0]
     let borderStyle: string = borderSplit[1]
     let borderColor: string = borderSplit[2]
-
+    console.log('borderCOlor: ' + borderColor)
     const handleChange = (index: number, value): void => {
         switch(index){
             case 0: 
@@ -53,8 +53,8 @@ const Border = () => {
             />
         </div>
         <ColorPicker 
-                name='Border Color'
-                values={null}
+                label='Border Color'
+                value={borderColor}
                 onChange={value => handleChange(2, value)}
             />
         </>

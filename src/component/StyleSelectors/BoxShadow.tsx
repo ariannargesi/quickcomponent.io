@@ -24,8 +24,11 @@ const WidthAndHeight = () => {
     const verticalOffste = Number(shadowPieces[1] )
     const blurRadius = Number(shadowPieces[2] )
     const spreadRadius = Number(shadowPieces[3] )
-    const color = shadowPieces[3]
+    const color = shadowPieces[4]
     
+    console.log('Shadow color')
+    console.log(color)
+
     const handleToggle = () => setShowMore(!showMore)
 
     function updateShadow(index: number, value){
@@ -106,8 +109,8 @@ const WidthAndHeight = () => {
               
             </div>
             <ColorPicker
-                name='Shadow color'
-                values={null}
+                label='Shadow color'
+                value={color}
                     onChange={value => {
                         updateShadow(4, value)
                     }}

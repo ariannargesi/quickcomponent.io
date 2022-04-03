@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { applyStyle } from '../../redux/slice'
-import { cssToCamelCase } from '../../helper'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import WidthAndHeight from '../StyleSelectors/WidthAndHeight'
 import BoxShadow from '../StyleSelectors/BoxShadow'
 import Positions from '../StyleSelectors/Positions'
@@ -16,11 +14,12 @@ import BackgroundColor from '../StyleSelectors/BackgroundColor'
 import Margin from '../StyleSelectors/Margin'
 import Padding from '../StyleSelectors/Padding'
 import { findNodeInTree } from '../../helper'
-import styles from './styles.module.css'
 import { RootState } from '../../redux'
+import { ComponentMember } from '../../redux/slice'
+import styles from './styles.module.sass'
 
 
-function getElement(key: string, html): any {
+function getElement(key: string, html:ComponentMember[]): ComponentMember {
     let res
     findNodeInTree(html, key, (value) => {
         res = value
@@ -30,23 +29,19 @@ function getElement(key: string, html): any {
         return res
     else
         return null
-
 }
 
 const StylePannel = () => {
-
+ 
     const state = useSelector((state: RootState) => state)
-
-    const value = getElement(state.app.selectedKey, state.app.map)
-
-
-
+    const element = getElement(state.app.selectedKey, state.app.map)
+    // if selected element is a text node, do not show style selectors
     return (
         <div className={styles.container}>
-            {value.text && (
-                <h3 style={{marginTop: '200px', padding: '40px', textAlign: 'center'}}>{`You can't apply style on text's. select another element`}</h3>
+            {element.text && (
+                <h3 className={styles.message}>{`You can't apply style on text's. select another element`}</h3>
             )}
-            {!value.text && (
+            {!element.text && (
                 <>
                     <WidthAndHeight />
                     <Margin />
@@ -63,7 +58,6 @@ const StylePannel = () => {
                     <BackgroundColor />
                 </>
             )}
-
         </div>
     )
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 
-interface BoxProp {
+interface Props {
     children: React.ReactNode,
     title: string 
 }
 
-const Box = (props: BoxProp) => {
+const Box = (props: Props) => {
     const style = {
         container: {
             padding: '15px 15px 10px 0',

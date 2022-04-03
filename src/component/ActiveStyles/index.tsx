@@ -1,14 +1,10 @@
-import React, { MouseEventHandler, useState } from 'react'
-import styles from './styles.module.sass'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { cssToCamelCase, findNodeInTree } from '../../helper'
-import { applyStyle, removeStyle } from '../../redux/slice'
-import CssPropertiy from '../../component/CssProperty'
-import { selectClasses } from '@mui/material'
+import { removeStyle, ComponentMember } from '../../redux/slice'
+import { RootState } from '../../redux'
 import { X } from 'react-feather'
-
-const properties = require('../../data/css-properties.json')
-
+import styles from './styles.module.sass'
 interface ItemProps {
     title: string,
 }
@@ -16,16 +12,11 @@ interface ItemProps {
 const Item = (props: ItemProps) => {
     const dispatch = useDispatch()
 
-
     const handleRemove = () => {
         const key = props.title.split(':')[0]
-
         dispatch(removeStyle(key))
     }
 
-    // borderRadius: 20px;
-    const propertyName = props.title.split(':')[0]
-    const propertie = properties[propertyName]
     return (
         <div className={styles.item}>
             <div>
@@ -36,7 +27,7 @@ const Item = (props: ItemProps) => {
     )
 }
 
-function getStyles(key: string, html): any {
+function getStyles(key: string, html: ComponentMember[]): ComponentMember {
     let res
     findNodeInTree(html, key, (value) => {
         res = value
@@ -49,13 +40,9 @@ function getStyles(key: string, html): any {
 
 }
 
-const QuickStyle: React.FC = () => {
-    //@ts-ignore
-    const selektedKey = useSelector(state => state.app.selectedKey)
-
-    //@ts-ignore 
-    const map = useSelector(state => state.app.map)
-    const stylesList = getStyles(selektedKey, map)
+const ActiveStyles: React.FC = () => {
+    const {map, selectedKey} = useSelector((state: RootState) => state.app)
+    const stylesList = getStyles(selectedKey, map)
 
     let keys = []
     if (stylesList) {
@@ -83,4 +70,4 @@ const QuickStyle: React.FC = () => {
 
 }
 
-export default QuickStyle
+export default ActiveStyles

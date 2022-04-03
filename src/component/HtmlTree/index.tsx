@@ -1,32 +1,33 @@
+import React from 'react'
 import { Tree, Input } from 'antd'
-import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateExpandedkeys, moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey, setInputAtKey } from '../../redux/slice'
 import useEmptyTree from '../../hooks/useEmptyTree'
 import Action from './Action'
 import useToggleDrawer from '../../hooks/useToggleDrawer'
-import { Plus } from 'react-feather'
+import { RootState } from '../../redux'
 import styles from './styles.module.sass'
-import EmptyTree from '../EmptyTree'
 
 function formatData(html) {
-    html.map((item, index) => {
+    html.map((item) => {
         if (Array.isArray(item.children)) {
             formatData(item.children)
             item.icon = <Action elementKey={item.key} />
         }
-
-        else if (item.text) {
+        else if (item.text)
             item.title = item.text
-        }
     })
     return html
 }
 
 const Title = (props: { data: any }) => {
+    // This component is responsible for rendering the title of tree members. 
+    // If the member is a text node, with clicking on it, the title get replaced with an input
+    // and you can update the inner text
+    // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
-    // @ts-ignore
-    const inputAtKey = useSelector(state => state.app.inputKey)
+    const inputAtKey = useSelector((state: RootState) => state.app.inputKey)
+
     const { data } = props
 
     const handleChange = (e) => {
@@ -39,8 +40,6 @@ const Title = (props: { data: any }) => {
     const clear = () => {
         dispatch(clearInputAtKey())
     }
-
-
 
     if (data.key === inputAtKey)
         return (
@@ -55,7 +54,7 @@ const Title = (props: { data: any }) => {
 
     return (
         <span onClick={() => {
-            if(data.text)
+            if (data.text)
                 dispatch(setInputAtKey({
                     key: data.key
                 }))
@@ -63,18 +62,13 @@ const Title = (props: { data: any }) => {
     )
 }
 
+const HtmlTree = () => {
 
-const HtmlTree: React.ReactNode = () => {
-
-    const toggleDrawer = useToggleDrawer()
-    const emptyTree = useEmptyTree()
     const dispatch = useDispatch()
-    //@ts-ignore
-    let html = useSelector(state => state.app.map)
-    //@ts-ignore
-    const expandedKey = useSelector(state => state.app.expandedKey)
-    //@ts-ignore
-    html = formatData(JSON.parse(JSON.stringify(html)))
+    const app = useSelector((state: RootState) => state.app)
+    const {map, expandedKey} = app 
+  
+    let formattedData = formatData(JSON.parse(JSON.stringify(map)))
 
     const handleElementsDragAndDrop = (info) => {
 
@@ -95,16 +89,13 @@ const HtmlTree: React.ReactNode = () => {
             dispatch(changeSelectedElement({ key: value[0] }))
     }
 
-    const handleClick = () => {
-        toggleDrawer()
-    }
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>Elements</h2>
             <Tree
                 showIcon={true}
                 showLine={true}
-                treeData={html}
+                treeData={formattedData}
                 expandedKeys={expandedKey}
                 onExpand={value => {
                     dispatch(updateExpandedkeys(value))

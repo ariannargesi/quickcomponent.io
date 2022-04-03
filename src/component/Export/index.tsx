@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import CodeView from '../CodeView'
-import ComponentConfig from '../CompnentConfig'
-import Footer from '../Footer'
+import Output from '../Output'
+import CodeConfig from '../CodeConfig'
 import { generateCode } from '../../redux/slice'
-import {  ChevronLeft } from 'react-feather'
 import { useNavigate } from 'react-router-dom'
 const style = {
     container: {
@@ -36,10 +34,10 @@ const Export = (props: any)=> {
             
             <div style={style.flex}>
             <div style={{ width: '50vw', height: '100vh'}}>
-                    <ComponentConfig  />
+                    <CodeConfig  />
                 </div>
                 <div style={{ width: '50vw', height: '100vh'}}>
-                    <CodeView />
+                    <Output />
                 </div>
             </div>
             {/* <Footer/> */}
