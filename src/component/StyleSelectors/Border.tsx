@@ -8,8 +8,8 @@ import useApplyStyle from '../../hooks/useApplyStyle'
 import { getNumbericValue } from '../../helper'
 import styles from './style.module.sass'
 const borderStyleOptions = [
-    {value: 'solid', label: 'solid'},
-    {value: 'dashed', label: 'dashed'}
+    { value: 'solid', label: 'solid' },
+    { value: 'dashed', label: 'dashed' }
 ]
 
 const Border = () => {
@@ -18,48 +18,46 @@ const Border = () => {
     const borderSplit = borderString.split(' ')
     let borderWidth: string = borderSplit[0]
     let borderStyle: string = borderSplit[1]
-    let borderColor: string = borderSplit[2]
-    console.log('borderCOlor: ' + borderColor)
+    let borderColor: string = borderSplit.slice(2, borderSplit.length).join(' ')
     const handleChange = (index: number, value): void => {
-        switch(index){
-            case 0: 
+        switch (index) {
+            case 0:
                 borderWidth = value + 'px'
                 break;
             case 1:
-                borderStyle = value 
-                break 
-            case 2: 
-                borderColor = value 
-                break 
+                borderStyle = value
+                break
+            case 2:
+                borderColor = value
+                break
         }
         const finalBorderValue = `${borderWidth} ${borderStyle} ${borderColor}`
-        console.log(finalBorderValue)
         applyStyle('border', finalBorderValue)
     }
 
     return (
         <>
-        <div className={styles.container}>  
-            <Slider
+            <div className={styles.container}>
+                <Slider
                     label={'Border with'}
                     value={getNumbericValue(borderWidth)}
                     onChange={value => handleChange(0, value)}
                 />
-            <Select
-                value={borderStyle}
-                label={'Border style'}
-                options={borderStyleOptions}
-                onChange={value => handleChange(1, value)}
-            />
-        </div>
-        <ColorPicker 
+                <Select
+                    value={borderStyle}
+                    label={'Border style'}
+                    options={borderStyleOptions}
+                    onChange={value => handleChange(1, value)}
+                />
+            </div>
+            <ColorPicker
                 label='Border Color'
                 value={borderColor}
                 onChange={value => handleChange(2, value)}
             />
         </>
 
-    )   
+    )
 }
 
 export default Border 

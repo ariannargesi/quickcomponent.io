@@ -5,7 +5,7 @@ import Radio from '../Radio'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { Collapse } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
-import { applyStyle } from '../../redux/slice'
+import { applyStyle } from '../../redux/slice/app'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
 import { getNumbericValue } from '../../helper'
@@ -77,7 +77,6 @@ const Margin = () => {
         if (finalValue)
             finalMargin = finalValue
         else finalMargin = `${marginDefaultValues.top} ${marginDefaultValues.right} ${marginDefaultValues.bottom} ${marginDefaultValues.left}`
-        console.log("Final value: " + finalMargin)
         applyStyle('margin', finalMargin)
     }
 

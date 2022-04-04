@@ -1,20 +1,22 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
-import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, removeStyleFromTree, updateNodeTitle } from '../../helper'
-import generateScript, { ExportTypes, ScriptFormats, StyleFormats, EditorView } from '../../helper/codeGenerators'
-import React from 'react'
-import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
-import { allowedNodeEnvironmentFlags } from 'process';
-import scriptGenerator, { PropTypesDecleration, styleGenerator } from '../../helper/codeGenerators'
+import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, removeStyleFromTree, updateNodeTitle } from '../../../helper'
+import { ExportTypes, ScriptFormats, StyleFormats, EditorView } from '../../../helper/codeGenerators'
+import scriptGenerator, { PropTypesDecleration, styleGenerator } from '../../../helper/codeGenerators'
+import { CSSProperties } from '@emotion/serialize'
+
 interface TextObject {
   text: string,
   key: string
 }
-
+interface ComponentMemberProp {
+  className?: string,
+  style?: object
+}
 export interface ComponentMember {
   title: string,
   text?: string
   key: string,
-  props: object,
+  props: ComponentMemberProp,
   children: ComponentMember[] | TextObject[]
 }
 
@@ -168,7 +170,10 @@ const counterSlice = createSlice({
       state.selectedKey = action.payload.key
     },
     deleteNode: (state, action) => {
-      deleteNodeInTree(state.map, action.payload.key)
+      const key = action.payload.key
+      if (key === state.selectedKey)
+        state.selectedKey = state.map[0].key
+      deleteNodeInTree(state.map, key)
     },
     applyStyle: (state, action) => {
       const { key, value } = action.payload
@@ -209,9 +214,9 @@ const counterSlice = createSlice({
       state.addChildTo = action.payload.key
     },
     addNodeInTree: (state, action) => {
-      if (state.map.length === 0){
+      if (state.map.length === 0) {
         state.map.push(action.payload.element)
-        state.selectedKey = action.payload.element.key 
+        state.selectedKey = action.payload.element.key
       }
       else {
         const elemetn = action.payload.element
@@ -244,11 +249,9 @@ const counterSlice = createSlice({
       removeStyleFromTree(state.map, state.selectedKey, property)
     },
     updateExpandedkeys: (state, action) => {
-      console.log(action.payload)
       state.expandedKey = action.payload
     },
     toggleDrawer: (state) => {
-      console.log('Im running')
       state.openDrawer = !state.openDrawer
     }
   },
@@ -274,5 +277,3 @@ export const {
   toggleDrawer
 } = counterSlice.actions
 export default counterSlice.reducer
-
-

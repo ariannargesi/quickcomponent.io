@@ -3,7 +3,7 @@ import { Select } from 'antd'
 import { useDispatch } from 'react-redux'
 import Slider from "@mui/material/Slider"
 import style from './style.module.sass'
-import { applyStyle } from '../../redux/slice'
+import { applyStyle } from '../../redux/slice/app'
 
 const options = [
     {value: '400', label: '400'},

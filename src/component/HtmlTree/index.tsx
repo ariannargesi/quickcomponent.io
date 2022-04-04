@@ -1,18 +1,16 @@
 import React from 'react'
 import { Tree, Input } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateExpandedkeys, moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey, setInputAtKey } from '../../redux/slice'
-import useEmptyTree from '../../hooks/useEmptyTree'
+import { updateExpandedkeys, moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey, setInputAtKey } from '../../redux/slice/app'
 import Action from './Action'
-import useToggleDrawer from '../../hooks/useToggleDrawer'
 import { RootState } from '../../redux'
 import styles from './styles.module.sass'
 
-function formatData(html) {
+function formatMap(html) {
+    // convert html map to proper format for showign in antd tree component 
     html.map((item) => {
         if (Array.isArray(item.children)) {
-            formatData(item.children)
-            item.icon = <Action elementKey={item.key} />
+            formatMap(item.children)
         }
         else if (item.text)
             item.title = item.text
@@ -30,35 +28,43 @@ const Title = (props: { data: any }) => {
 
     const { data } = props
 
-    const handleChange = (e) => {
+    const handleInputChange = (e) => {
         const value = e.target.value
         dispatch(updateTreeInputValue({
             value
         }))
     }
 
-    const clear = () => {
+    const handleTitleClick = () => {
+        if (data.text)
+            dispatch(setInputAtKey({key: data.key}))
+    }
+
+    const disableInput = () => {
         dispatch(clearInputAtKey())
     }
 
     if (data.key === inputAtKey)
         return (
             <>
-                <Input onChange={handleChange} onBlur={() => clear()} onKeyPress={event => {
-                    if (event.key === 'Enter') {
-                        clear()
-                    }
-                }} autoFocus />
+                <Input
+                    onChange={handleInputChange}
+                    onBlur={() => disableInput()}
+                    onKeyPress={event => {
+                        if (event.key === 'Enter')
+                            disableInput()
+                    }}
+                    autoFocus
+                />
             </>
         )
 
     return (
-        <span onClick={() => {
-            if (data.text)
-                dispatch(setInputAtKey({
-                    key: data.key
-                }))
-        }}>{data.title}</span>
+        <div>
+            <span onClick={handleTitleClick}>{data.title}</span>
+            <Action elementKey={data.key} />
+        </div>
+
     )
 }
 
@@ -66,12 +72,11 @@ const HtmlTree = () => {
 
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state.app)
-    const {map, expandedKey} = app 
-  
-    let formattedData = formatData(JSON.parse(JSON.stringify(map)))
+    const { map, expandedKey } = app
+
+    let formattedData = formatMap(JSON.parse(JSON.stringify(map)))
 
     const handleElementsDragAndDrop = (info) => {
-
         const { key: dragKey } = info.dragNode
         const { key: dropKey } = info.node
         const { dropPosition, dropToGap } = info
@@ -84,7 +89,10 @@ const HtmlTree = () => {
         }))
     }
 
-    const handleElementSelect = (value) => {
+    const handleElementSelection = (value, e) => {
+        console.log("Tagname")
+        if (e.nativeEvent.srcElement.tagName != 'DIV')
+            return
         if (value.length != 0)
             dispatch(changeSelectedElement({ key: value[0] }))
     }
@@ -102,7 +110,7 @@ const HtmlTree = () => {
                 }}
                 draggable
                 onDrop={handleElementsDragAndDrop}
-                onSelect={handleElementSelect}
+                onSelect={handleElementSelection}
                 titleRender={nodeData => <Title data={nodeData} />}
             />
         </div>

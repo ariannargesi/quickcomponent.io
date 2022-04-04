@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { applyStyle } from "../redux/slice"
+import { applyStyle } from "../redux/slice/app"
 
 const useApplyStyle = () => {
     const dispatch = useDispatch()

@@ -6,7 +6,7 @@ import jszip from 'jszip'
 import Filesaver from 'file-saver'
 import styles from './styles.module.sass'
 import Editor from '../Editor'
-import { toggleEditorView, App } from '../../redux/slice'
+import { toggleEditorView, App } from '../../redux/slice/app'
 import {RootState} from '../../redux'
 import { EditorView } from '../../helper/codeGenerators'
 const zip = new jszip()

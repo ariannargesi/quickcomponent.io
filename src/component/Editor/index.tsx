@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import AceEditor from "react-ace"
 import { useSelector } from "react-redux"
 import { Clipboard, Check } from 'react-feather'
-import { App } from '../../redux/slice'
+import { App } from '../../redux/slice/app'
 import { RootState } from '../../redux'
 import { StyleFormats, ScriptFormats, EditorView } from '../../helper/codeGenerators'
 import styles from './styles.module.sass'
@@ -58,6 +58,7 @@ const Editor = () => {
       <AceEditor
         mode={lang}
         theme="dracula"
+        readOnly
         value={code}
         name="text-editor"
         fontSize={15}

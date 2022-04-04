@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { toggleDrawer } from '../redux/slice'
+import { toggleDrawer } from '../redux/slice/app'
 
 const useToggleDrawer = () => {
     const dispatch = useDispatch()

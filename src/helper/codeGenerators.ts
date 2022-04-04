@@ -1,8 +1,8 @@
-import { Script } from "vm"
-import {nanoid} from 'nanoid'
+import prettier from 'prettier/standalone'
+import babel from "prettier/parser-babel"
+import css from 'prettier/parser-postcss'
 import arrayToJSx from '../helper/arrayToJSX'
-import { ComponentMember, Prop } from "../redux/slice"
-import { current } from "@reduxjs/toolkit"
+import { ComponentMember, Prop } from "../redux/slice/app"
 export enum StyleFormats {
     CSS = "css",
     SASS = "sass" 
@@ -189,12 +189,11 @@ export default (config: Config) => {
 
     component+='}'
 
-    
     component += '\n'
 
     if(scriptType === 'js' && propsList.length > 0 ){
         let temp = ''
-            temp+= `${componentName}.PropTypes {`
+            temp+= `${componentName}.PropTypes = {`
             temp+='\n'
             propsList.map((item, index) => {
                 temp+= `${item.propName}: PropTypes.${item.propType}`
@@ -207,7 +206,7 @@ export default (config: Config) => {
     }
     component+='\n'
 
-    return component
+    return prettier.format( component, { parser: 'babel', plugins: [babel], semi: false })
 }
 
 const indentGenerator = (num) => {
@@ -258,16 +257,15 @@ const generateCSS = (map: ComponentMember[]): string => {
     let str = ''
     function giveMeCSS (html) {
         if(Array.isArray(html) === false) return 
-        return html.map((el, index) => {
+        return html.map((el) => {
         if(el.props === undefined) return 
         if(el.props.style) {
             str+= '.' + el.props.className + '{\n' + objectToStyle(el.props.style, true) + '}\n'
-            // return `.${el.props.className} { \n${objectToStyle(el.props.style, true)}}\n`
         }
         giveMeCSS(el.children)
     })}
     giveMeCSS(map)
-    return str 
+    return prettier.format(str, { parser: 'css', plugins: [css] })
 }
 
 function generateSASS (map: ComponentMember[]): string {

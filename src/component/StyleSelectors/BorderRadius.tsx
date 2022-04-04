@@ -4,9 +4,12 @@ import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
 import { getNumbericValue } from '../../helper'
 import styles from '../StyleSelectors/style.module.sass'
+
 const BorderRadius = () => {
+
     const applyStyle = useApplyStyle()
     const borderRadius = useStyleValue('borderRadius')
+    
     return (
         <div className={styles.container}>
         <span>Border radius</span>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { cssToCamelCase, findNodeInTree } from '../../helper'
-import { removeStyle, ComponentMember } from '../../redux/slice'
+import { removeStyle, ComponentMember } from '../../redux/slice/app'
 import { RootState } from '../../redux'
 import { X } from 'react-feather'
 import styles from './styles.module.sass'

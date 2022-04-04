@@ -1,4 +1,5 @@
 export default [
+    'Div',
     'Button',
     'H1',
     'H2',

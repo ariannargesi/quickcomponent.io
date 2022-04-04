@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import React from 'react'
 import Header from './component/Header'
 import HtmlTree from './component/HtmlTree'
-import QuickStyle from './component/QuickStyle'
+import ActiveStyles from './component/ActiveStyles'
 import ComponentView from './component/ComponentView'
 import StyleList from './component/StylePannel'
 import Drawer from './component/Drawer'
@@ -19,9 +19,10 @@ function App() {
                 <StyleList />
                 <div style={{ width: '300px' }}>
                     <HtmlTree />
-                    <QuickStyle />
+                   <ActiveStyles/>
                 </div>
-                <ComponentView /></div>}
+                <ComponentView />
+                </div>}
             <Drawer />
 
             <Link to='/export'>

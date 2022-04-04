@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Output from '../Output'
 import CodeConfig from '../CodeConfig'
-import { generateCode } from '../../redux/slice'
+import { generateCode } from '../../redux/slice/app'
 import { useNavigate } from 'react-router-dom'
 const style = {
     container: {

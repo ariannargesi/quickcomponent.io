@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { ChevronLeft } from 'react-feather'
 import Radio from '../Radio'
-import { updateConfig } from '../../redux/slice'
+import { updateConfig } from '../../redux/slice/app'
 import { RootState } from '../../redux'
 import Box from './Box'
 import { ScriptFormats, StyleFormats } from '../../helper/codeGenerators'
@@ -51,7 +51,7 @@ const CompnentConfig = () => {
                     activeItem={config.usingTestFile === true ? 'Yes' : 'No'}
                 />
             </Box>
-            <Box title='Script language?'>
+            <Box title='Do you use typescript for your scripts?'>
                 <Radio
                     type='gray'
                     options={['Yes', "No, I'm using javascript"]}

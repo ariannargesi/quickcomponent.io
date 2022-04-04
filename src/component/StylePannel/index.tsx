@@ -15,7 +15,7 @@ import Margin from '../StyleSelectors/Margin'
 import Padding from '../StyleSelectors/Padding'
 import { findNodeInTree } from '../../helper'
 import { RootState } from '../../redux'
-import { ComponentMember } from '../../redux/slice'
+import { ComponentMember } from '../../redux/slice/app'
 import styles from './styles.module.sass'
 
 
@@ -46,6 +46,8 @@ const StylePannel = () => {
                     <WidthAndHeight />
                     <Margin />
                     <Padding />
+                    <Color />
+                    <BackgroundColor />
                     <BoxShadow />
                     <Positions />
                     <Display />
@@ -54,8 +56,7 @@ const StylePannel = () => {
                     <TextAlign />
                     <FontSize />
                     <FontWeight />
-                    <Color />
-                    <BackgroundColor />
+
                 </>
             )}
         </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Drawer as AntDrawer, List } from 'antd'
-import { addNodeInTree, setInputAtKey, ComponentMember } from '../../redux/slice'
+import { addNodeInTree, setInputAtKey, ComponentMember } from '../../redux/slice/app'
 import elementsList from '../../data/html-elements'
 import { nanoid } from '@reduxjs/toolkit'
 import useToggleDrawer from '../../hooks/useToggleDrawer'
