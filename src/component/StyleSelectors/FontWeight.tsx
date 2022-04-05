@@ -8,7 +8,6 @@ const options = [
     { label: '400', value: 400 },
     { label: '700', value: 700 },
     { label: '900', value: 900 },
-    { label: '400', value: 400 }
 ]
 
 const FontWeight = () => {

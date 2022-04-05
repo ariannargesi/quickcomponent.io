@@ -164,7 +164,7 @@ export default (config: Config) => {
     }
     component+='\n'
 
-    component+=`const ${componentName} = (props${scriptType === 'ts' ? ':Props' : ''})${scriptType === 'ts' ? ':JSX.element' : ''}`
+    component+=`const ${componentName} = (props${scriptType === 'ts' ? ':Props' : ''})${scriptType === 'ts' ? ':React.ReactNode' : ''}`
     component+='=> {'
     component+='\n'
 

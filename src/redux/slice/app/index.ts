@@ -77,62 +77,7 @@ const initialState: App = {
   inputKey: null,
   refs: [],
   map: [
-    {
-      title: "div",
-      key: "TpBr6w7RzTKfFA0Um2BW5",
-      props: {
-        className: 'fafd',
-        style: {
-          padding: '25px',
-          width: '100%',
-          borderRadius: '38px',
-          boxShadow: '0px 10px 15px -3px rgb(0 0 0 / 10%)'
-        }
-      },
-      children: [
-        {
-          title: "h1",
-          key: nanoid(),
-          props: {},
-          children: [{ text: 'Hello world', key: nanoid() }],
-
-        },
-        {
-          title: "h2",
-          key: nanoid(),
-          props: {},
-
-          children: [{
-            title: "h2",
-            key: nanoid(),
-            props: {},
-
-            children: [{ text: 'Mewwww!!!', key: 'cat' }]
-          }]
-        },
-        {
-          title: "h3",
-          key: nanoid(),
-          props: {},
-
-          children: [{ text: 'Hello world', key: nanoid() }]
-        },
-        {
-          title: "h4",
-          key: nanoid(),
-          props: {},
-
-          children: [{ text: 'Hello world', key: nanoid() }]
-        },
-        {
-          title: "h5",
-          key: nanoid(),
-          props: {},
-
-          children: [{ text: 'Hello world', key: 'my-ff' }]
-        },
-      ]
-    }
+   
   ],
   config: {
     usingTestFile: true,
@@ -159,6 +104,9 @@ const counterSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
+    initiateMap: (state, action) => {
+      state.map = action.payload.map 
+    },
     moveElementInTree: (state, action) => {
       const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
       findNodeInTree(state.map, dragKey, dargNode => {
@@ -258,6 +206,7 @@ const counterSlice = createSlice({
 })
 
 export const {
+  initiateMap, 
   moveElementInTree,
   changeSelectedElement,
   applyStyle,

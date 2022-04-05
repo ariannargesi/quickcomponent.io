@@ -60,7 +60,7 @@ const ActiveStyles: React.FC = () => {
                     keys.map(key => {
                         const name: string = cssToCamelCase(key)
                         const value: string = stylesList[key]
-                        return <Item title={`${name}:${value}`} />
+                        return <Item title={`${name}:${value}`} key={key} />
                     })
                 }
                 

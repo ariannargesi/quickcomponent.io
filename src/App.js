@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom'
 import Header from './component/Header'
 import HtmlTree from './component/HtmlTree'
 import ActiveStyles from './component/ActiveStyles'
@@ -8,13 +9,15 @@ import StyleList from './component/StylePannel'
 import Drawer from './component/Drawer'
 import useEmptyTree from "./hooks/useEmptyTree"
 import EmptyTree from "./component/EmptyTree"
-import { Link } from 'react-router-dom'
+import welcomeComponentMap from './welcome-map'
+import {initiateMap} from './redux/slice/app'
 function App() {
+   
+
     const treeIsEmpty = useEmptyTree()
     return (
         <div className="App">
             <Header />
-
             {treeIsEmpty ? <EmptyTree /> : <div className="main-container">
                 <StyleList />
                 <div style={{ width: '300px' }}>

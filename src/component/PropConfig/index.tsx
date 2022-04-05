@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Input, Button, Select } from 'antd'
 import { Switch, Modal } from 'antd';
 import { useSelector } from 'react-redux'
+import isVarName from 'is-var-name'
 import { Trash } from 'react-feather';
 import { RootState } from '../../redux'
 import { ScriptFormats } from '../../helper/codeGenerators';
@@ -28,7 +29,8 @@ const initialForm = {
 }
 
 const PropConfig = (props: Prop) => {
-
+    const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [modalVisible, setModalVisible] = useState(false);
     const config = useSelector((state: RootState) => state.app.config)
     // using statePropsList to show props list outside of the modal 
@@ -47,6 +49,28 @@ const PropConfig = (props: Prop) => {
     }
 
     const typesList = scriptType === ScriptFormats.TS ? tsx_types : propTypes_types
+
+    const handleInputChange = e => {
+        const value = e.target.value.trim() 
+        const propNameAlreadyExist = propsList.filter(item => item.propName === value).length > 0
+        if(propNameAlreadyExist){
+            console.log("prop already exsit")
+            setError(true)
+            setErrorMessage(`"${value}" already exist`)
+            return 
+        }
+        handleChange({ propName: e.target.value })
+        const isValidName = isVarName(value)
+        if(isValidName){
+            setError(false)
+        }
+        else {
+            if(value)
+                setError(true)
+                setErrorMessage('Your prop name must be a valid javascript name')
+        }
+    
+    }
 
     const handleAddProp = () => {
         setPropsList(prev => [...prev, form])
@@ -76,7 +100,7 @@ const PropConfig = (props: Prop) => {
                         </tr>
                         {propsList.map((item) => {
                             return (
-                                <tr>
+                                <tr key={item.propName}>
                                     <td>{item.propName}</td>
                                     <td>{item.propType}</td>
                                     <td>{item.required ? 'True' : 'False'}</td>
@@ -97,10 +121,14 @@ const PropConfig = (props: Prop) => {
                 width={600}
 
             >
+                
                 <div className={styles.formContainer}>
                     <div>
                         <label htmlFor="name">Name</label>
-                        <Input value={form.propName} onChange={e => handleChange({ propName: e.target.value })} />
+                        <Input 
+                            value={form.propName}
+                            onChange={handleInputChange} 
+                        />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <label htmlFor="name">Name</label>
@@ -111,7 +139,7 @@ const PropConfig = (props: Prop) => {
                         >
                             {typesList.map(item => {
                                 return (
-                                    <Option value={item}>{item}</Option>
+                                    <Option key={item} value={item}>{item}</Option>
                                 )
                             })}
                         </Select>
@@ -121,19 +149,20 @@ const PropConfig = (props: Prop) => {
                         <label>required:</label>
                         <Switch defaultChecked onChange={e => handleChange({ required: e })} />
                     </div>
-                    <Button onClick={handleAddProp}>Add</Button>
+                    <Button disabled={error || !form.propName} onClick={handleAddProp}>Add</Button>
                 </div>
+                {error && <span className={styles.error}>{errorMessage}</span>}
                 {propsList.length != 0 && (
                     <table className={styles.table}>
-                        <tr>
+                        <thead>
                             <th>Name</th>
                             <th>Type</th>
                             <th>Required</th>
-                        </tr>
+                        </thead>
                         <tbody>
                             {propsList.map((item, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={item.propName}>
                                         <td>{item.propName}</td>
                                         <td>{item.propType}</td>
                                         <td>{item.required ? 'True' : 'False'}</td>

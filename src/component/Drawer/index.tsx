@@ -17,7 +17,7 @@ function generateTextBasedElement(name: string): ComponentMember {
         title: name,
         props: {},
         key: elementKey,
-        children: [{ text: 'Text', key: innerTextKey }]
+        children: name === 'div' ? [] : [{ text: 'Text', key: innerTextKey }]
     }
 }
 

@@ -15,6 +15,7 @@ const Radio = (props: Props) => {
                     <li
                         className={item === props.activeItem ? styles.active : null}
                         onClick={() => props.onChange(item)}
+                        key={item}
                     >
                         {item}
                     </li>)

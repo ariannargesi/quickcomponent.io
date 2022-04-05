@@ -21,6 +21,7 @@
         "eslint-plugin-react": "^7.28.0",
         "file-saver": "^2.0.5",
         "framer-motion": "6",
+        "is-var-name": "^2.0.0",
         "jszip": "^3.7.1",
         "node-sass": "^7.0.1",
         "prettier": "2.5.1",

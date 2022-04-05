@@ -38,6 +38,7 @@ const Title = (props: { data: any }) => {
     const handleTitleClick = () => {
         if (data.text)
             dispatch(setInputAtKey({key: data.key}))
+        else dispatch(changeSelectedElement({ key: data.key }))
     }
 
     const disableInput = () => {
@@ -61,7 +62,7 @@ const Title = (props: { data: any }) => {
 
     return (
         <div>
-            <span onClick={handleTitleClick}>{data.title}</span>
+            <span onClick={handleTitleClick} className={styles.title}>{data.title}</span>
             <Action elementKey={data.key} />
         </div>
 
@@ -99,7 +100,7 @@ const HtmlTree = () => {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Elements</h2>
+            <h2 className={styles.mainTitle}>Elements</h2>
             <Tree
                 showIcon={true}
                 showLine={true}

@@ -21,13 +21,13 @@ const TextAlign = () => {
             <div className={style.buttons}>
                 <AlignLeft
                     onClick={() => handleClick('left')}
-                    className={textAlign === 'left' && style.active} />
+                    className={textAlign === 'left' ? style.active : ''} />
                 <AlignCenter
                     onClick={() => handleClick('center')}
-                    className={textAlign === 'center' && style.active} />
+                    className={textAlign === 'center' ? style.active : ''} />
                 <AlignRight
                     onClick={() => handleClick('right')}
-                    className={textAlign === 'right' && style.active} />
+                    className={textAlign === 'right' ? style.active : ''} />
             </div>
         </div>
     )

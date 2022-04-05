@@ -42,8 +42,8 @@ const CodeView = (props) => {
         }}>
             <div className={styles.container}>
                 <div className={styles.switchers}>
-                    <button className={app.editorView === EditorView.Script && styles.active} onClick={showScript}>{scriptFileName}</button>
-                    <button className={app.editorView === EditorView.Style && styles.active} onClick={showStyle}>{styleFileName}</button>
+                    <button className={app.editorView === EditorView.Script ? styles.active : ''} onClick={showScript}>{scriptFileName}</button>
+                    <button className={app.editorView === EditorView.Style ? styles.active : ''} onClick={showStyle}>{styleFileName}</button>
                 </div>
                 <button
                     className={styles.downloadZip}
