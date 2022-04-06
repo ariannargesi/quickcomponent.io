@@ -6,7 +6,7 @@ import App from './App'
 import store from './redux'
 import 'antd/dist/antd.css';
 import {Provider} from 'react-redux'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Export from './component/Export'
 import { initiateMap } from './redux/slice/app'
 import welcomeComponentMap from './welcome-map'
@@ -26,13 +26,12 @@ const Main = () => {
   return (
 <Provider store={store}>
     <InitiateMapComponent/>
-    <BrowserRouter>
+    <HashRouter>
     <Routes>
-
         <Route path="/" element={<App />} />
         <Route path="/export" element={<Export />} />
         </Routes>
-      </BrowserRouter>
+    `</HashRouter>
       
 </Provider>
   )
