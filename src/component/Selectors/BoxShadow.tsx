@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Slider from "../Slider";
 import { ChevronDown, ChevronRight } from 'react-feather'
-import style from './style.module.sass'
+import style from './styles.module.sass'
 import ColorPicker from '../ColorPicker'
 import useApplyStyle from '../../hooks/useApplyStyle';
 import useStyleValue from '../../hooks/useStyleValue';

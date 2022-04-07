@@ -1,10 +1,10 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch} from 'react-redux'
 
 import { applyStyle } from '../../redux/slice/app'
 import Select from '../Select'
 import useStyleValue from '../../hooks/useStyleValue'
-import styles from '../StyleSelectors/style.module.sass'
+import styles from '../Selectors/styles.module.sass'
 
 
 

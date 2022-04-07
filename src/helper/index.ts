@@ -39,35 +39,6 @@ export function objectToStyle(object, semi) {
     });
     return main;
 }
-export function generateStyles() {
-    let cssProperties = require("../data/css-properties.json");
-    const allKeys = Object.keys(cssProperties);
-    const styles = {};
-    allKeys.map((key) => {
-        styles[cssToCamelCase(key)] = cssProperties[key].initial;
-    });
-    return styles;
-}
-export function isPureCssValue(value) {
-    return !(value.indexOf('<') >= 0)
-}
-
-
-export function getCssValues(propertyName) {
-    const cssProperties = require('../data/css-properties.json')
-    const unFilteredValues = cssProperties[propertyName].syntax
-    const unFilteredValuesArray = unFilteredValues.split('|')
-    const filteredValues = []
-    const temp = []
-    unFilteredValuesArray.map(rawValue => {
-        rawValue = rawValue.trim()
-        if (isPureCssValue(rawValue))
-            filteredValues.push(rawValue)
-        // else temp.push(rawValue)
-    })
-    // alert(temp)
-    return filteredValues
-}
 
 export const findNodeInTree = (tree, key, callback) => {
     tree.forEach(item => {
@@ -120,7 +91,7 @@ export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
 }
 
 export function addNodeInTree(tree, key, node) {
-    tree.forEach((item, index) => {
+    tree.forEach((item) => {
         if (item.key === key)
             item.children.push(node)
         else if (item.children)
@@ -129,7 +100,7 @@ export function addNodeInTree(tree, key, node) {
 }
 
 export function updateNodeTitle(tree, key, value) {
-    tree.forEach((item, index) => {
+    tree.forEach((item) => {
         if (item.key === key)
             item.text = value
         else if (item.children)

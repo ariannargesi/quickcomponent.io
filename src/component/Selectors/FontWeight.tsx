@@ -2,12 +2,11 @@ import React from 'react'
 import Select from '../Select'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
-import styles from './style.module.sass'
+import styles from './styles.module.sass'
 
 const options = [
     { label: '400', value: 400 },
     { label: '700', value: 700 },
-    { label: '900', value: 900 },
 ]
 
 const FontWeight = () => {

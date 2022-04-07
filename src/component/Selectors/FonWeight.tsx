@@ -2,7 +2,7 @@ import React from 'react'
 import { Select } from 'antd'
 import { useDispatch } from 'react-redux'
 import Slider from "@mui/material/Slider"
-import style from './style.module.sass'
+import style from './styles.module.sass'
 import { applyStyle } from '../../redux/slice/app'
 
 const options = [

@@ -33,10 +33,11 @@ function getStyles(key: string, html: ComponentMember[]): ComponentMember {
         res = value
     })
 
-    if (res.props?.style)
+    if(!res)
+        return null 
+    else if (res.props?.style)
         return res.props.style
-    else
-        return null
+
 
 }
 

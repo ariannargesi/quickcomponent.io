@@ -2,11 +2,12 @@ import React from 'react'
 import { Select } from 'antd'
 import { useDispatch } from 'react-redux'
 import Slider from '../Slider'
-import style from './style.module.sass'
+import style from './styles.module.sass'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
 import { getNumbericValue } from '../../helper'
-import styles from '../StyleSelectors/style.module.sass'
+import styles from '../Selectors/styles.module.sass'
+
 const options = [
     { value: 'relative', label: 'relative' },
     { value: 'absolute', label: 'absolute' },
@@ -15,10 +16,9 @@ const options = [
 ]
 
 const Positions = () => {
-    const dispatch = useDispatch()
+    
     const applyStyle = useApplyStyle()
-    // 3px 
-
+    
     let position = useStyleValue('position')
     let top = useStyleValue('top')
     let bottom = useStyleValue('bottom')

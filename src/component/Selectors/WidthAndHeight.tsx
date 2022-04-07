@@ -1,5 +1,5 @@
 import React from 'react'
-import style from './style.module.sass'
+import style from './styles.module.sass'
 import Radio from '../Radio'
 import Slider from '../Slider'
 import useStyleValue from '../../hooks/useStyleValue'

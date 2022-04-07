@@ -4,15 +4,13 @@ import { useSelector } from "react-redux"
 import { Clipboard, Check } from 'react-feather'
 import { App } from '../../redux/slice/app'
 import { RootState } from '../../redux'
-import { StyleFormats, ScriptFormats, EditorView } from '../../helper/codeGenerators'
+import { StyleFormats, EditorView } from '../../helper/codeGenerators'
 import styles from './styles.module.sass'
 
-import "ace-builds/src-noconflict/mode-tsx";
-import "ace-builds/src-noconflict/mode-jsx";
+import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-css";
 import "ace-builds/src-noconflict/mode-sass";
 import "ace-builds/src-noconflict/theme-dracula";
-import "ace-builds/src-noconflict/ext-language_tools";
 
 const Editor = () => {
 
@@ -26,19 +24,15 @@ const Editor = () => {
       return state.app.output.style
   })
 
-  let lang
-  // Detect language of current visible code in the editor and use it
+  let mode
   if (app.editorView === EditorView.Script) {
-    if (app.config.scriptType === ScriptFormats.TS)
-      lang = 'tsx'
-    else if (app.config.scriptType === ScriptFormats.JS)
-      lang = 'jsx'
+    mode = 'javascript'
   }
   else if (app.editorView === EditorView.Style)
     if (app.config.styleType === StyleFormats.SASS)
-      lang = 'sass'
+      mode = 'sass'
     else if (app.config.styleType === StyleFormats.CSS)
-      lang = 'css'
+      mode = 'css'
 
   // Show copy icon when user update config or change view
   useEffect(() => {
@@ -56,7 +50,7 @@ const Editor = () => {
   return (
     <div className={styles.container}>
       <AceEditor
-        mode={lang}
+        mode={mode}
         theme="dracula"
         readOnly
         value={code}

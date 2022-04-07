@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Slider from "../Slider";
-import style from './style.module.sass'
+import style from './styles.module.sass'
 import Radio from '../Radio'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { Collapse } from 'antd';
@@ -10,12 +10,14 @@ import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
 import { getNumbericValue } from '../../helper'
 
-const Margin = () => {
+
+
+const Padding = () => {
     const dispatch = useDispatch()
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
 
-    const marginString = useStyleValue('margin') || '0px'
+    const marginString = useStyleValue('padding') || '0px'
     let marginSplit = marginString.split(' ')
 
 
@@ -77,14 +79,14 @@ const Margin = () => {
         if (finalValue)
             finalMargin = finalValue
         else finalMargin = `${marginDefaultValues.top} ${marginDefaultValues.right} ${marginDefaultValues.bottom} ${marginDefaultValues.left}`
-        applyStyle('margin', finalMargin)
+        applyStyle('padding', finalMargin)
     }
 
     return (
         <>
             <div className={style.container}>
                 <Slider
-                    label='Margin'
+                    label='Padding'
                     value={marginSplit.length === 1 ? getNumbericValue(marginSplit[0]) : 0}
                     onChange={(value) => {
                         handleChange('all', value)
@@ -135,4 +137,4 @@ const Margin = () => {
     )
 }
 
-export default Margin
+export default Padding 

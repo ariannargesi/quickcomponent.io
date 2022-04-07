@@ -1,9 +1,9 @@
 import React from 'react'
-import Slider from '../../component/Slider'
+import Slider from '../Slider'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
 import { getNumbericValue } from '../../helper'
-import styles from '../StyleSelectors/style.module.sass'
+import styles from '../Selectors/styles.module.sass'
 
 const BorderRadius = () => {
 

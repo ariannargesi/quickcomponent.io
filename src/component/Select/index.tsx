@@ -1,6 +1,6 @@
 import React from 'react'
 import {Select} from 'antd'
-import style from '../StyleSelectors/style.module.sass'
+import style from '../Selectors/styles.module.sass'
 const Component = (props: {
     label: string,
     onChange: (value: string | number) => void,

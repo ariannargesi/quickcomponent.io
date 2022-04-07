@@ -1,18 +1,18 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import WidthAndHeight from '../StyleSelectors/WidthAndHeight'
-import BoxShadow from '../StyleSelectors/BoxShadow'
-import Positions from '../StyleSelectors/Positions'
-import Display from '../StyleSelectors/Display'
-import BorderRadius from '../StyleSelectors/BorderRadius'
-import TextAlign from '../StyleSelectors/TextAlign'
-import Border from '../StyleSelectors/Border'
-import FontSize from '../StyleSelectors/FontSize'
-import FontWeight from '../StyleSelectors/FontWeight'
-import Color from '../StyleSelectors/Color'
-import BackgroundColor from '../StyleSelectors/BackgroundColor'
-import Margin from '../StyleSelectors/Margin'
-import Padding from '../StyleSelectors/Padding'
+import WidthAndHeight from '../Selectors/WidthAndHeight'
+import BoxShadow from '../Selectors/BoxShadow'
+import Positions from '../Selectors/Positions'
+import Display from '../Selectors/Display'
+import BorderRadius from '../Selectors/BorderRadius'
+import TextAlign from '../Selectors/TextAlign'
+import Border from '../Selectors/Border'
+import FontSize from '../Selectors/FontSize'
+import FontWeight from '../Selectors/FontWeight'
+import Color from '../Selectors/Color'
+import BackgroundColor from '../Selectors/BackgroundColor'
+import Margin from '../Selectors/Margin'
+import Padding from '../Selectors/Padding'
 import { findNodeInTree } from '../../helper'
 import { RootState } from '../../redux'
 import { ComponentMember } from '../../redux/slice/app'
@@ -35,13 +35,15 @@ const StylePannel = () => {
  
     const state = useSelector((state: RootState) => state)
     const element = getElement(state.app.selectedKey, state.app.map)
-    // if selected element is a text node, do not show style selectors
+
+    let message 
+    if(!element)
+        message = 'Please select an element.'
+        
     return (
         <div className={styles.container}>
-            {element.text && (
-                <h3 className={styles.message}>{`You can't apply style on text's. select another element`}</h3>
-            )}
-            {!element.text && (
+            {message && <h3 className={styles.message}>{message}</h3>}
+            { element && !element.text && (
                 <>
                     <WidthAndHeight />
                     <Margin />

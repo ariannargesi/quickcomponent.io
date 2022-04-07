@@ -2,7 +2,7 @@ import React from 'react'
 import ColorPicker from '../ColorPicker'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
-import styles from '../StyleSelectors/style.module.sass'
+import styles from '../StyleSelectors/styles.module.sass'
 
 
 const Color = () => {

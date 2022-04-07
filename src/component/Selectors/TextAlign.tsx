@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import useStyleValue from '../../hooks/useStyleValue'
 import { applyStyle } from '../../redux/slice/app'
-import style from './style.module.sass'
+import style from './styles.module.sass'
 
 const TextAlign = () => {
     const applyStyle = useApplyStyle()

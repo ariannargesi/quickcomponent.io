@@ -1,12 +1,12 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Slider from '../Slider'
 import ColorPicker from '../ColorPicker'
 import Select from '../Select'
 import useStyleValue from '../../hooks/useStyleValue'
 import useApplyStyle from '../../hooks/useApplyStyle'
 import { getNumbericValue } from '../../helper'
-import styles from './style.module.sass'
+import styles from './styles.module.sass'
+
 const borderStyleOptions = [
     { value: 'solid', label: 'solid' },
     { value: 'dashed', label: 'dashed' }
