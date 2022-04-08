@@ -1,69 +1,9 @@
 import { createSlice, current, nanoid } from '@reduxjs/toolkit'
 import { findNodeInTree, deleteNodeInTree, addNodeInPosition, addNodeInTree as addNode, addStyleInNode, removeStyleFromTree, updateNodeTitle } from '../../../helper'
-import { ExportTypes, ScriptFormats, StyleFormats, EditorView } from '../../../helper/codeGenerators'
-import scriptGenerator, { PropTypesDecleration, styleGenerator } from '../../../helper/codeGenerators'
-import { CSSProperties } from '@emotion/serialize'
+import { ExportTypes, ScriptFormats, StyleFormats, EditorView } from '../../../types'
+import { styleGenerator, scriptGenerator } from '../../../helper/codeGenerators'
 
-interface TextObject {
-  text: string,
-  key: string
-}
-interface ComponentMemberProp {
-  className?: string,
-  style?: object
-}
-export interface ComponentMember {
-  title: string,
-  text?: string
-  key: string,
-  props: ComponentMemberProp,
-  children: ComponentMember[] | TextObject[]
-}
-
-export interface Prop {
-  propName: string,
-  propType: string,
-  propDefaultValue?: string,
-  required?: boolean
-}
-
-export interface Config {
-  usingTestFile: boolean,
-  styleType: StyleFormats,
-  scriptType: ScriptFormats,
-  scriptFileName: string,
-  styleFileName: string,
-  exportType: ExportTypes,
-  propsList: Prop[],
-  hooksList: string[],
-  componentName: string,
-  propDeclerationType: PropTypesDecleration,
-  propDisctruction: boolean
-}
-
-interface Output {
-  output: {
-    style: string,
-    script: string,
-    commands: { description: string, command: string }[]
-  }
-}
-
-export interface App extends Output {
-  openDrawer: boolean,
-  selectedKey: string,
-  expandedKey: string[]
-  searchQuery: {
-    value: string,
-    exact: boolean
-  },
-  config: Config,
-  addChildTo: string,
-  inputKey: string,
-  map: ComponentMember[],
-  editorView: EditorView,
-  refs: any[]
-}
+import { App, typesDecleration } from '../../../types'
 
 const initialState: App = {
   openDrawer: false,
@@ -84,7 +24,7 @@ const initialState: App = {
     scriptType: ScriptFormats.TS,
     scriptFileName: "index",
     hooksList: [],
-    propDeclerationType: PropTypesDecleration.Interface,
+    propDeclerationType: typesDecleration.Interface,
     styleType: StyleFormats.CSS,
     styleFileName: 'style',
     exportType: ExportTypes.Default,
@@ -105,7 +45,10 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     initiateMap: (state, action) => {
-      state.map = action.payload.map 
+      const map = action.payload.map 
+      state.map = map 
+      state.selectedKey = map[0].key 
+
     },
     moveElementInTree: (state, action) => {
       const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
@@ -133,7 +76,7 @@ const counterSlice = createSlice({
         componentName: state.config.componentName,
         hooksList: state.config.hooksList,
         map: state.map,
-        propType: state.config.propDeclerationType,
+        type: state.config.propDeclerationType,
         propsDistruction: state.config.propDisctruction,
         propsList: state.config.propsList,
         scriptType: state.config.scriptType,
@@ -147,7 +90,7 @@ const counterSlice = createSlice({
         componentName: state.config.componentName,
         hooksList: state.config.hooksList,
         map: state.map,
-        propType: state.config.propDeclerationType,
+        type: state.config.propDeclerationType,
         propsDistruction: state.config.propDisctruction,
         propsList: state.config.propsList,
         scriptType: state.config.scriptType,

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Plus, Trash} from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../redux'
+import { RootState } from '../../../types'
 import { deleteNode, selectElementForAddingChild} from '../../../redux/slice/app'
 import useToggleDrawer from '../../../hooks/useToggleDrawer'
 import './styles.sass'

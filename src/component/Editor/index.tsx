@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react"
 import AceEditor from "react-ace"
 import { useSelector } from "react-redux"
 import { Clipboard, Check } from 'react-feather'
-import { App } from '../../redux/slice/app'
-import { RootState } from '../../redux'
-import { StyleFormats, EditorView } from '../../helper/codeGenerators'
+import { App } from '../../types'
+import { RootState } from '../../types'
+import { StyleFormats, EditorView } from '../../types'
+import { formatScript, formatStyle} from '../../helper'
 import styles from './styles.module.sass'
 
 import "ace-builds/src-noconflict/mode-javascript";
@@ -19,9 +20,9 @@ const Editor = () => {
   const code = useSelector((state: RootState) => {
     // get code depend on eidtor view
     if (state.app.editorView === EditorView.Script)
-      return state.app.output.script
+      return formatScript(state.app.output.script)
     else
-      return state.app.output.style
+      return formatStyle(state.app.output.style)
   })
 
   let mode

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import arrayToComponent from '../../helper/arrayToComponent'
-import { RootState } from '../../redux'
+import { RootState } from '../../types'
 
 const ComponentView = () => {
     const html = useSelector((state: RootState) => state.app.map)

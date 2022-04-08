@@ -1,122 +1,28 @@
 import prettier from 'prettier/standalone'
-import babel from "prettier/parser-babel"
-import css from 'prettier/parser-postcss'
+ import css from 'prettier/parser-postcss'
 import arrayToJSx from '../helper/arrayToJSX'
-import { ComponentMember, Prop } from "../redux/slice/app"
-export enum StyleFormats {
-    CSS = "css",
-    SASS = "sass" 
-}
-
-export enum ScriptFormats {
-    TS = 'ts',
-    JS = 'js' 
-}
-
-export enum ExportTypes {
-    Named,
-    Default
-}
-
-export enum EditorView {
-    Script,
-    Style
-}
-
-
-export const getImportStyle = (format: StyleFormats, fileName = 'style'):string => {
-    return `import './${fileName}.${format}'\n`   
-}
-
-export const getMainComponent = (exportType: ExportTypes, fileFormat: ScriptFormats, propsList: Prop[], componentName = 'App'): string => {
-    let propsString = getPropTypes(ScriptFormats.JS, propsList, 'App')
-    let res  = ''
-    if(exportType === ExportTypes.Default && propsList.length === 0)
-        res += `export default (#PROPS) => {return (#JSX)}`
-    else 
-        res += ` #INTERFACE const ${componentName}=(#PROPS)=>{return (#JSX)}#PROP_TYPES export default ${componentName}`
-    if(fileFormat === ScriptFormats.JS)
-        res = res.replace('#PROP_TYPES', propsString)
-    else if(fileFormat === ScriptFormats.TS)
-        res = res.replace('#INTERFACE', propsString)
-    return res 
-}
-export const placeJSXInComponentString = (componentString: string, JSX:string): string => {
-    return componentString.replace('#JSX', JSX)
-}
-
-export const getPropTypes = (fileFormat: ScriptFormats, propsList: Prop[], componentName?:string): string => {    let res = ''
-    if(fileFormat === ScriptFormats.JS){
-        res+= `${componentName}.propTypes {\n`
-        propsList.forEach((item, index) => {
-            res+= `${item.propName}:propTypes.${item.propType}`
-            if(propsList.length-1 != index)
-                res+= ','
-        })
-        res+='}'
-    }
-    else if(fileFormat === ScriptFormats.TS){
-        res+= `interface Props {\n`
-        propsList.forEach((item, index) => {
-            res+= `${item.propName}:propTypes.${item.propType}`
-            if(propsList.length-1 != index)
-                res+= ','
-        })
-        res+='}'
-    }
-    return res 
-}
-
-export const importPropTypes = ():string =>{ 
-    return "import PropTypes from 'prop-types'"
-}   
-
-export function getImport (x) {
-	const hooks = ['useState', 'useEffect', 'useRef']
-	if(x.indexOf(':') == -1)
-		return "import React from 'react'\n"
-	else {
-		const hooksIndex = x.split(':')[1]
-		const arr = JSON.parse(hooksIndex)
-		let hooksString = ''
-		arr.forEach((item, index) => {
-			hooksString+= hooks[item]
-			if(index != arr.length-1)
-				hooksString+= ','
-		})
-		return `import React, {${hooksString}} from 'react'\n`	
-	}
-}
-
-// didn't find a better name 
-export enum PropTypesDecleration {
-    Interface,
-    Type 
-}
-
+import { ComponentMember, PropItem, StyleFormats, ScriptFormats, ExportTypes, EditorView, typesDecleration } from "../types"
 interface Config {
     componentName: string,
-    propsList: Prop[],
+    propsList: PropItem[],
     scriptType: ScriptFormats,
     styleType: StyleFormats,
     propsDistruction: boolean,
-    propType: PropTypesDecleration,
+    type: typesDecleration,
     hooksList: string[],
     map: ComponentMember[]
 }
-export default (config: Config) => {
+export const scriptGenerator = (config: Config) => {
     const {
         componentName,
         propsList,
         scriptType,
         styleType,
         propsDistruction,
-        propType,
+        type,
         hooksList, 
         map
     } = config
-
-
     // My original component
     let component = ''
 
@@ -132,9 +38,12 @@ export default (config: Config) => {
         component += `import React, {${temp}} from 'react'`
     }
 
-
     component += '\n'
-
+    if(scriptType === 'js' && propsList.length > 0 ){
+        component += `import PropTypes from "prop-types"`
+        component += '\n'
+    }
+        
 
     if (styleType === 'sass')
         component += `import "./style.sass"`
@@ -146,15 +55,12 @@ export default (config: Config) => {
     component += '\n'
 
     if(scriptType === 'ts' && propsList.length > 0 ){
-        let temp = ''
-            if(propType === PropTypesDecleration.Interface)
-                temp+= 'interface'
-            else if(propType === PropTypesDecleration.Type)
-                temp+= 'type'
+            let temp = ''            
+            temp+= 'interface'
             temp+=' Props {'
             temp+='\n'
             propsList.map((item, index) => {
-                temp+= `${item.propName}: ${item.propType}`
+                temp+= `${item.name} ${item.required ? '' : '?'}: ${item.type}`
                 if(propsList.length -1 != index)
                     temp+=','
                     temp+='\n'
@@ -171,7 +77,7 @@ export default (config: Config) => {
     if(propsDistruction){
         let temp = 'const {'
         propsList.forEach((item, index) => {
-            temp+=item.propName
+            temp+=item.name
             if(propsList.length -1 != index)
                 temp+=','
         })
@@ -188,15 +94,19 @@ export default (config: Config) => {
     component+='\n'
 
     component+='}'
+    component+='\n'
 
-    component += '\n'
+    component+= `export default ${componentName}`
+
+    
 
     if(scriptType === 'js' && propsList.length > 0 ){
+        component += '\n'
         let temp = ''
-            temp+= `${componentName}.PropTypes = {`
+            temp+= `${componentName}.propTypes  = {`
             temp+='\n'
             propsList.map((item, index) => {
-                temp+= `${item.propName}: PropTypes.${item.propType}`
+                temp+= `${item.name}: propTypes.${item.type}${item.required ? '.isRequired' : ''}`
                 if(propsList.length -1 != index)
                     temp+=','
                     temp+='\n'
@@ -206,7 +116,7 @@ export default (config: Config) => {
     }
     component+='\n'
 
-    return prettier.format( component, { parser: 'babel', plugins: [babel], semi: false })
+    return component 
 }
 
 const indentGenerator = (num) => {

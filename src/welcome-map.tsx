@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid"
-import { ComponentMember } from "./redux/slice/app"
+import { ComponentMember } from "./types"
 
 const map: ComponentMember[] = [
     {

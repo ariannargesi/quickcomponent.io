@@ -1,27 +1,28 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-
 import { useDispatch } from 'react-redux'
 import jszip from 'jszip'
 import Filesaver from 'file-saver'
 import styles from './styles.module.sass'
 import Editor from '../Editor'
-import { toggleEditorView, App } from '../../redux/slice/app'
-import {RootState} from '../../redux'
-import { EditorView } from '../../helper/codeGenerators'
+import { toggleEditorView } from '../../redux/slice/app'
+import {RootState} from '../../types'
+import { EditorView } from '../../types'
+import { formatScript, formatStyle } from '../../helper'
+
 const zip = new jszip()
 
-const CodeView = (props) => {
+const CodeView = () => {
 
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state.app)
     const scriptFileName = app.config.scriptFileName + '.' + app.config.scriptType
     const styleFileName = app.config.styleFileName + '.' + app.config.styleType
-    const { scriptType, styleType, componentName, usingTestFile } = app.config
+    const { scriptType, componentName, usingTestFile } = app.config
 
     const downloadFiles = () => {
-        zip.file(scriptFileName, app.output.script)
-        zip.file(styleFileName, app.output.style)
+        zip.file(scriptFileName, formatScript(app.output.script))
+        zip.file(styleFileName, formatStyle(app.output.style))
         if(usingTestFile)
             zip.file(`index.test.${scriptType}`, '')
         zip.generateAsync({ type: "blob" }).then(function (content) {

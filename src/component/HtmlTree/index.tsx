@@ -3,7 +3,7 @@ import { Tree, Input } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateExpandedkeys, moveElementInTree, changeSelectedElement, updateTreeInputValue, clearInputAtKey, setInputAtKey } from '../../redux/slice/app'
 import Action from './Action'
-import { RootState } from '../../redux'
+import { RootState } from '../../types'
 import styles from './styles.module.sass'
 
 function formatMap(html) {

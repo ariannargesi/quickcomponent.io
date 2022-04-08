@@ -1,4 +1,6 @@
-import { nanoid } from 'nanoid' 
+import prettier from 'prettier/standalone'
+import babel from "prettier/parser-babel"
+import css from 'prettier/parser-postcss'
 export function cssToCamelCase(string) {
     /*
      * input: "border-radius"
@@ -78,7 +80,6 @@ export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
             const style = item.props.style
             item.props = {
                 ...item.props,
-                className: item.title + '_' + nanoid(6),
                 style: {
                     ...style,
                     [propertyName]: prpoertyValue
@@ -139,3 +140,10 @@ export function getNumbericValue(str: string): number {
     return Number(value)
 }
 
+export function formatScript (str: string): string {
+    return prettier.format( str, { parser: 'babel', plugins: [babel], semi: false })
+}
+
+export function formatStyle (str: string): string {
+    return prettier.format(str, { parser: 'css', plugins: [css] })
+}

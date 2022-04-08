@@ -1,8 +1,11 @@
-const arrayToJSx = (html) => {
+const arrayToJSX = (html) => {
     return html.map((el, index) => {
        if(el.text) return el.text     
-       return `<${el.title} ${el.props?.className ? `className='${el.props.className}'` : ''}>${arrayToJSx(el.children)}</${el.title}>`
+       const className = 
+       el.props.className && el.props.style 
+       ? `className='${el.props.className}'` : ''
+       return `<${el.title} ${className}>${arrayToJSX(el.children)}</${el.title}>`
    }).join('')
 };
 
-export default arrayToJSx
+export default arrayToJSX

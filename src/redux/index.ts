@@ -1,9 +1,6 @@
 import {createStore, combineReducers } from "redux"
 import { composeWithDevTools } from "redux-devtools-extension"
-import app, { App } from './slice/app'
-export interface RootState {
-    app: App   
-}
+import app from './slice/app'
 
 const store = createStore(combineReducers({
      app,

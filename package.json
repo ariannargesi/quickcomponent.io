@@ -33,8 +33,6 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "jest",
-        "test:watch": "jest --watch",
         "eject": "react-scripts eject"
     },
     "homepage": ".",
@@ -59,6 +57,6 @@
     "devDependencies": {
         "@babel/core": "^7.17.5",
         "@babel/preset-env": "^7.16.11",
-        "babel-jest": "^27.5.1"
+        "babel-plugin-root-import": "^6.6.0"
     }
 }

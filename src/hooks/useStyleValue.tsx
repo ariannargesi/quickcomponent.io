@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '../redux'
+import { RootState } from '../types'
 import { findNodeInTree } from '../helper'
 
 const useStyleValue = (name: string): string | undefined => {

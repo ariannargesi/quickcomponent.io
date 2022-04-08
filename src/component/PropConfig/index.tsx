@@ -4,12 +4,12 @@ import { Switch, Modal } from 'antd';
 import { useSelector } from 'react-redux'
 import isVarName from 'is-var-name'
 import { Trash } from 'react-feather';
-import { RootState } from '../../redux'
-import { ScriptFormats } from '../../helper/codeGenerators';
+import { RootState } from '../../types'
+import { ScriptFormats } from '../../types';
 import styles from './styles.module.sass'
 const { Option } = Select;
 
-let propTypes_types = [
+let types_types = [
     'array', 'bigint', 'bool', 'fun', 'number', 'object', 'string', 'symbol', 'node', 'element', 'elementType', 'any'
 ]
 
@@ -23,8 +23,8 @@ interface Prop {
 
 // form initial state
 const initialForm = {
-    propName: '',
-    propType: 'any',
+    name: '',
+    type: 'any',
     required: false
 }
 
@@ -48,18 +48,18 @@ const PropConfig = (props: Prop) => {
         })
     }
 
-    const typesList = scriptType === ScriptFormats.TS ? tsx_types : propTypes_types
+    const typesList = scriptType === ScriptFormats.TS ? tsx_types : types_types
 
     const handleInputChange = e => {
         const value = e.target.value.trim() 
-        const propNameAlreadyExist = propsList.filter(item => item.propName === value).length > 0
-        if(propNameAlreadyExist){
+        const nameAlreadyExist = propsList.filter(item => item.name === value).length > 0
+        if(nameAlreadyExist){
             console.log("prop already exsit")
             setError(true)
             setErrorMessage(`"${value}" already exist`)
             return 
         }
-        handleChange({ propName: e.target.value })
+        handleChange({ name: e.target.value })
         const isValidName = isVarName(value)
         if(isValidName){
             setError(false)
@@ -100,9 +100,9 @@ const PropConfig = (props: Prop) => {
                         </tr>
                         {propsList.map((item) => {
                             return (
-                                <tr key={item.propName}>
-                                    <td>{item.propName}</td>
-                                    <td>{item.propType}</td>
+                                <tr key={item.name}>
+                                    <td>{item.name}</td>
+                                    <td>{item.type}</td>
                                     <td>{item.required ? 'True' : 'False'}</td>
                                 </tr>
                             )
@@ -126,15 +126,15 @@ const PropConfig = (props: Prop) => {
                     <div>
                         <label htmlFor="name">Name</label>
                         <Input 
-                            value={form.propName}
+                            value={form.name}
                             onChange={handleInputChange} 
                         />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <label htmlFor="name">Name</label>
                         <Select
-                            defaultValue={form.propType}
-                            onChange={e => handleChange({ propType: e })}
+                            defaultValue={form.type}
+                            onChange={e => handleChange({ type: e })}
                             style={{ width: 120 }}
                         >
                             {typesList.map(item => {
@@ -147,9 +147,9 @@ const PropConfig = (props: Prop) => {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <label>required:</label>
-                        <Switch defaultChecked onChange={e => handleChange({ required: e })} />
+                        <Switch defaultChecked={form.required} onChange={e => handleChange({ required: e })} />
                     </div>
-                    <Button disabled={error || !form.propName} onClick={handleAddProp}>Add</Button>
+                    <Button disabled={error || !form.name} onClick={handleAddProp}>Add</Button>
                 </div>
                 {error && <span className={styles.error}>{errorMessage}</span>}
                 {propsList.length != 0 && (
@@ -162,9 +162,9 @@ const PropConfig = (props: Prop) => {
                         <tbody>
                             {propsList.map((item, index) => {
                                 return (
-                                    <tr key={item.propName}>
-                                        <td>{item.propName}</td>
-                                        <td>{item.propType}</td>
+                                    <tr key={item.name}>
+                                        <td>{item.name}</td>
+                                        <td>{item.type}</td>
                                         <td>{item.required ? 'True' : 'False'}</td>
                                         <td><Trash onClick={() => handleDeleteProp(index)} /></td>
                                     </tr>

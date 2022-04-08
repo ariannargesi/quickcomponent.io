@@ -1,11 +1,12 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Drawer as AntDrawer, List } from 'antd'
-import { addNodeInTree, setInputAtKey, ComponentMember } from '../../redux/slice/app'
+import { addNodeInTree, setInputAtKey } from '../../redux/slice/app'
 import elementsList from '../../data/html-elements'
 import { nanoid } from '@reduxjs/toolkit'
 import useToggleDrawer from '../../hooks/useToggleDrawer'
-import store, { RootState } from '../../redux'
+import store from '../../redux'
+import { RootState, ComponentMember } from '../../types'
 
 function generateTextBasedElement(name: string): ComponentMember {
     // take html element name and return an object with ComponentMember
@@ -15,7 +16,9 @@ function generateTextBasedElement(name: string): ComponentMember {
     store.dispatch(setInputAtKey({ key: innerTextKey }))
     return {
         title: name,
-        props: {},
+        props: {
+            className: name + '_' + nanoid(6)
+        },
         key: elementKey,
         children: name === 'div' ? [] : [{ text: 'Text', key: innerTextKey }]
     }

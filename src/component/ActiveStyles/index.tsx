@@ -1,10 +1,11 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { cssToCamelCase, findNodeInTree } from '../../helper'
-import { removeStyle, ComponentMember } from '../../redux/slice/app'
-import { RootState } from '../../redux'
+import { removeStyle } from '../../redux/slice/app'
 import { X } from 'react-feather'
 import styles from './styles.module.sass'
+import { RootState, ComponentMember } from '../../types'
+
 interface ItemProps {
     title: string,
 }

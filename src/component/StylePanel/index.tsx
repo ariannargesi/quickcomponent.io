@@ -14,8 +14,8 @@ import BackgroundColor from '../Selectors/BackgroundColor'
 import Margin from '../Selectors/Margin'
 import Padding from '../Selectors/Padding'
 import { findNodeInTree } from '../../helper'
-import { RootState } from '../../redux'
-import { ComponentMember } from '../../redux/slice/app'
+import { RootState, ComponentMember } from '../../types'
+
 import styles from './styles.module.sass'
 
 

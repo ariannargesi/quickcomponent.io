@@ -27,7 +27,7 @@ function App() {
 
             <Link to='/export'>
                 <button style={{
-                    position: ' absolute',
+                    position: 'fixed',
                     right: '50px',
                     bottom: '50px',
                     background: 'purple',
