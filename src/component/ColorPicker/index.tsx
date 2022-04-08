@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { Button, Checkbox } from 'antd'
-import { ColorPicker as ReacetColorPicker } from 'react-color-gradient-picker';
-import ColorBox from '../ColorBox'
-import styles from './styles.module.sass'
-import 'react-color-gradient-picker/dist/index.css';
+import React, { useState } from "react"
+import { Button, Checkbox } from "antd"
+import { ColorPicker as ReacetColorPicker } from "react-color-gradient-picker"
+import ColorBox from "../ColorBox"
+import styles from "./styles.module.sass"
+import "react-color-gradient-picker/dist/index.css"
 
 interface PickerProps {
     label: string
-    onChange: (value: string) => void,
+    onChange: (value: string) => void
     value?: string
     allowGradient?: boolean
 }
@@ -16,7 +16,7 @@ const ColorPicker = (props: PickerProps) => {
     const [showPicker, setShowPicker] = useState(false)
     const [showGradient, setShowGradient] = useState(false)
 
-    const handleChange = ({style}) => {
+    const handleChange = ({ style }) => {
         props.onChange(style)
     }
 
@@ -25,7 +25,7 @@ const ColorPicker = (props: PickerProps) => {
             <div className={styles.header}>
                 <span className={styles.label}>{props.label}</span>
                 <ColorBox
-                    onClick={() => setShowPicker(state => !state)}
+                    onClick={() => setShowPicker((state) => !state)}
                     color={props.value}
                 />
             </div>
@@ -36,7 +36,9 @@ const ColorPicker = (props: PickerProps) => {
                             <span className={styles.label}>Gradient: </span>
                             <Checkbox
                                 value={showGradient}
-                                onChange={() => setShowGradient(state => !state)}
+                                onChange={() =>
+                                    setShowGradient((state) => !state)
+                                }
                             />
                         </div>
                     )}
@@ -46,8 +48,9 @@ const ColorPicker = (props: PickerProps) => {
                     />
                     <Button
                         block
-                        type='primary'
-                        onClick={() => setShowPicker(false)}>
+                        type="primary"
+                        onClick={() => setShowPicker(false)}
+                    >
                         Done
                     </Button>
                 </div>
@@ -56,4 +59,4 @@ const ColorPicker = (props: PickerProps) => {
     )
 }
 
-export default ColorPicker 
+export default ColorPicker

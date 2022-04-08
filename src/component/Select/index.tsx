@@ -1,12 +1,10 @@
-import React from 'react'
-import {Select} from 'antd'
-import style from '../Selectors/styles.module.sass'
+import { Select } from "antd"
+import style from "../Selectors/styles.module.sass"
 const Component = (props: {
-    label: string,
-    onChange: (value: string | number) => void,
-    options: any,
+    label: string
+    onChange: (value: string | number) => void
+    options: any
     value: string | number
-    
 }) => {
     return (
         <div>
@@ -21,4 +19,4 @@ const Component = (props: {
     )
 }
 
-export default Component 
+export default Component

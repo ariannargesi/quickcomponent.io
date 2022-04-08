@@ -1,84 +1,101 @@
-import React, { useState } from 'react'
-import { Input, Button, Select } from 'antd'
-import { Switch, Modal } from 'antd';
-import { useSelector } from 'react-redux'
-import isVarName from 'is-var-name'
-import { Trash } from 'react-feather';
-import { RootState } from '../../types'
-import { ScriptFormats } from '../../types';
-import styles from './styles.module.sass'
-const { Option } = Select;
+import React, { useState } from "react"
+import { Input, Button, Select } from "antd"
+import { Switch, Modal } from "antd"
+import { useSelector } from "react-redux"
+import isVarName from "is-var-name"
+import { Trash } from "react-feather"
+import { RootState } from "../../types"
+import { ScriptFormats } from "../../types"
+import styles from "./styles.module.sass"
+const { Option } = Select
 
 let types_types = [
-    'array', 'bigint', 'bool', 'fun', 'number', 'object', 'string', 'symbol', 'node', 'element', 'elementType', 'any'
+    "array",
+    "bigint",
+    "bool",
+    "fun",
+    "number",
+    "object",
+    "string",
+    "symbol",
+    "node",
+    "element",
+    "elementType",
+    "any",
 ]
 
 let tsx_types = [
-    'string', 'number', 'boolean', 'string[]', 'number[]', 'boolean[]', 'object', 'Function', 'ReactNode'
+    "string",
+    "number",
+    "boolean",
+    "string[]",
+    "number[]",
+    "boolean[]",
+    "object",
+    "Function",
+    "ReactNode",
 ]
 
 interface Prop {
-    onConfirm: any,
+    onConfirm: any
 }
 
 // form initial state
 const initialForm = {
-    name: '',
-    type: 'any',
-    required: false
+    name: "",
+    type: "any",
+    required: false,
 }
 
 const PropConfig = (props: Prop) => {
     const [error, setError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
-    const [modalVisible, setModalVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("")
+    const [modalVisible, setModalVisible] = useState(false)
     const config = useSelector((state: RootState) => state.app.config)
-    // using statePropsList to show props list outside of the modal 
+    // using statePropsList to show props list outside of the modal
     const { propsList: statePropsList, scriptType } = config
-    // using this state to show props list insdie the modal 
+    // using this state to show props list insdie the modal
     const [propsList, setPropsList] = useState([])
     const [form, setForm] = useState(initialForm)
 
     const handleChange = (e) => {
-        setForm(prev => {
+        setForm((prev) => {
             return {
                 ...prev,
-                ...e
+                ...e,
             }
         })
     }
 
     const typesList = scriptType === ScriptFormats.TS ? tsx_types : types_types
 
-    const handleInputChange = e => {
-        const value = e.target.value.trim() 
-        const nameAlreadyExist = propsList.filter(item => item.name === value).length > 0
-        if(nameAlreadyExist){
+    const handleInputChange = (e) => {
+        const value = e.target.value.trim()
+        const nameAlreadyExist =
+            propsList.filter((item) => item.name === value).length > 0
+        if (nameAlreadyExist) {
             console.log("prop already exsit")
             setError(true)
             setErrorMessage(`"${value}" already exist`)
-            return 
+            return
         }
         handleChange({ name: e.target.value })
         const isValidName = isVarName(value)
-        if(isValidName){
+        if (isValidName) {
             setError(false)
+        } else {
+            if (value) setError(true)
+            setErrorMessage("Your prop name must be a valid javascript name")
         }
-        else {
-            if(value)
-                setError(true)
-                setErrorMessage('Your prop name must be a valid javascript name')
-        }
-    
     }
 
     const handleAddProp = () => {
-        setPropsList(prev => [...prev, form])
+        setPropsList((prev) => [...prev, form])
         setForm(initialForm)
     }
 
     const handleDeleteProp = (index) => {
-        setPropsList(propsList => {
+        setPropsList((propsList) => {
             return propsList.filter((item, index2) => index != index2)
         })
     }
@@ -89,10 +106,12 @@ const PropConfig = (props: Prop) => {
             {statePropsList.length === 0 && (
                 <span>You have not set any prop yet. </span>
             )}
-            <Button onClick={() => setModalVisible(true)} >Add/Delete props</Button>
+            <Button onClick={() => setModalVisible(true)}>
+                Add/Delete props
+            </Button>
             {statePropsList.length != 0 && (
-                <div style={{ textAlign: 'left' }}>
-                    <table className={styles.table} style={{width: '70%'}}>
+                <div style={{ textAlign: "left" }}>
+                    <table className={styles.table} style={{ width: "70%" }}>
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
@@ -103,7 +122,7 @@ const PropConfig = (props: Prop) => {
                                 <tr key={item.name}>
                                     <td>{item.name}</td>
                                     <td>{item.type}</td>
-                                    <td>{item.required ? 'True' : 'False'}</td>
+                                    <td>{item.required ? "True" : "False"}</td>
                                 </tr>
                             )
                         })}
@@ -119,37 +138,41 @@ const PropConfig = (props: Prop) => {
                 footer={false}
                 onCancel={() => setModalVisible(false)}
                 width={600}
-
             >
-                
                 <div className={styles.formContainer}>
                     <div>
                         <label htmlFor="name">Name</label>
-                        <Input 
-                            value={form.name}
-                            onChange={handleInputChange} 
-                        />
+                        <Input value={form.name} onChange={handleInputChange} />
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
                         <label htmlFor="name">Name</label>
                         <Select
                             defaultValue={form.type}
-                            onChange={e => handleChange({ type: e })}
+                            onChange={(e) => handleChange({ type: e })}
                             style={{ width: 120 }}
                         >
-                            {typesList.map(item => {
+                            {typesList.map((item) => {
                                 return (
-                                    <Option key={item} value={item}>{item}</Option>
+                                    <Option key={item} value={item}>
+                                        {item}
+                                    </Option>
                                 )
                             })}
                         </Select>
-
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
                         <label>required:</label>
-                        <Switch defaultChecked={form.required} onChange={e => handleChange({ required: e })} />
+                        <Switch
+                            defaultChecked={form.required}
+                            onChange={(e) => handleChange({ required: e })}
+                        />
                     </div>
-                    <Button disabled={error || !form.name} onClick={handleAddProp}>Add</Button>
+                    <Button
+                        disabled={error || !form.name}
+                        onClick={handleAddProp}
+                    >
+                        Add
+                    </Button>
                 </div>
                 {error && <span className={styles.error}>{errorMessage}</span>}
                 {propsList.length != 0 && (
@@ -165,8 +188,16 @@ const PropConfig = (props: Prop) => {
                                     <tr key={item.name}>
                                         <td>{item.name}</td>
                                         <td>{item.type}</td>
-                                        <td>{item.required ? 'True' : 'False'}</td>
-                                        <td><Trash onClick={() => handleDeleteProp(index)} /></td>
+                                        <td>
+                                            {item.required ? "True" : "False"}
+                                        </td>
+                                        <td>
+                                            <Trash
+                                                onClick={() =>
+                                                    handleDeleteProp(index)
+                                                }
+                                            />
+                                        </td>
                                     </tr>
                                 )
                             })}
@@ -175,12 +206,12 @@ const PropConfig = (props: Prop) => {
                 )}
                 <Button
                     block
-                    type='primary'
+                    type="primary"
                     onClick={() => {
                         props.onConfirm(propsList)
                         setModalVisible(false)
                     }}
-                    style={{ marginTop: '16px' }}
+                    style={{ marginTop: "16px" }}
                 >
                     Done
                 </Button>
@@ -190,4 +221,3 @@ const PropConfig = (props: Prop) => {
 }
 
 export default PropConfig
-

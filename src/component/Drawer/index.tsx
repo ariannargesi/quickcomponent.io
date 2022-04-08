@@ -1,12 +1,11 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Drawer as AntDrawer, List } from 'antd'
-import { addNodeInTree, setInputAtKey } from '../../redux/slice/app'
-import elementsList from '../../data/html-elements'
-import { nanoid } from '@reduxjs/toolkit'
-import useToggleDrawer from '../../hooks/useToggleDrawer'
-import store from '../../redux'
-import { RootState, ComponentMember } from '../../types'
+import { useSelector, useDispatch } from "react-redux"
+import { Drawer as AntDrawer, List } from "antd"
+import { addNodeInTree, setInputAtKey } from "../../redux/slice/app"
+import elementsList from "../../data/html-elements"
+import { nanoid } from "@reduxjs/toolkit"
+import useToggleDrawer from "../../hooks/useToggleDrawer"
+import store from "../../redux"
+import { RootState, ComponentMember } from "../../types"
 
 function generateTextBasedElement(name: string): ComponentMember {
     // take html element name and return an object with ComponentMember
@@ -17,10 +16,10 @@ function generateTextBasedElement(name: string): ComponentMember {
     return {
         title: name,
         props: {
-            className: name + '_' + nanoid(6)
+            className: name + "_" + nanoid(6),
         },
         key: elementKey,
-        children: name === 'div' ? [] : [{ text: 'Text', key: innerTextKey }]
+        children: name === "div" ? [] : [{ text: "Text", key: innerTextKey }],
     }
 }
 
@@ -30,13 +29,14 @@ const Drawer = () => {
     const dispatch = useDispatch()
 
     const handleAddingChild = (name) => {
-        dispatch(addNodeInTree({
-            element: generateTextBasedElement(name)
-        }))
+        dispatch(
+            addNodeInTree({
+                element: generateTextBasedElement(name),
+            })
+        )
         toggleDrawer()
     }
     return (
-
         <AntDrawer
             title="Elements List"
             placement="left"
@@ -46,8 +46,10 @@ const Drawer = () => {
         >
             <List
                 dataSource={elementsList}
-                renderItem={item => (
-                    <List.Item onClick={() => handleAddingChild(item)}>{item}</List.Item>
+                renderItem={(item) => (
+                    <List.Item onClick={() => handleAddingChild(item)}>
+                        {item}
+                    </List.Item>
                 )}
             />
         </AntDrawer>

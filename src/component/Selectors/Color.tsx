@@ -1,22 +1,20 @@
-import React from 'react'
-import ColorPicker from '../ColorPicker'
-import useApplyStyle from '../../hooks/useApplyStyle'
-import useStyleValue from '../../hooks/useStyleValue'
-import styles from '../StyleSelectors/styles.module.sass'
-
+import ColorPicker from "../ColorPicker"
+import useApplyStyle from "../../hooks/useApplyStyle"
+import useStyleValue from "../../hooks/useStyleValue"
+import styles from "../StyleSelectors/styles.module.sass"
 
 const Color = () => {
     const applyStyle = useApplyStyle()
-    const color = useStyleValue('color')
+    const color = useStyleValue("color")
     return (
         <ColorPicker
-            label='Color'
+            label="Color"
             value={color}
-            onChange={value => {
-                applyStyle('color', value)
+            onChange={(value) => {
+                applyStyle("color", value)
             }}
         />
     )
 }
 
-export default Color 
+export default Color

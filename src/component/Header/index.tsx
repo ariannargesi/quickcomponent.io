@@ -1,14 +1,11 @@
-import React from 'react'
-import styles from './styles.module.sass'
-import { Link } from "react-router-dom";
-import { GitHub } from 'react-feather';
+import styles from "./styles.module.sass"
+import { Link } from "react-router-dom"
+import { GitHub } from "react-feather"
 
-const url = 'https://github.com/ariannargesi/quickcomponent'
-const issues = url + '/issues/new'
-const tweet = 
-`https://twitter.com/intent/tweet?text=
-I found this app. Its really great and you should try it`
-.replace(' ', '%20')
+const url = "https://github.com/ariannargesi/quickcomponent"
+const issues = url + "/issues/new"
+const tweet = `https://twitter.com/intent/tweet?text=
+I found this app. Its really great and you should try it`.replace(" ", "%20")
 
 const Header = () => {
     return (
@@ -17,7 +14,7 @@ const Header = () => {
             <a href={tweet}>Tweet about it</a>
             <div className={styles.github}>
                 <a href={url}>
-                    <GitHub color='white' size={40} />
+                    <GitHub color="white" size={40} />
                 </a>
             </div>
         </header>
@@ -25,5 +22,3 @@ const Header = () => {
 }
 
 export default Header
-
-

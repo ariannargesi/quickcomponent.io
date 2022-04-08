@@ -1,22 +1,21 @@
-import React from 'react'
-import ColorPicker from '../ColorPicker'
-import useApplyStyle from '../../hooks/useApplyStyle'
-import useStyleValue from '../../hooks/useStyleValue'
+import ColorPicker from "../ColorPicker"
+import useApplyStyle from "../../hooks/useApplyStyle"
+import useStyleValue from "../../hooks/useStyleValue"
 
 const BackgroundColor = () => {
     const applyStyle = useApplyStyle()
-    const color = useStyleValue('backgroundColor')
+    const color = useStyleValue("backgroundColor")
 
     return (
         <ColorPicker
-            label='Background color'
+            label="Background color"
             allowGradient
             value={color}
-            onChange={value => {
-                applyStyle('backgroundColor', value)
+            onChange={(value) => {
+                applyStyle("backgroundColor", value)
             }}
         />
     )
 }
 
-export default BackgroundColor 
+export default BackgroundColor

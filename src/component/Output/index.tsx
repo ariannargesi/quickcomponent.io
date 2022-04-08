@@ -1,33 +1,31 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import jszip from 'jszip'
-import Filesaver from 'file-saver'
-import styles from './styles.module.sass'
-import Editor from '../Editor'
-import { toggleEditorView } from '../../redux/slice/app'
-import {RootState} from '../../types'
-import { EditorView } from '../../types'
-import { formatScript, formatStyle } from '../../helper'
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import jszip from "jszip"
+import Filesaver from "file-saver"
+import styles from "./styles.module.sass"
+import Editor from "../Editor"
+import { toggleEditorView } from "../../redux/slice/app"
+import { RootState } from "../../types"
+import { EditorView } from "../../types"
+import { formatScript, formatStyle } from "../../helper"
 
 const zip = new jszip()
 
 const CodeView = () => {
-
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state.app)
-    const scriptFileName = app.config.scriptFileName + '.' + app.config.scriptType
-    const styleFileName = app.config.styleFileName + '.' + app.config.styleType
+    const scriptFileName =
+        app.config.scriptFileName + "." + app.config.scriptType
+    const styleFileName = app.config.styleFileName + "." + app.config.styleType
     const { scriptType, componentName, usingTestFile } = app.config
 
     const downloadFiles = () => {
         zip.file(scriptFileName, formatScript(app.output.script))
         zip.file(styleFileName, formatStyle(app.output.style))
-        if(usingTestFile)
-            zip.file(`index.test.${scriptType}`, '')
+        if (usingTestFile) zip.file(`index.test.${scriptType}`, "")
         zip.generateAsync({ type: "blob" }).then(function (content) {
-            Filesaver.saveAs(content, `${componentName}.zip`);
-        });
+            Filesaver.saveAs(content, `${componentName}.zip`)
+        })
     }
 
     const showScript = () => {
@@ -39,16 +37,33 @@ const CodeView = () => {
     }
 
     return (
-        <div style={{
-        }}>
+        <div style={{}}>
             <div className={styles.container}>
                 <div className={styles.switchers}>
-                    <button className={app.editorView === EditorView.Script ? styles.active : ''} onClick={showScript}>{scriptFileName}</button>
-                    <button className={app.editorView === EditorView.Style ? styles.active : ''} onClick={showStyle}>{styleFileName}</button>
+                    <button
+                        className={
+                            app.editorView === EditorView.Script
+                                ? styles.active
+                                : ""
+                        }
+                        onClick={showScript}
+                    >
+                        {scriptFileName}
+                    </button>
+                    <button
+                        className={
+                            app.editorView === EditorView.Style
+                                ? styles.active
+                                : ""
+                        }
+                        onClick={showStyle}
+                    >
+                        {styleFileName}
+                    </button>
                 </div>
-                <button
-                    className={styles.downloadZip}
-                    onClick={downloadFiles} >Download zip</button>
+                <button className={styles.downloadZip} onClick={downloadFiles}>
+                    Download zip
+                </button>
             </div>
             <Editor />
         </div>

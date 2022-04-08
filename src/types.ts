@@ -1,91 +1,88 @@
-
 export interface RootState {
-    app: App   
+    app: App
 }
 
 export enum StyleFormats {
     CSS = "css",
-    SASS = "sass"
+    SASS = "sass",
 }
 
 export enum ScriptFormats {
-    TS = 'ts',
-    JS = 'js'
+    TS = "ts",
+    JS = "js",
 }
 
 export enum ExportTypes {
     Named,
-    Default
+    Default,
 }
 
 export enum EditorView {
     Script,
-    Style
+    Style,
 }
 
 export enum typesDecleration {
     Interface,
-    Type
+    Type,
 }
 
-
 export interface TextObject {
-    text: string,
+    text: string
     key: string
 }
 export interface ComponentMemberProp {
-    className?: string,
+    className?: string
     style?: object
 }
 export interface ComponentMember {
-    title: string,
+    title: string
     text?: string
-    key: string,
-    props: ComponentMemberProp,
+    key: string
+    props: ComponentMemberProp
     children: ComponentMember[] | TextObject[]
 }
 
 export interface PropItem {
-    name: string,
-    type: string,
-    defaultValue?: string,
+    name: string
+    type: string
+    defaultValue?: string
     required?: boolean
 }
 
 export interface Config {
-    usingTestFile: boolean,
-    styleType: StyleFormats,
-    scriptType: ScriptFormats,
-    scriptFileName: string,
-    styleFileName: string,
-    exportType: ExportTypes,
-    propsList: PropItem[],
-    hooksList: string[],
-    componentName: string,
-    propDeclerationType: typesDecleration,
+    usingTestFile: boolean
+    styleType: StyleFormats
+    scriptType: ScriptFormats
+    scriptFileName: string
+    styleFileName: string
+    exportType: ExportTypes
+    propsList: PropItem[]
+    hooksList: string[]
+    componentName: string
+    propDeclerationType: typesDecleration
     propDisctruction: boolean
 }
-
 export interface Output {
     output: {
-        style: string,
-        script: string,
-        commands: { description: string, command: string }[]
+        style: string
+        script: string
+        commands: { description: string; command: string }[]
     }
 }
 
 export interface App extends Output {
-    openDrawer: boolean,
-    selectedKey: string,
+    openDrawer: boolean
+    selectedKey: string
     expandedKey: string[]
     searchQuery: {
-        value: string,
+        value: string
         exact: boolean
-    },
-    config: Config,
-    addChildTo: string,
-    inputKey: string,
-    map: ComponentMember[],
-    editorView: EditorView,
+    }
+    config: Config
+    addChildTo: string
+    inputKey: string
+    map: ComponentMember[]
+    editorView: EditorView
     refs: any[]
 }

@@ -1,29 +1,28 @@
-import React from 'react'
-import Slider from '../Slider'
-import ColorPicker from '../ColorPicker'
-import Select from '../Select'
-import useStyleValue from '../../hooks/useStyleValue'
-import useApplyStyle from '../../hooks/useApplyStyle'
-import { getNumbericValue } from '../../helper'
-import styles from './styles.module.sass'
+import Slider from "../Slider"
+import ColorPicker from "../ColorPicker"
+import Select from "../Select"
+import useStyleValue from "../../hooks/useStyleValue"
+import useApplyStyle from "../../hooks/useApplyStyle"
+import { getNumbericValue } from "../../helper"
+import styles from "./styles.module.sass"
 
 const borderStyleOptions = [
-    { value: 'solid', label: 'solid' },
-    { value: 'dashed', label: 'dashed' }
+    { value: "solid", label: "solid" },
+    { value: "dashed", label: "dashed" },
 ]
 
 const Border = () => {
     const applyStyle = useApplyStyle()
-    const borderString = useStyleValue('border') || '1px solid #eee'
-    const borderSplit = borderString.split(' ')
+    const borderString = useStyleValue("border") || "1px solid #eee"
+    const borderSplit = borderString.split(" ")
     let borderWidth: string = borderSplit[0]
     let borderStyle: string = borderSplit[1]
-    let borderColor: string = borderSplit.slice(2, borderSplit.length).join(' ')
+    let borderColor: string = borderSplit.slice(2, borderSplit.length).join(" ")
     const handleChange = (index: number, value): void => {
         switch (index) {
             case 0:
-                borderWidth = value + 'px'
-                break;
+                borderWidth = value + "px"
+                break
             case 1:
                 borderStyle = value
                 break
@@ -32,32 +31,31 @@ const Border = () => {
                 break
         }
         const finalBorderValue = `${borderWidth} ${borderStyle} ${borderColor}`
-        applyStyle('border', finalBorderValue)
+        applyStyle("border", finalBorderValue)
     }
 
     return (
         <>
             <div className={styles.container}>
                 <Slider
-                    label={'Border with'}
+                    label={"Border with"}
                     value={getNumbericValue(borderWidth)}
-                    onChange={value => handleChange(0, value)}
+                    onChange={(value) => handleChange(0, value)}
                 />
                 <Select
                     value={borderStyle}
-                    label={'Border style'}
+                    label={"Border style"}
                     options={borderStyleOptions}
-                    onChange={value => handleChange(1, value)}
+                    onChange={(value) => handleChange(1, value)}
                 />
             </div>
             <ColorPicker
-                label='Border Color'
+                label="Border Color"
                 value={borderColor}
-                onChange={value => handleChange(2, value)}
+                onChange={(value) => handleChange(2, value)}
             />
         </>
-
     )
 }
 
-export default Border 
+export default Border

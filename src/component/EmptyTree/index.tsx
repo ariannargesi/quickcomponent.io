@@ -1,9 +1,8 @@
-import React from 'react'
-import { Plus } from 'react-feather'
-import useToggleDrawer from '../../hooks/useToggleDrawer'
-import styles from './styles.module.sass'
+import { Plus } from "react-feather"
+import useToggleDrawer from "../../hooks/useToggleDrawer"
+import styles from "./styles.module.sass"
 
-let imNot = 'Check for this'
+let imNot = "Check for this"
 
 const EmptyTree = () => {
     const toggleDrawer = useToggleDrawer()
