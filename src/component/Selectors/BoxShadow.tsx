@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import Slider from "../Slider"
 import { ChevronDown, ChevronRight } from "react-feather"
 import style from "./styles.module.sass"
@@ -11,9 +11,9 @@ const WidthAndHeight = () => {
 
     const [showMore, setShowMore] = useState(true)
 
-    let shadow =
+    const shadow =
         useStyleValue("boxShadow") || "2px 2px 2px 4px rgba(128,154,145, 0.5)"
-    let shadowPieces: string[] = shadow.split("px")
+    const shadowPieces: string[] = shadow.split("px")
 
     const horzontalOffest = Number(shadowPieces[0])
     const verticalOffste = Number(shadowPieces[1])
@@ -24,7 +24,7 @@ const WidthAndHeight = () => {
     const handleToggle = () => setShowMore(!showMore)
 
     function updateShadow(index: number, value) {
-        let shadowPieces: string[] = shadow.split("px")
+        const shadowPieces: string[] = shadow.split("px")
         switch (index) {
             case 0:
                 shadowPieces[0] = value
@@ -43,7 +43,7 @@ const WidthAndHeight = () => {
                 break
         }
 
-        let shadowString: string = shadowPieces.join("px ")
+        const shadowString: string = shadowPieces.join("px ")
         applyStyle("boxShadow", shadowString)
     }
 

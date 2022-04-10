@@ -1,9 +1,8 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Output from "../Output"
 import CodeConfig from "../CodeConfig"
 import { generateCode } from "../../redux/slice/app"
-import { useNavigate } from "react-router-dom"
 const style = {
     container: {
         width: "1200px",
@@ -15,16 +14,13 @@ const style = {
     },
 }
 
-const Export = (props: any) => {
+const Export = () => {
+
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    
     useEffect(() => {
         dispatch(generateCode())
     }, [])
-
-    const goBack = () => {
-        navigate(-1)
-    }
 
     return (
         <div style={style.container}>
@@ -36,7 +32,6 @@ const Export = (props: any) => {
                     <Output />
                 </div>
             </div>
-            {/* <Footer/> */}
         </div>
     )
 }

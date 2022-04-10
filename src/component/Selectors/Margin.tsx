@@ -1,22 +1,17 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import Slider from "../Slider"
 import style from "./styles.module.sass"
-import Radio from "../Radio"
 import { ChevronDown, ChevronUp } from "react-feather"
-import { Collapse } from "antd"
-import { useDispatch, useSelector } from "react-redux"
-import { applyStyle } from "../../redux/slice/app"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
 
 const Margin = () => {
-    const dispatch = useDispatch()
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
 
     const marginString = useStyleValue("margin") || "0px"
-    let marginSplit = marginString.split(" ")
+    const marginSplit = marginString.split(" ")
 
     let marginDefaultValues = {
         top: "0px",

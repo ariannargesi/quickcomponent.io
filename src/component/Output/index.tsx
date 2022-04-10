@@ -9,7 +9,6 @@ import { RootState } from "../../types"
 import { EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
 
-const zip = new jszip()
 
 const CodeView = () => {
     const dispatch = useDispatch()
@@ -20,6 +19,7 @@ const CodeView = () => {
     const { scriptType, componentName, usingTestFile } = app.config
 
     const downloadFiles = () => {
+        const zip = new jszip()
         zip.file(scriptFileName, formatScript(app.output.script))
         zip.file(styleFileName, formatStyle(app.output.style))
         if (usingTestFile) zip.file(`index.test.${scriptType}`, "")

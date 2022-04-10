@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Button, Checkbox } from "antd"
 import { ColorPicker as ReacetColorPicker } from "react-color-gradient-picker"
 import ColorBox from "../ColorBox"

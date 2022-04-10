@@ -1,5 +1,4 @@
 import { Select } from "antd"
-import { useDispatch } from "react-redux"
 import Slider from "../Slider"
 import style from "./styles.module.sass"
 import useApplyStyle from "../../hooks/useApplyStyle"
@@ -15,13 +14,14 @@ const options = [
 ]
 
 const Positions = () => {
-    const applyStyle = useApplyStyle()
 
-    let position = useStyleValue("position")
-    let top = useStyleValue("top")
-    let bottom = useStyleValue("bottom")
-    let right = useStyleValue("right")
-    let left = useStyleValue("left")
+    const applyStyle = useApplyStyle()
+    const position = useStyleValue("position")
+    const top = useStyleValue("top")
+    const bottom = useStyleValue("bottom")
+    const right = useStyleValue("right")
+    const left = useStyleValue("left")
+
     return (
         <div className={styles.container}>
             <span className={style.label}>Position</span>

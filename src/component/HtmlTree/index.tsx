@@ -9,7 +9,7 @@ import {
     setInputAtKey,
 } from "../../redux/slice/app"
 import Action from "./Action"
-import { RootState } from "../../types"
+import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
 
 function formatMap(html) {
@@ -22,7 +22,7 @@ function formatMap(html) {
     return html
 }
 
-const Title = (props: { data: any }) => {
+const Title = (props: { data: ComponentMember }) => {
     // This component is responsible for rendering the title of tree members.
     // If the member is a text node, with clicking on it, the title get replaced with an input
     // and you can update the inner text
@@ -79,7 +79,7 @@ const HtmlTree = () => {
     const app = useSelector((state: RootState) => state.app)
     const { map, expandedKey } = app
 
-    let formattedData = formatMap(JSON.parse(JSON.stringify(map)))
+    const formattedData = formatMap(JSON.parse(JSON.stringify(map)))
 
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
@@ -117,7 +117,11 @@ const HtmlTree = () => {
                 draggable
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelection}
-                titleRender={(nodeData) => <Title data={nodeData} />}
+                titleRender={(nodeData: ComponentMember) => {
+                    console.log('Node data')
+                    console.log(nodeData)
+                    return <Title data={nodeData} />
+                }}
             />
         </div>
     )

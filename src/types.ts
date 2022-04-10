@@ -75,14 +75,9 @@ export interface App extends Output {
     openDrawer: boolean
     selectedKey: string
     expandedKey: string[]
-    searchQuery: {
-        value: string
-        exact: boolean
-    }
     config: Config
     addChildTo: string
     inputKey: string
     map: ComponentMember[]
     editorView: EditorView
-    refs: any[]
 }

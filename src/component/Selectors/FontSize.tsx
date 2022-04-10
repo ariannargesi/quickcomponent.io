@@ -1,6 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
 import styles from "./styles.module.sass"
-import Radio from "../Radio"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue, getUnit } from "../../helper"

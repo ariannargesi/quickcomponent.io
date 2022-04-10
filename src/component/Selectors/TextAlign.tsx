@@ -1,8 +1,6 @@
 import { AlignLeft, AlignCenter, AlignRight } from "react-feather"
-import { useDispatch } from "react-redux"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
-import { applyStyle } from "../../redux/slice/app"
 import style from "./styles.module.sass"
 
 const TextAlign = () => {

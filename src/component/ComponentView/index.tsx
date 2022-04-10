@@ -9,7 +9,7 @@ const ComponentView = () => {
     return (
         <div
             style={{
-                padding: "16px",
+                padding: "16px",    
                 height: "100%",
                 display: "flex",
                 flex: "1",

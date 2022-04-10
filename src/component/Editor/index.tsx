@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import AceEditor from "react-ace"
 import { useSelector } from "react-redux"
 import { Clipboard, Check } from "react-feather"
@@ -7,7 +7,6 @@ import { RootState } from "../../types"
 import { StyleFormats, EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
 import styles from "./styles.module.sass"
-
 import "ace-builds/src-noconflict/mode-javascript"
 import "ace-builds/src-noconflict/mode-css"
 import "ace-builds/src-noconflict/mode-sass"

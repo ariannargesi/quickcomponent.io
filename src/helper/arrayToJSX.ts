@@ -1,6 +1,6 @@
 const arrayToJSX = (html) => {
     return html
-        .map((el, index) => {
+        .map((el) => {
             if (el.text) return el.text
             const className =
                 el.props.className && el.props.style

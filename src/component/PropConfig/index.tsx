@@ -1,15 +1,14 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Input, Button, Select } from "antd"
 import { Switch, Modal } from "antd"
 import { useSelector } from "react-redux"
 import isVarName from "is-var-name"
 import { Trash } from "react-feather"
-import { RootState } from "../../types"
-import { ScriptFormats } from "../../types"
+import { PropItem, RootState, ScriptFormats } from "../../types"
 import styles from "./styles.module.sass"
 const { Option } = Select
 
-let types_types = [
+const types_types = [
     "array",
     "bigint",
     "bool",
@@ -24,7 +23,7 @@ let types_types = [
     "any",
 ]
 
-let tsx_types = [
+const tsx_types = [
     "string",
     "number",
     "boolean",
@@ -37,7 +36,7 @@ let tsx_types = [
 ]
 
 interface Prop {
-    onConfirm: any
+    onConfirm: (list: PropItem[]) => void 
 }
 
 // form initial state

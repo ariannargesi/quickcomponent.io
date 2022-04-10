@@ -1,12 +1,13 @@
 import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
+
 export function cssToCamelCase(string) {
     /*
      * input: "border-radius"
      * output: borderRadius
      * */
-    let charsArray = string.split("")
+    const charsArray = string.split("")
 
     string.split("").map((character, index) => {
         if (character === "-" && index != 0) {
@@ -14,7 +15,7 @@ export function cssToCamelCase(string) {
         }
     })
 
-    let resultString = charsArray
+    const resultString = charsArray
         .filter((character) => character != "-")
         .join("")
     return resultString

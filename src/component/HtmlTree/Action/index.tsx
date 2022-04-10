@@ -1,7 +1,5 @@
-import React, { useEffect } from "react"
 import { Plus, Trash } from "react-feather"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../../types"
+import { useDispatch } from "react-redux"
 import {
     deleteNode,
     selectElementForAddingChild,
@@ -16,7 +14,6 @@ const iconSize = 17
 const Action = (props: Props) => {
     const toggleDrawer = useToggleDrawer()
     const dispatch = useDispatch()
-    const selectedKey = useSelector((State: RootState) => State.app.selectedKey)
     const key = props.elementKey
 
     function addChild() {

@@ -1,5 +1,4 @@
 import styles from "./styles.module.sass"
-import { Link } from "react-router-dom"
 import { GitHub } from "react-feather"
 
 const url = "https://github.com/ariannargesi/quickcomponent"

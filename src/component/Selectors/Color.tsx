@@ -1,7 +1,6 @@
 import ColorPicker from "../ColorPicker"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
-import styles from "../StyleSelectors/styles.module.sass"
 
 const Color = () => {
     const applyStyle = useApplyStyle()

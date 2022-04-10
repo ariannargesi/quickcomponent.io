@@ -1,9 +1,12 @@
 import { Select } from "antd"
+import { LabeledValue } from "antd/lib/select"
+
 import style from "../Selectors/styles.module.sass"
+
 const Component = (props: {
     label: string
     onChange: (value: string | number) => void
-    options: any
+    options: LabeledValue[]
     value: string | number
 }) => {
     return (

@@ -1,51 +1,46 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import Slider from "../Slider"
 import style from "./styles.module.sass"
-import Radio from "../Radio"
 import { ChevronDown, ChevronUp } from "react-feather"
-import { Collapse } from "antd"
-import { useDispatch, useSelector } from "react-redux"
-import { applyStyle } from "../../redux/slice/app"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
 
 const Padding = () => {
-    const dispatch = useDispatch()
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
 
-    const marginString = useStyleValue("padding") || "0px"
-    let marginSplit = marginString.split(" ")
+    const paddingString = useStyleValue("padding") || "0px"
+    const paddingSplit = paddingString.split(" ")
 
-    let marginDefaultValues = {
+    let paddingDefaultValues = {
         top: "0px",
         bottom: "0px",
         right: "0px",
         left: "0px",
     }
 
-    if (marginSplit.length === 1) {
-        const m = marginSplit[0]
-        marginDefaultValues = {
+    if (paddingSplit.length === 1) {
+        const m = paddingSplit[0]
+        paddingDefaultValues = {
             top: m,
             bottom: m,
             left: m,
             right: m,
         }
-    } else if (marginSplit.length == 2) {
-        marginDefaultValues = {
-            top: marginSplit[0],
-            bottom: marginSplit[0],
-            left: marginSplit[1],
-            right: marginSplit[1],
+    } else if (paddingSplit.length == 2) {
+        paddingDefaultValues = {
+            top: paddingSplit[0],
+            bottom: paddingSplit[0],
+            left: paddingSplit[1],
+            right: paddingSplit[1],
         }
-    } else if (marginSplit.length == 4) {
-        marginDefaultValues = {
-            top: marginSplit[0],
-            right: marginSplit[1],
-            bottom: marginSplit[2],
-            left: marginSplit[3],
+    } else if (paddingSplit.length == 4) {
+        paddingDefaultValues = {
+            top: paddingSplit[0],
+            right: paddingSplit[1],
+            bottom: paddingSplit[2],
+            left: paddingSplit[3],
         }
     }
     const handleToggle = () => setShowMore(!showMore)
@@ -57,23 +52,23 @@ const Padding = () => {
                 finalValue = value + "px"
                 break
             case "right":
-                marginDefaultValues.right = value + "px"
+                paddingDefaultValues.right = value + "px"
                 break
             case "top":
-                marginDefaultValues.top = value + "px"
+                paddingDefaultValues.top = value + "px"
                 break
             case "bottom":
-                marginDefaultValues.bottom = value + "px"
+                paddingDefaultValues.bottom = value + "px"
                 break
             case "left":
-                marginDefaultValues.left = value + "px"
+                paddingDefaultValues.left = value + "px"
         }
 
-        let finalMargin
-        if (finalValue) finalMargin = finalValue
+        let finalPadding
+        if (finalValue) finalPadding = finalValue
         else
-            finalMargin = `${marginDefaultValues.top} ${marginDefaultValues.right} ${marginDefaultValues.bottom} ${marginDefaultValues.left}`
-        applyStyle("padding", finalMargin)
+            finalPadding = `${paddingDefaultValues.top} ${paddingDefaultValues.right} ${paddingDefaultValues.bottom} ${paddingDefaultValues.left}`
+        applyStyle("padding", finalPadding)
     }
 
     return (
@@ -82,8 +77,8 @@ const Padding = () => {
                 <Slider
                     label="Padding"
                     value={
-                        marginSplit.length === 1
-                            ? getNumbericValue(marginSplit[0])
+                        paddingSplit.length === 1
+                            ? getNumbericValue(paddingSplit[0])
                             : 0
                     }
                     onChange={(value) => {
@@ -99,7 +94,7 @@ const Padding = () => {
                         <Slider
                             labelInline
                             label="Top"
-                            value={getNumbericValue(marginDefaultValues.top)}
+                            value={getNumbericValue(paddingDefaultValues.top)}
                             onChange={(value) => {
                                 handleChange("top", value)
                             }}
@@ -107,7 +102,7 @@ const Padding = () => {
                         <Slider
                             labelInline
                             label="Right"
-                            value={getNumbericValue(marginDefaultValues.right)}
+                            value={getNumbericValue(paddingDefaultValues.right)}
                             onChange={(value) => {
                                 handleChange("right", value)
                             }}
@@ -115,7 +110,7 @@ const Padding = () => {
                         <Slider
                             labelInline
                             label="Bottom"
-                            value={getNumbericValue(marginDefaultValues.bottom)}
+                            value={getNumbericValue(paddingDefaultValues.bottom)}
                             onChange={(value) => {
                                 handleChange("bottom", value)
                             }}
@@ -123,7 +118,7 @@ const Padding = () => {
                         <Slider
                             labelInline
                             label="Left"
-                            value={getNumbericValue(marginDefaultValues.left)}
+                            value={getNumbericValue(paddingDefaultValues.left)}
                             onChange={(value) => {
                                 handleChange("left", value)
                             }}

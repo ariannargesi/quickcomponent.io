@@ -6,8 +6,6 @@ import {
     PropItem,
     StyleFormats,
     ScriptFormats,
-    ExportTypes,
-    EditorView,
     typesDecleration,
 } from "../types"
 interface ScriptGeneratorConfig {
@@ -184,7 +182,7 @@ function generateSASS(map: ComponentMember[]): string {
     const arrayToComponent = (html, indent = 0) => {
         if (Array.isArray(html) === false) return
         return html.forEach((el) => {
-            let indentStr = indentGenerator(indent)
+            const indentStr = indentGenerator(indent)
             if (el.props === undefined) return
             if (el.props.style) {
                 str += `${indentStr}.${el.props.className}\n${objectToStyle(

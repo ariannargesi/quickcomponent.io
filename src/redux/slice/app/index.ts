@@ -1,4 +1,4 @@
-import { createSlice, current, nanoid } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import {
     findNodeInTree,
     deleteNodeInTree,
@@ -15,21 +15,16 @@ import {
     EditorView,
 } from "../../../types"
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
-
 import { App, typesDecleration } from "../../../types"
+import initialMap from '../../../welcome-map'
 
 const initialState: App = {
     openDrawer: false,
-    selectedKey: "TpBr6w7RzTKfFA0Um2BW5",
+    selectedKey: initialMap[0].key,
     expandedKey: [],
-    searchQuery: {
-        value: "",
-        exact: false,
-    },
     addChildTo: null,
     inputKey: null,
-    refs: [],
-    map: [],
+    map: initialMap,
     config: {
         usingTestFile: true,
         scriptType: ScriptFormats.TS,
@@ -55,11 +50,6 @@ const counterSlice = createSlice({
     name: "map",
     initialState,
     reducers: {
-        initiateMap: (state, action) => {
-            const map = action.payload.map
-            state.map = map
-            state.selectedKey = map[0].key
-        },
         moveElementInTree: (state, action) => {
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
             findNodeInTree(state.map, dragKey, (dargNode) => {
@@ -131,7 +121,6 @@ const counterSlice = createSlice({
             } else {
                 const elemetn = action.payload.element
                 const elementKey = elemetn.key
-                const elementChildren = elemetn.children
                 state.expandedKey.push(state.addChildTo, elementKey)
                 addNode(state.map, state.addChildTo, action.payload.element)
             }
@@ -144,13 +133,6 @@ const counterSlice = createSlice({
         },
         updateTreeInputValue: (state, action) => {
             updateNodeTitle(state.map, state.inputKey, action.payload.value)
-        },
-        updateSearchQuery: (state, action) => {
-            const { value, exact } = action.payload
-            state.searchQuery.value = value
-        },
-        addRef: (state, action) => {
-            state.refs.push(action.payload.ref)
         },
         removeStyle: (state, action) => {
             const property = action.payload
@@ -166,7 +148,6 @@ const counterSlice = createSlice({
 })
 
 export const {
-    initiateMap,
     moveElementInTree,
     changeSelectedElement,
     applyStyle,
@@ -178,8 +159,6 @@ export const {
     setInputAtKey,
     clearInputAtKey,
     updateTreeInputValue,
-    updateSearchQuery,
-    addRef,
     generateCode,
     removeStyle,
     updateExpandedkeys,
