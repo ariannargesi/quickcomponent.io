@@ -31,7 +31,6 @@ function getStyles(key: string, html: ComponentMember[]): ComponentMember {
     findNodeInTree(html, key, (value) => {
         res = value
     })
-
     if (!res) return null
     else if (res.props?.style) return res.props.style
 }

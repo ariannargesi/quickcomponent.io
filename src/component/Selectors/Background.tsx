@@ -4,15 +4,15 @@ import useStyleValue from "../../hooks/useStyleValue"
 
 const BackgroundColor = () => {
     const applyStyle = useApplyStyle()
-    const color = useStyleValue("backgroundColor")
+    const color = useStyleValue("background")
 
     return (
         <ColorPicker
-            label="Background color"
+            label="Background"
             allowGradient
             value={color}
             onChange={(value) => {
-                applyStyle("backgroundColor", value)
+                applyStyle("background", value)
             }}
         />
     )

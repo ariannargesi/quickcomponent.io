@@ -8,7 +8,7 @@ const ColorBox = (props: Props) => {
     const { color, onClick } = props
     return (
         <div className={styles.container} onClick={onClick}>
-            <div style={{ backgroundColor: color }} />
+            <div style={{ background: color }} />
         </div>
     )
 }
