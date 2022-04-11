@@ -16,7 +16,7 @@ import {
 } from "../../../types"
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
 import { App, typesDecleration } from "../../../types"
-import initialMap from '../../../welcome-map'
+import initialMap from "../../../welcome-map"
 
 const initialState: App = {
     openDrawer: false,

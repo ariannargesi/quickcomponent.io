@@ -110,7 +110,9 @@ const Padding = () => {
                         <Slider
                             labelInline
                             label="Bottom"
-                            value={getNumbericValue(paddingDefaultValues.bottom)}
+                            value={getNumbericValue(
+                                paddingDefaultValues.bottom
+                            )}
                             onChange={(value) => {
                                 handleChange("bottom", value)
                             }}

@@ -1,7 +1,7 @@
 import styles from "./styles.module.sass"
 interface Props {
     color: string
-    onClick: (value) => void 
+    onClick: (value) => void
 }
 
 const ColorBox = (props: Props) => {

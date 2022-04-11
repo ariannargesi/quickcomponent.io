@@ -9,7 +9,6 @@ import { RootState } from "../../types"
 import { EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
 
-
 const CodeView = () => {
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state.app)
@@ -21,7 +20,10 @@ const CodeView = () => {
     const downloadFiles = () => {
         const zip = new jszip()
         zip.file(scriptFileName, formatScript(app.output.script))
-        zip.file(styleFileName, formatStyle(app.output.style, app.config.styleType))
+        zip.file(
+            styleFileName,
+            formatStyle(app.output.style, app.config.styleType)
+        )
         if (usingTestFile) zip.file(`index.test.${scriptType}`, "")
         zip.generateAsync({ type: "blob" }).then(function (content) {
             Filesaver.saveAs(content, `${componentName}.zip`)

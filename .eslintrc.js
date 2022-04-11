@@ -5,8 +5,9 @@ module.exports = {
         node: true,
     },
     extends: [
-        "plugin:@typescript-eslint/eslint-recommended",  
-        "plugin:@typescript-eslint/recommended"],
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+    ],
     parserOptions: {
         ecmaFeatures: {
             jsx: true,
@@ -18,7 +19,7 @@ module.exports = {
     rules: {
         "react/jsx-key": "warn",
         "no-prototype-builtins": "warn",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
     },
     overrides: [
         {

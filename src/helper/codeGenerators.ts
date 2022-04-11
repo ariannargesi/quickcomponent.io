@@ -86,7 +86,6 @@ export const scriptGenerator = (config: ScriptGeneratorConfig) => {
     component += "\n"
     component += ")"
     component += "\n"
-    
     component += "}"
     component += "\n"
 
@@ -107,8 +106,6 @@ export const scriptGenerator = (config: ScriptGeneratorConfig) => {
         temp += "}"
         component += temp
     }
-    component += "\n"
-
     return component
 }
 
@@ -172,7 +169,7 @@ const generateCSS = (map: ComponentMember[]): string => {
         })
     }
     giveMeCSS(map)
-    return str 
+    return str
 }
 
 function generateSASS(map: ComponentMember[]): string {

@@ -36,7 +36,7 @@ const tsx_types = [
 ]
 
 interface Prop {
-    onConfirm: (list: PropItem[]) => void 
+    onConfirm: (list: PropItem[]) => void
 }
 
 // form initial state

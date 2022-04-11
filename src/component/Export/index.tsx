@@ -15,9 +15,8 @@ const style = {
 }
 
 const Export = () => {
-
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         dispatch(generateCode())
     }, [])

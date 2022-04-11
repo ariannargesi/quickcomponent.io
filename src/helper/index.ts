@@ -147,8 +147,6 @@ export function formatScript(str: string): string {
 }
 
 export function formatStyle(str: string, format: StyleFormats): string {
-    if(format === StyleFormats.SASS)
-        return str 
-    else         
-        return prettier.format(str, { parser: "css", plugins: [css] })
+    if (format === StyleFormats.SASS) return str
+    else return prettier.format(str, { parser: "css", plugins: [css] })
 }
