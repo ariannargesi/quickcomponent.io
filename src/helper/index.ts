@@ -1,6 +1,7 @@
 import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
+import { StyleFormats } from "../types"
 
 export function cssToCamelCase(string) {
     /*
@@ -145,6 +146,9 @@ export function formatScript(str: string): string {
     })
 }
 
-export function formatStyle(str: string): string {
-    return prettier.format(str, { parser: "css", plugins: [css] })
+export function formatStyle(str: string, format: StyleFormats): string {
+    if(format === StyleFormats.SASS)
+        return str 
+    else         
+        return prettier.format(str, { parser: "css", plugins: [css] })
 }

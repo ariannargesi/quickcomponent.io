@@ -1,5 +1,3 @@
-import prettier from "prettier/standalone"
-import css from "prettier/parser-postcss"
 import arrayToJSx from "../helper/arrayToJSX"
 import {
     ComponentMember,
@@ -88,7 +86,7 @@ export const scriptGenerator = (config: ScriptGeneratorConfig) => {
     component += "\n"
     component += ")"
     component += "\n"
-
+    
     component += "}"
     component += "\n"
 
@@ -174,7 +172,7 @@ const generateCSS = (map: ComponentMember[]): string => {
         })
     }
     giveMeCSS(map)
-    return prettier.format(str, { parser: "css", plugins: [css] })
+    return str 
 }
 
 function generateSASS(map: ComponentMember[]): string {

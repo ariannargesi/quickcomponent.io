@@ -19,7 +19,7 @@ const Editor = () => {
         // get code depend on eidtor view
         if (state.app.editorView === EditorView.Script)
             return formatScript(state.app.output.script)
-        else return formatStyle(state.app.output.style)
+        else return formatStyle(state.app.output.style, app.config.styleType)
     })
 
     let mode

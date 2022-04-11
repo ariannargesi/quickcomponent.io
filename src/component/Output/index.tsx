@@ -21,7 +21,7 @@ const CodeView = () => {
     const downloadFiles = () => {
         const zip = new jszip()
         zip.file(scriptFileName, formatScript(app.output.script))
-        zip.file(styleFileName, formatStyle(app.output.style))
+        zip.file(styleFileName, formatStyle(app.output.style, app.config.styleType))
         if (usingTestFile) zip.file(`index.test.${scriptType}`, "")
         zip.generateAsync({ type: "blob" }).then(function (content) {
             Filesaver.saveAs(content, `${componentName}.zip`)
