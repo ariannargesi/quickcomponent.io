@@ -73,7 +73,6 @@ const PropConfig = (props: Prop) => {
         const nameAlreadyExist =
             propsList.filter((item) => item.name === value).length > 0
         if (nameAlreadyExist) {
-            console.log("prop already exsit")
             setError(true)
             setErrorMessage(`"${value}" already exist`)
             return

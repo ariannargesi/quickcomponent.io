@@ -97,7 +97,6 @@ const HtmlTree = () => {
     }
 
     const handleElementSelection = (value, e) => {
-        console.log("Tagname")
         if (e.nativeEvent.srcElement.tagName != "DIV") return
         if (value.length != 0)
             dispatch(changeSelectedElement({ key: value[0] }))
@@ -118,8 +117,6 @@ const HtmlTree = () => {
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelection}
                 titleRender={(nodeData: ComponentMember) => {
-                    console.log('Node data')
-                    console.log(nodeData)
                     return <Title data={nodeData} />
                 }}
             />
