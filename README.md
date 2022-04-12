@@ -1,6 +1,6 @@
 # Quickcomponent.io
 
-This website speed up your component creation process with React.js. Modify content, styles of the elements and click on export button to recive your compnent code with your custom configuration.
+This website speed up your component creation process with React.js. Modify content, styles of the elements and click on export button to receive your component code with your custom configurations.
 
 ## How to use 
 First open website [here](http://quickcomponent.io)
