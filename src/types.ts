@@ -36,13 +36,12 @@ export interface ComponentMemberProp {
     style?: object
 }
 export interface ComponentMember {
-    title: string
+    title?: string
     text?: string
     key: string
-    props: ComponentMemberProp
-    children: ComponentMember[] | TextObject[]
+    props?: ComponentMemberProp
+    children?: ComponentMember[]
 }
-
 export interface PropItem {
     name: string
     type: string

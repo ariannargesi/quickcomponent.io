@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import arrayToComponent from "../../helper/arrayToComponent"
+import { arrayToComponent } from "../../helper/codeGenerators"
 import { RootState } from "../../types"
 
 const ComponentView = () => {

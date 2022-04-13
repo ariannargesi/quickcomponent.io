@@ -1,4 +1,5 @@
-import arrayToJSx from "../helper/arrayToJSX"
+import React from "react"
+
 import {
     ComponentMember,
     PropItem,
@@ -6,6 +7,7 @@ import {
     ScriptFormats,
     typesDecleration,
 } from "../types"
+
 interface ScriptGeneratorConfig {
     componentName: string
     propsList: PropItem[]
@@ -16,6 +18,48 @@ interface ScriptGeneratorConfig {
     hooksList: string[]
     map: ComponentMember[]
 }
+
+const generateHooksList = (list: string[]): string => {
+    // prettier automaticlly remove comma from last imported item
+    return list.join(", ")
+}
+
+const generateTypeSscriptProps = (list: PropItem[]): string => {
+    let value = "interface Prop {"
+    list.forEach((item) => {
+        value += `${item.name} ${item.required ? "" : "?"}: ${item.type};`
+    })
+    value += "}"
+    return value
+}
+
+const generateJavascriptProps = (
+    list: PropItem[],
+    componentName: string
+): string => {
+    let value = ""
+    value += `${componentName}.propTypes  = {`
+    value += "\n"
+    list.forEach((item) => {
+        value += `${item.name}: propTypes.${item.type}${
+            item.required ? ".isRequired" : ""
+        },`
+        value += "\n"
+    })
+    value += "}"
+    return value
+}
+
+const extractItemsFromProps = (list: PropItem[]): string => {
+    // prettier automaticlly remove comma from last imported item
+    let value = "const {"
+    list.forEach((item) => {
+        value += item.name + ","
+    })
+    value += "} = props"
+    return value
+}
+
 export const scriptGenerator = (config: ScriptGeneratorConfig) => {
     const {
         componentName,
@@ -26,110 +70,94 @@ export const scriptGenerator = (config: ScriptGeneratorConfig) => {
         hooksList,
         map,
     } = config
-    let component = ""
-    if (hooksList.length === 0) component += `import React from 'react'`
-    else {
-        let temp = ""
-        hooksList.forEach((item, index) => {
-            temp += item
-            if (hooksList.length - 1 != index) temp += ","
-        })
-        component += `import React, {${temp}} from 'react'`
+
+    let componentString = ""
+
+    const newLine = (): void => {
+        componentString += "\n"
     }
 
-    component += "\n"
-    if (scriptType === "js" && propsList.length > 0) {
-        component += `import PropTypes from "prop-types"`
-        component += "\n"
+    const noHook = hooksList.length === 0
+    const propsExsit = propsList.length > 0
+
+    // Start: Import section
+    if (noHook) componentString += `import React from 'react'`
+    else
+        componentString += `import React, {${generateHooksList(
+            hooksList
+        )}} from 'react'`
+
+    newLine()
+
+    if (scriptType === ScriptFormats.JS && propsExsit) {
+        componentString += `import PropTypes from "prop-types"`
+        newLine()
     }
 
-    if (styleType === "sass") component += `import "./style.sass"`
-    else if (styleType === "css") component += `import "./style.css"`
-
-    component += "\n"
-
-    if (scriptType === "ts" && propsList.length > 0) {
-        let temp = ""
-        temp += "interface"
-        temp += " Props {"
-        temp += "\n"
-        propsList.map((item, index) => {
-            temp += `${item.name} ${item.required ? "" : "?"}: ${item.type}`
-            if (propsList.length - 1 != index) temp += ","
-            temp += "\n"
-        })
-        temp += "}"
-        component += temp
+    switch (styleType) {
+        case StyleFormats.SASS:
+            componentString += `import "./style.sass"`
+            break
+        case StyleFormats.CSS:
+            componentString += `import "./style.css"`
     }
-    component += "\n"
 
-    component += `const ${componentName} = (props${
+    newLine()
+
+    // Typescript props
+    if (scriptType === ScriptFormats.TS && propsExsit) {
+        newLine()
+        componentString += generateTypeSscriptProps(propsList)
+        newLine()
+    }
+
+    newLine()
+
+    // Main component
+    componentString += `const ${componentName} = (props${
         scriptType === "ts" ? ":Props" : ""
-    })${scriptType === "ts" ? ":React.ReactNode" : ""}`
-    component += "=> {"
-    component += "\n"
+    })${scriptType === "ts" ? ":React.ReactNode" : ""} => {`
 
-    if (propsDistruction) {
-        let temp = "const {"
-        propsList.forEach((item, index) => {
-            temp += item.name
-            if (propsList.length - 1 != index) temp += ","
-        })
-        temp += "} = props"
-        component += temp
+    newLine()
+
+    if (propsDistruction) componentString += extractItemsFromProps(propsList)
+
+    newLine()
+
+    componentString += `retrun (${arrayToJSX(map)})}`
+
+    newLine()
+
+    componentString += `export default ${componentName}`
+
+    newLine()
+
+    // Javascript props
+    if (scriptType === ScriptFormats.JS && propsExsit) {
+        newLine()
+        componentString += generateJavascriptProps(propsList, componentName)
     }
-
-    component += "\n"
-    component += "retrun ("
-    component += "\n"
-    component += arrayToJSx(map)
-    component += "\n"
-    component += ")"
-    component += "\n"
-    component += "}"
-    component += "\n"
-
-    component += `export default ${componentName}`
-
-    if (scriptType === "js" && propsList.length > 0) {
-        component += "\n"
-        let temp = ""
-        temp += `${componentName}.propTypes  = {`
-        temp += "\n"
-        propsList.map((item, index) => {
-            temp += `${item.name}: propTypes.${item.type}${
-                item.required ? ".isRequired" : ""
-            }`
-            if (propsList.length - 1 != index) temp += ","
-            temp += "\n"
-        })
-        temp += "}"
-        component += temp
-    }
-    return component
+    return componentString
 }
 
 const indentGenerator = (num) => {
-    let str = ""
-    for (let c = 1; c <= num; c++) {
-        str += "\xa0"
-    }
-    return str
+    let value = ""
+    for (let c = 1; c <= num; c++) value += "\xa0"
+    return value
 }
 
-function objectToStyle(object, semi, indent = undefined) {
+const objectToStyle = (object, semi, indent = undefined) => {
     /*
     input: borderRadius: "40px"
     output: border-radius: 40px 
     * */
     const keys = Object.keys(object)
     const values = Object.values(object)
-    let main = ""
-
-    keys.map((key, index) => {
+    let value = ""
+    keys.forEach((key, index) => {
         let currentLine = ""
-        if (indent != undefined) main += indentGenerator(indent)
-        key.split("").map((char) => {
+        if (indent != undefined) value += indentGenerator(indent)
+        key.split("").forEach((char) => {
             if (char === char.toUpperCase())
                 currentLine += "-" + char.toLowerCase()
             else currentLine += char
@@ -138,9 +166,9 @@ function objectToStyle(object, semi, indent = undefined) {
         currentLine += values[index]
         if (semi) currentLine += ";"
         currentLine += "\n"
-        main += currentLine
+        value += currentLine
     })
-    return main
+    return value
 }
 
 export const styleGenerator = (
@@ -152,43 +180,68 @@ export const styleGenerator = (
 }
 
 const generateCSS = (map: ComponentMember[]): string => {
-    let str = ""
-    function giveMeCSS(html) {
-        if (Array.isArray(html) === false) return
-        return html.map((el) => {
+    let value = ""
+        map.forEach((el) => {
             if (el.props === undefined) return
             if (el.props.style) {
-                str +=
+                value +=
                     "." +
                     el.props.className +
                     "{\n" +
                     objectToStyle(el.props.style, true) +
-                    "}\n"
+                    "}"
             }
-            giveMeCSS(el.children)
+            value += generateCSS(el.children)
         })
-    }
-    giveMeCSS(map)
-    return str
+    return value
 }
 
-function generateSASS(map: ComponentMember[]): string {
-    let str = ""
-    const arrayToComponent = (html, indent = 0) => {
-        if (Array.isArray(html) === false) return
-        return html.forEach((el) => {
-            const indentStr = indentGenerator(indent)
-            if (el.props === undefined) return
-            if (el.props.style) {
-                str += `${indentStr}.${el.props.className}\n${objectToStyle(
-                    el.props.style,
-                    false,
-                    indent + 4
-                )}`
-            }
-            arrayToComponent(el.children, indent + 2)
-        })
-    }
-    arrayToComponent(map)
-    return str
+const generateSASS = (map: ComponentMember[],  indent = 0): string => {
+    let value = ""
+    map.forEach((el) => {
+        const indentStr = indentGenerator(indent)
+        if (el.props === undefined) return
+        if (el.props.style) {
+            value += `${indentStr}.${el.props.className}\n${objectToStyle(
+                el.props.style,
+                false,
+                indent + 4
+            )}`
+        }
+        value +=generateSASS(el.children, indent + 4)
+    })
+   
+    return value
+}
+
+export const arrayToComponent = (map: ComponentMember[]): React.ReactNode => {
+    const value = []
+    map.forEach((el) => {
+        if (typeof el.text === "string") 
+            value.push(el.text)
+        else 
+            value.push(React.createElement(
+                el.title,
+                { style: el.props.style, key: el.key },
+                arrayToComponent(el.children)
+            ))
+    })
+    return value 
+}
+
+export const arrayToJSX = (map: ComponentMember[]) => {
+    let value = ""
+    map.forEach((el) => {
+        if (el.text) value += el.text
+        else {
+            const className =
+                el.props.className && el.props.style
+                    ? `className='${el.props.className}'`
+                    : ""
+            value += `<${el.title} ${className}>${arrayToJSX(el.children)}</${
+                el.title
+            }>`
+        }
+    })
+    return value
 }
