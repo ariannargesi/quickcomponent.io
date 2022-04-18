@@ -1,4 +1,8 @@
+import { useState } from 'react'
 import { Link } from "react-router-dom"
+import { Layout } from 'antd'
+import { ChevronRight } from 'react-feather'
+import styles from './App.module.sass'
 import Header from "./component/Header"
 import HtmlTree from "./component/HtmlTree"
 import ActiveStyles from "./component/ActiveStyles"
@@ -7,7 +11,13 @@ import StylePanel from "./component/StylePanel"
 import Drawer from "./component/Drawer"
 import useEmptyTree from "./hooks/useEmptyTree"
 import EmptyTree from "./component/EmptyTree"
+
+
+const { Sider } = Layout
+
 function App() {
+    const [styleVsibile, toggleStyle] = useState(true)
+    const [htmlTreeAndActiveStylesVisible, toggleHtmlTreeAndActiveStyles] = useState(true)
     const treeIsEmpty = useEmptyTree()
 
     return (
@@ -18,10 +28,25 @@ function App() {
             ) : (
                 <div className="main-container">
                     <StylePanel />
-                    <div style={{ width: "300px" }}>
-                        <HtmlTree />
-                        <ActiveStyles />
-                    </div>
+                    <Sider
+                        trigger={null}
+                        style={{ position: 'relative', backgroundColor: '#eee', zIndex: 10 }}
+                        collapsible width={htmlTreeAndActiveStylesVisible ? 300 : 30}
+                    >
+                        {htmlTreeAndActiveStylesVisible &&
+                            <div style={{height: '100%', position: 'relative', zIndex: 1, }}>
+                                <HtmlTree />
+                                <ActiveStyles />
+                            </div>
+                        }
+                        <div
+                            className={styles.siderControl}
+                            onClick={() => {
+                                toggleHtmlTreeAndActiveStyles(!htmlTreeAndActiveStylesVisible)
+                            }}>
+                            <ChevronRight />
+                        </div>
+                    </Sider>
                     <ComponentView />
                 </div>
             )}

@@ -7,6 +7,9 @@ import {
     addStyleInNode,
     removeStyleFromTree,
     updateNodeTitle,
+    updateClassName as changeClassname, 
+    isTextBasedTag,
+
 } from "../../../helper"
 import {
     ExportTypes,
@@ -21,7 +24,7 @@ import initialMap from "../../../welcome-map"
 const initialState: App = {
     openDrawer: false,
     selectedKey: initialMap[0].key,
-    expandedKey: [],
+    expandedKey: [initialMap[0].key],
     addChildTo: null,
     inputKey: null,
     map: initialMap,
@@ -52,16 +55,25 @@ const counterSlice = createSlice({
     reducers: {
         moveElementInTree: (state, action) => {
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
-            findNodeInTree(state.map, dragKey, (dargNode) => {
-                deleteNodeInTree(state.map, dragKey)
-                addNodeInPosition(
-                    state.map,
-                    dropKey,
-                    dropPosition,
-                    dargNode,
-                    dropToGap
-                )
+            // if drop key is text based elemnt yojj can do that 
+            findNodeInTree(state.map, state.addChildTo, res => {
+                if(isTextBasedTag((res.title)))
+                    alert('you cant do this')
+                else {
+                    findNodeInTree(state.map, dragKey, (dargNode) => {
+                        deleteNodeInTree(state.map, dragKey)
+                        addNodeInPosition(
+                            state.map,
+                            dropKey,
+                            dropPosition,
+                            dargNode,
+                            dropToGap
+                        )
+                    })
+                }
             })
+              
+            
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
@@ -115,15 +127,24 @@ const counterSlice = createSlice({
             state.addChildTo = action.payload.key
         },
         addNodeInTree: (state, action) => {
-            if (state.map.length === 0) {
-                state.map.push(action.payload.element)
-                state.selectedKey = action.payload.element.key
-            } else {
-                const elemetn = action.payload.element
-                const elementKey = elemetn.key
-                state.expandedKey.push(state.addChildTo, elementKey)
-                addNode(state.map, state.addChildTo, action.payload.element)
-            }
+
+            findNodeInTree(state.map, state.addChildTo, res => {
+                if(isTextBasedTag((res.title)))
+                    alert('you cant do this')
+                else {
+                    if (state.map.length === 0) {
+                        state.map.push(action.payload.element)
+                        state.selectedKey = action.payload.element.key
+                    } else {
+                        const elemetn = action.payload.element
+                        const elementKey = elemetn.key
+                        state.expandedKey.push(state.addChildTo, elementKey)
+                        addNode(state.map, state.addChildTo, action.payload.element)
+                    }
+                }
+            })
+
+            
         },
         setInputAtKey: (state, action) => {
             state.inputKey = action.payload.key
@@ -132,7 +153,7 @@ const counterSlice = createSlice({
             state.inputKey = null
         },
         updateTreeInputValue: (state, action) => {
-            updateNodeTitle(state.map, state.inputKey, action.payload.value)
+            updateNodeTitle(state.map, state.selectedKey, action.payload.value)
         },
         removeStyle: (state, action) => {
             const property = action.payload
@@ -144,6 +165,10 @@ const counterSlice = createSlice({
         toggleDrawer: (state) => {
             state.openDrawer = !state.openDrawer
         },
+        updateClassName: (state, action) => {
+            const {value} = action.payload 
+            changeClassname(state.map, state.selectedKey, value )    
+        }
     },
 })
 
@@ -163,5 +188,6 @@ export const {
     removeStyle,
     updateExpandedkeys,
     toggleDrawer,
+    updateClassName  
 } = counterSlice.actions
 export default counterSlice.reducer

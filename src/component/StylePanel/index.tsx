@@ -12,6 +12,7 @@ import Color from "../Selectors/Color"
 import BackgroundColor from "../Selectors/Background"
 import Margin from "../Selectors/Margin"
 import Padding from "../Selectors/Padding"
+import UpdateClassname from '../Selectors/UpdateClassname'
 import { findNodeInTree } from "../../helper"
 import { RootState, ComponentMember } from "../../types"
 
@@ -39,6 +40,7 @@ const StylePannel = () => {
             {message && <h3 className={styles.message}>{message}</h3>}
             {element && !element.text && (
                 <>
+                    <UpdateClassname/>
                     <WidthAndHeight />
                     <Margin />
                     <Padding />

@@ -2,6 +2,7 @@ import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
 import { StyleFormats } from "../types"
+import { current } from "@reduxjs/toolkit"
 
 export function cssToCamelCase(string) {
     /*
@@ -107,8 +108,26 @@ export function addNodeInTree(tree, key, node) {
 
 export function updateNodeTitle(tree, key, value) {
     tree.forEach((item) => {
-        if (item.key === key) item.text = value
-        else if (item.children) updateNodeTitle(item.children, key, value)
+        if (item.key === key) {
+            console.log('update input value');
+            console.log(current(item));
+            
+            
+            // item.text = value 
+        }
+        else if (item.children)
+        updateNodeTitle(item.children, key, value)
+    })
+}
+
+export function updateClassName(tree, key, value) {
+    console.log('we have new value')
+    console.log(value)
+    tree.forEach((item) => {
+        if (item.key === key)
+            item.props.className = value 
+        else if (item.children)
+        updateClassName(item.children, key, value)
     })
 }
 
@@ -149,4 +168,28 @@ export function formatScript(str: string): string {
 export function formatStyle(str: string, format: StyleFormats): string {
     if (format === StyleFormats.SASS) return str
     else return prettier.format(str, { parser: "css", plugins: [css] })
+}
+
+export function findNodeText(tree, key: string, callback: (result: string) => void){ 
+    findNodeInTree(tree, key, (value) => {
+        let res = undefined
+        res = ''
+        if(value)
+            value.children.forEach(el => {
+                if(el.text)
+                    res = el 
+            })
+        callback(res.text)
+    })
+}
+
+
+const elements = ['h1','h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'label']
+export function isTextBasedTag(tag: string): boolean{
+    return !elements.indexOf(tag) 
+}
+
+export function isEmptyObject (value): boolean {
+    if(!value) return null 
+    return Object.keys(value).length > 0
 }

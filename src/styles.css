@@ -63,8 +63,7 @@ ul {
 
 .ace_editor,
 .ace_editor * {
-    font-family: "Consolas", "Menlo", "Ubuntu Mono", "Droid Sans Mono",
-        monospace !important;
+    font-family: "Consolas", "Menlo", "Ubuntu Mono", "Droid Sans Mono", monospace !important;
 }
 
 #text-editor {

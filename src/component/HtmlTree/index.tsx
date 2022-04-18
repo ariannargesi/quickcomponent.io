@@ -28,41 +28,14 @@ const Title = (props: { data: ComponentMember }) => {
     // and you can update the inner text
     // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
-    const inputAtKey = useSelector((state: RootState) => state.app.inputKey)
 
     const { data } = props
-
-    const handleInputChange = (e) => {
-        const value = e.target.value
-        dispatch(
-            updateTreeInputValue({
-                value,
-            })
-        )
-    }
 
     const handleTitleClick = () => {
         if (data.text) dispatch(setInputAtKey({ key: data.key }))
         else dispatch(changeSelectedElement({ key: data.key }))
     }
 
-    const disableInput = () => {
-        dispatch(clearInputAtKey())
-    }
-
-    if (data.key === inputAtKey)
-        return (
-            <>
-                <Input
-                    onChange={handleInputChange}
-                    onBlur={() => disableInput()}
-                    onKeyPress={(event) => {
-                        if (event.key === "Enter") disableInput()
-                    }}
-                    autoFocus
-                />
-            </>
-        )
 
     return (
         <div>

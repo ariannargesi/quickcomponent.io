@@ -112,6 +112,39 @@ const map: ComponentMember[] = [
                     },
                 ],
             },
+            {
+                title: "div",
+                props: {
+                    className: "div_6Hy3cW",
+                    style: {
+                        textAlign: "center",
+                    },
+                },
+                key: nanoid(),
+                children: [
+                    {
+                        title: "button",
+                        props: {
+                            className: "button_B-tI26",
+                            style: {
+                                backgroundColor: "rgba(89, 242, 112, 1)",
+                                fontSize: "24px",
+                                width: "149px",
+                                padding: "8px",
+                                borderRadius: "30px",
+                                margin: "65px 0px 0px 0px",
+                            },
+                        },
+                        key: nanoid(),
+                        children: [
+                            {
+                                text: "Button",
+                                key: nanoid(),
+                            },
+                        ],
+                    },
+                ],
+            },
         ],
     },
 ]

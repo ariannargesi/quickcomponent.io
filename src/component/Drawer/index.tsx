@@ -12,11 +12,14 @@ function generateTextBasedElement(name: string): ComponentMember {
     name = name.toLowerCase()
     const innerTextKey = nanoid()
     const elementKey = nanoid()
-    store.dispatch(setInputAtKey({ key: innerTextKey }))
+    store.dispatch(setInputAtKey({ key: elementKey }))
     return {
         title: name,
         props: {
             className: name + "_" + nanoid(6),
+            style: {
+                color: 'white'
+            } 
         },
         key: elementKey,
         children: name === "div" ? [] : [{ text: "Text", key: innerTextKey }],

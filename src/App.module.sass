@@ -1,0 +1,19 @@
+.siderControl 
+    position: absolute 
+    top: calc(50% - 30px)
+    width: 60px
+    height: 60px 
+    border-radius: 20px 
+    right: -30px 
+    background-color: #eee 
+    display: flex 
+    transform: rotate(45deg)
+    align-items: center 
+    justify-content: center  
+    z-index: 0
+    cursor: pointer
+    transition: 200ms 
+    svg
+        transform: rotate(-45deg)
+    &:hover
+        box-shadow: 5px 5px 5px darkgray 

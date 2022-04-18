@@ -1,4 +1,5 @@
 import React from "react"
+import { isEmptyObject } from "."
 
 import {
     ComponentMember,
@@ -183,7 +184,7 @@ const generateCSS = (map: ComponentMember[]): string => {
     let value = ""
         map.forEach((el) => {
             if (el.props === undefined) return
-            if (el.props.style) {
+            if (el.props.style && isEmptyObject(el.props.style)) {
                 value +=
                     "." +
                     el.props.className +
@@ -201,7 +202,7 @@ const generateSASS = (map: ComponentMember[],  indent = 0): string => {
     map.forEach((el) => {
         const indentStr = indentGenerator(indent)
         if (el.props === undefined) return
-        if (el.props.style) {
+        if (el.props.style && isEmptyObject(el.props.style)) {
             value += `${indentStr}.${el.props.className}\n${objectToStyle(
                 el.props.style,
                 false,
@@ -214,20 +215,6 @@ const generateSASS = (map: ComponentMember[],  indent = 0): string => {
     return value
 }
 
-export const arrayToComponent = (map: ComponentMember[]): React.ReactNode => {
-    const value = []
-    map.forEach((el) => {
-        if (typeof el.text === "string") 
-            value.push(el.text)
-        else 
-            value.push(React.createElement(
-                el.title,
-                { style: el.props.style, key: el.key },
-                arrayToComponent(el.children)
-            ))
-    })
-    return value 
-}
 
 export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
