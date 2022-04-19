@@ -9,7 +9,6 @@ import { findNodeInTree, findNodeText } from '../../helper'
 function getClassName (map, key) {
     let res 
     findNodeInTree(map, key, value => {
-        console.log(value)
         res = value.props.className   
     })
     return res
@@ -19,9 +18,7 @@ const UpdateClassname = () => {
     const dispatch = useDispatch()
     const {map, selectedKey} = useSelector((state: RootState) => state.app)
     const [value, setValue] = useState(getClassName(map, selectedKey))
-   
-    console.log('This is updating: ' + value);
-   
+      
         useEffect(() => {
             setValue(getClassName(map, selectedKey))
         }, [selectedKey])

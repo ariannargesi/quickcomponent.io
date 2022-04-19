@@ -5,7 +5,7 @@ import elementsList from "../../data/html-elements"
 import { nanoid } from "@reduxjs/toolkit"
 import useToggleDrawer from "../../hooks/useToggleDrawer"
 import store from "../../redux"
-import { RootState, ComponentMember } from "../../types"
+import { RootState, ComponentMember, HtmlElement } from "../../types"
 
 function generateTextBasedElement(name: string): ComponentMember {
     // take html element name and return an object with ComponentMember
@@ -49,9 +49,9 @@ const Drawer = () => {
         >
             <List
                 dataSource={elementsList}
-                renderItem={(item) => (
-                    <List.Item onClick={() => handleAddingChild(item)}>
-                        {item}
+                renderItem={(item: HtmlElement) => (
+                    <List.Item onClick={() => handleAddingChild(item.tag)}>
+                        {item.tag}
                     </List.Item>
                 )}
             />

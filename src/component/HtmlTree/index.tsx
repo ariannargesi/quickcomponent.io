@@ -42,7 +42,7 @@ const Title = (props: { data: ComponentMember }) => {
             <span onClick={handleTitleClick} className={styles.title}>
                 {data.title}
             </span>
-            <Action elementKey={data.key} />
+            <Action elementKey={data.key} title={!data.text ? data.title : null}/>
         </div>
     )
 }

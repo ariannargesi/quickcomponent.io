@@ -30,7 +30,7 @@ const WidthAndHeight = () => {
                 <div className={style.body}>
                     <Slider
                         min={0}
-                        max={500}
+                        max={1500}
                         value={widthValue}
                         onChange={(value) => {
                             applyStyle("width", value + widthUnit)

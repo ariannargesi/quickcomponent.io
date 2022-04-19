@@ -27,7 +27,7 @@ function App() {
                 <EmptyTree />
             ) : (
                 <div className="main-container">
-                    <StylePanel />
+                    <StylePanel /> 
                     <Sider
                         trigger={null}
                         style={{ position: 'relative', backgroundColor: '#eee', zIndex: 10 }}
@@ -46,7 +46,7 @@ function App() {
                             }}>
                             <ChevronRight />
                         </div>
-                    </Sider>
+                    </Sider> 
                     <ComponentView />
                 </div>
             )}
@@ -66,7 +66,7 @@ function App() {
                         fontSize: "18px",
                     }}
                 >
-                    {" "}
+                    
                     Export
                 </button>
             </Link>

@@ -5,9 +5,12 @@ import {
     selectElementForAddingChild,
 } from "../../../redux/slice/app"
 import useToggleDrawer from "../../../hooks/useToggleDrawer"
+import { isContentEditable, isTextOnly } from "../../../helper"
+
 import "./styles.sass"
 interface Props {
-    elementKey: string
+    elementKey: string,
+    title: string 
 }
 
 const iconSize = 17
@@ -24,11 +27,13 @@ const Action = (props: Props) => {
     function removeElement() {
         dispatch(deleteNode({ key }))
     }
-
+    console.log(props.title)
     return (
         <div className={"tree-item-action"}>
-            <Plus onClick={addChild} size={iconSize} />
-            <Trash onClick={removeElement} size={iconSize} />
+            
+            {props.title && isTextOnly(props.title) === false && <Plus onClick={addChild} size={iconSize} /> }
+            {props.title != null && <Trash onClick={removeElement} size={iconSize} /> }
+            
         </div>
     )
 }

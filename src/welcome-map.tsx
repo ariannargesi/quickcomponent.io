@@ -7,7 +7,7 @@ const map: ComponentMember[] = [
         props: {
             className: "container",
             style: {
-                width: "500px",
+                width: "1500px",
                 height: "500px",
                 background: "rgba(255, 255, 255, 1)",
                 borderRadius: "64px",

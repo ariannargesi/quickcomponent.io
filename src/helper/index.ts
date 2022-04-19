@@ -2,8 +2,7 @@ import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
 import { StyleFormats } from "../types"
-import { current } from "@reduxjs/toolkit"
-
+import elementsList from '../data/html-elements'
 export function cssToCamelCase(string) {
     /*
      * input: "border-radius"
@@ -109,9 +108,8 @@ export function addNodeInTree(tree, key, node) {
 export function updateNodeTitle(tree, key, value) {
     tree.forEach((item) => {
         if (item.key === key) {
-            console.log('update input value');
-            console.log(current(item));
-            
+           
+            item.children[0].text = value 
             
             // item.text = value 
         }
@@ -121,8 +119,6 @@ export function updateNodeTitle(tree, key, value) {
 }
 
 export function updateClassName(tree, key, value) {
-    console.log('we have new value')
-    console.log(value)
     tree.forEach((item) => {
         if (item.key === key)
             item.props.className = value 
@@ -193,3 +189,15 @@ export function isEmptyObject (value): boolean {
     if(!value) return null 
     return Object.keys(value).length > 0
 }
+
+export function isContentEditable (value) {
+    return elementsList.filter(item => item.tag === value)[0].contentEditable
+} 
+
+export function isTextOnly (value) {
+    return elementsList.filter(item => item.tag === value)[0].textOnly
+} 
+
+export function isHtmlTag (value) {
+    return elementsList.filter(item => item.tag === value).length > 0
+} 

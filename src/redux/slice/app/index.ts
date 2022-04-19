@@ -77,6 +77,8 @@ const counterSlice = createSlice({
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
+            if(state.inputKey && state.inputKey != state.selectedKey)
+                state.inputKey = null 
         },
         deleteNode: (state, action) => {
             const key = action.payload.key
@@ -154,6 +156,7 @@ const counterSlice = createSlice({
         },
         updateTreeInputValue: (state, action) => {
             updateNodeTitle(state.map, state.selectedKey, action.payload.value)
+            state.inputKey = null 
         },
         removeStyle: (state, action) => {
             const property = action.payload

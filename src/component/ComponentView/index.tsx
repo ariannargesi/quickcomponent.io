@@ -2,55 +2,55 @@ import FormItemInput from 'antd/lib/form/FormItemInput'
 import React from 'react'
 import { AlignJustify } from 'react-feather'
 import { useDispatch, useSelector } from "react-redux"
-import { findNodeText, updateNodeTitle } from '../../helper'
+import { findNodeText, isContentEditable } from '../../helper'
 import { changeSelectedElement, setInputAtKey, updateTreeInputValue, clearInputAtKey } from '../../redux/slice/app'
 import { RootState, ComponentMember } from "../../types"
+
 import styles from './styles.module.sass'
 
 
 
 
 const ComponentView = () => {
-    const html = useSelector((state: RootState) => state.app.map)
-    const inputAtKey = useSelector((state: RootState) => state.app.inputKey)
+    const {map, inputKey, selectedKey} = useSelector((state: RootState) => state.app)
     const dispatch = useDispatch()
 
     const arrayToComponent = (map: ComponentMember[], fromInput = false): React.ReactNode => {
-
+        let temp = ''
         const value = []
         map.forEach((el) => {
-            if (inputAtKey === el.key) {
+            if (inputKey === el.key) {
                 let nodeText 
-                findNodeText(html, el.key, (res) => {
+                findNodeText(map, el.key, (res) => {
                     nodeText = res 
                     
                 })
-               
                 value.push(React.createElement(
                     el.title,
                     {
                         style: el.props.style,
                         key: el.key,
-                        onClick: (e) => {
-                            if (e.stopPropagation)
-                                e.stopPropagation()
-                            dispatch(changeSelectedElement({ key: el.key }))
-                        },
-                        onDoubleClick: (e) => {
-                            if (e.stopPropagation)
-                                e.stopPropagation()
-                            dispatch(setInputAtKey({ key: el.key }))
-                        }
                     },
                     [
                         React.createElement('input', 
                             { 
-                                style: el.props.style,
-                                value: nodeText, 
+                                autoFocus: true, 
+                                defaultValue: nodeText,
+                                className: styles.editInnerText,
+                                onKeyDown: (e ) => {
+                                    if(e.key === 'Enter')
+                                        dispatch(updateTreeInputValue({value: temp }))
+                                },
                                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                                     const value = e.target.value 
-                                    dispatch(updateTreeInputValue({value: value }))
-                                }
+                                    temp = value 
+                                },
+                            
+                                onBlur: (e ) => {
+                                        dispatch(updateTreeInputValue({value: temp }))
+                                        
+                                },
+
                             }), 
                         arrayToComponent(el.children, true)
                     ]
@@ -66,17 +66,19 @@ const ComponentView = () => {
                 value.push(React.createElement(
                     el.title,
                     {
-                        style: el.props.style,
+                        style: {...el.props.style, outlineColor: el.key === selectedKey ? 'lightgreen' : '#c9c9c9'},
                         key: el.key,
                         onClick: (e) => {
                             if (e.stopPropagation)
                                 e.stopPropagation()
                             dispatch(changeSelectedElement({ key: el.key }))
+                        
                         },
                         onDoubleClick: (e) => {
                             if (e.stopPropagation)
                                 e.stopPropagation()
-                            dispatch(setInputAtKey({ key: el.key }))
+                            if(isContentEditable(el.title))
+                                dispatch(setInputAtKey({ key: el.key }))
                         }
                     },
                     arrayToComponent(el.children)
@@ -85,7 +87,7 @@ const ComponentView = () => {
         return value
     }
 
-    const component = arrayToComponent(html)
+    const component = arrayToComponent(map)
 
     return (
         <div
@@ -105,9 +107,7 @@ const ComponentView = () => {
                 style={{
                     overflow: "scroll",
                     height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    
                 }}
                 className={styles.container}
             >

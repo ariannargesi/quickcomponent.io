@@ -80,3 +80,9 @@ export interface App extends Output {
     map: ComponentMember[]
     editorView: EditorView
 }
+
+export interface HtmlElement {
+    tag: string,
+    contentEditable: boolean,
+    textOnly  
+}
