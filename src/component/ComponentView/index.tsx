@@ -90,31 +90,18 @@ const ComponentView = () => {
     const component = arrayToComponent(map)
 
     return (
-        <div
-            style={{
-                padding: "16px",
-                height: "100%",
-                display: "flex",
-                flex: "1",
-                flexDirection: "column",
-                overflow: "hidden",
-            }}
-        >
-            <h2>Component view</h2>
-            {/* allow scroll when compnent get big
-                while users can see component title */}
-            <div
-                style={{
-                    overflow: "scroll",
-                    height: "100%",
-                    
-                }}
-                className={styles.container}
-            >
+        <div className={styles.wrapper}>
+            <div className={styles.header }>
+                <h2>Component view</h2>
+            </div>
+        <div className={styles.container}>
+            <div className={styles.content}>
                 {component}
             </div>
         </div>
+        </div>
     )
+        
 }
 
 export default ComponentView

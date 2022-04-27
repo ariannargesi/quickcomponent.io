@@ -84,6 +84,7 @@ ul {
 .main-container {
     height: calc(100vh - 40px);
     display: flex;
+    align-content: stretch;
 }
 
 div::-webkit-scrollbar {
@@ -93,4 +94,9 @@ div::-webkit-scrollbar {
 div::-webkit-scrollbar-thumb {
     background-color: rgb(131, 131, 131);
     border-radius: 10px;
+}
+
+div {
+    scrollbar-color: rgb(131, 131, 131) #eee;
+    scrollbar-width: thin;
 }
