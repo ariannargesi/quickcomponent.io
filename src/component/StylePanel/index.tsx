@@ -51,7 +51,10 @@ const StylePannel = () => {
                     <Color />
                     <BackgroundColor />
                     <BoxShadow />
-                    <Positions />
+                    {state.app.map[0].key != state.app.selectedKey && (
+                        <Positions />
+                    )}
+                    
                     <Display />
                     <BorderRadius />
                     <Border />

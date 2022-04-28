@@ -55,25 +55,16 @@ const counterSlice = createSlice({
     reducers: {
         moveElementInTree: (state, action) => {
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
-            // if drop key is text based elemnt yojj can do that 
-            findNodeInTree(state.map, state.addChildTo, res => {
-                if(isTextBasedTag((res.title)))
-                    alert('you cant do this')
-                else {
-                    findNodeInTree(state.map, dragKey, (dargNode) => {
-                        deleteNodeInTree(state.map, dragKey)
-                        addNodeInPosition(
-                            state.map,
-                            dropKey,
-                            dropPosition,
-                            dargNode,
-                            dropToGap
-                        )
-                    })
-                }
+            findNodeInTree(state.map, dragKey, (dargNode) => {
+                deleteNodeInTree(state.map, dragKey)
+                addNodeInPosition(
+                    state.map,
+                    dropKey,
+                    dropPosition,
+                    dargNode,
+                    dropToGap
+                )
             })
-              
-            
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
