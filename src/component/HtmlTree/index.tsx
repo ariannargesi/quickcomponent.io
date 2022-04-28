@@ -11,13 +11,15 @@ import {
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
+import { Icon } from "@mui/material"
+import { Type } from 'react-feather'
 
 function formatMap(html) {
     // convert html map to proper format for showign in antd tree component
     html.map((item) => {
         if (Array.isArray(item.children)) {
             formatMap(item.children)
-        } else if (item.text) item.title = item.text
+        }
     })
     return html
 }
@@ -31,18 +33,26 @@ const Title = (props: { data: ComponentMember }) => {
 
     const { data } = props
 
-    const handleTitleClick = () => {
-        if (data.text) dispatch(setInputAtKey({ key: data.key }))
-        else dispatch(changeSelectedElement({ key: data.key }))
+    const handleClick = () => {
+        if (data.text) 
+            dispatch(changeSelectedElement({ key: data.key }))
+        
     }
 
+    const handleDoubleClick = () => {
+        dispatch(setInputAtKey({key: data.key}))
+    }
 
     return (
-        <div>
-            <span onClick={handleTitleClick} className={styles.title}>
-                {data.title}
+        <div 
+            onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
+        >
+            <span className={styles.title}>
+                <b>{data.title}</b>
+                <i>{data.text ? ` ( ${data.text}` : ''}</i>
             </span>
-            <Action elementKey={data.key} title={!data.text ? data.title : null}/>
+            <Action elementKey={data.key} addChild={!data.text} />
         </div>
     )
 }
@@ -53,7 +63,7 @@ const HtmlTree = () => {
     const { map, expandedKey } = app
 
     const formattedData = formatMap(JSON.parse(JSON.stringify(map)))
-
+    console.log(formattedData)
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
         const { key: dropKey } = info.node
@@ -79,14 +89,16 @@ const HtmlTree = () => {
         <div className={styles.container}>
             <h2 className={styles.mainTitle}>Elements</h2>
             <Tree
+                showLine={false}
                 showIcon={true}
-                showLine={true}
                 treeData={formattedData}
                 expandedKeys={expandedKey}
+
                 onExpand={(value) => {
                     dispatch(updateExpandedkeys(value))
                 }}
                 draggable
+                onClick={e => console.log(e.target)}
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelection}
                 titleRender={(nodeData: ComponentMember) => {

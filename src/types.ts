@@ -86,3 +86,4 @@ export interface HtmlElement {
     contentEditable: boolean,
     textOnly  
 }
+

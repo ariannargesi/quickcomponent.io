@@ -32,13 +32,17 @@ const StylePannel = () => {
     const state = useSelector((state: RootState) => state)
     const element = getElement(state.app.selectedKey, state.app.map)
 
+    console.log('Element')
+    console.log(element);
+    
+
     let message
     if (!element) message = "Please select an element."
 
     return (
         <div className={styles.container}>
             {message && <h3 className={styles.message}>{message}</h3>}
-            {element && !element.text && (
+            {element && (
                 <>
                     <UpdateClassname/>
                     <WidthAndHeight />

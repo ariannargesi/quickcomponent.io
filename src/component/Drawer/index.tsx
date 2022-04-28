@@ -22,7 +22,7 @@ function generateTextBasedElement(name: string): ComponentMember {
             } 
         },
         key: elementKey,
-        children: name === "div" ? [] : [{ text: "Text", key: innerTextKey }],
+        text: 'Text', 
     }
 }
 

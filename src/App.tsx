@@ -30,8 +30,8 @@ function App() {
                     <StylePanel /> 
                     <Sider
                         trigger={null}
-                        style={{ position: 'relative', backgroundColor: '#eee', zIndex: 10 }}
-                        collapsible width={htmlTreeAndActiveStylesVisible ? 300 : 30}
+                        style={{ position: 'relative', backgroundColor: '#eee' }}
+                        collapsible width={htmlTreeAndActiveStylesVisible ? 300 : 0}
                     >
                         {htmlTreeAndActiveStylesVisible &&
                             <div style={{height: '100%', position: 'relative', zIndex: 1, }}>

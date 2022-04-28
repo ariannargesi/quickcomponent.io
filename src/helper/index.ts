@@ -108,10 +108,10 @@ export function addNodeInTree(tree, key, node) {
 export function updateNodeTitle(tree, key, value) {
     tree.forEach((item) => {
         if (item.key === key) {
-           
-            item.children[0].text = value 
-            
-            // item.text = value 
+            if(item.text)
+                item.text = value 
+            else 
+            item.children[0].text = value             
         }
         else if (item.children)
         updateNodeTitle(item.children, key, value)
@@ -171,11 +171,14 @@ export function findNodeText(tree, key: string, callback: (result: string) => vo
         let res = undefined
         res = ''
         if(value)
-            value.children.forEach(el => {
-                if(el.text)
-                    res = el 
-            })
-        callback(res.text)
+            if(value.text)
+                res = value.text 
+            else 
+                value.children.forEach(el => {
+                    if(el.text)
+                        res = el.text  
+                })
+        callback(res)
     })
 }
 

@@ -23,7 +23,7 @@ const ComponentView = () => {
                 let nodeText 
                 findNodeText(map, el.key, (res) => {
                     nodeText = res 
-                    
+                    console.log('This is result ',nodeText )
                 })
                 value.push(React.createElement(
                     el.title,
@@ -47,19 +47,46 @@ const ComponentView = () => {
                                 },
                             
                                 onBlur: (e ) => {
+                                    if(temp)
                                         dispatch(updateTreeInputValue({value: temp }))
                                         
                                 },
 
-                            }), 
-                        arrayToComponent(el.children, true)
+                            })
                     ]
                 ))
             }
 
+
+
             else if (el.text) {
-                    if(fromInput === false)
+                    if(el.title){
+                        value.push(React.createElement(
+                            el.title,
+                            {
+                                style: {...el.props.style, outlineColor: el.key === selectedKey ? 'lightgreen' : '#c9c9c9'},
+                                key: el.key,
+                                onClick: (e) => {
+                                    if (e.stopPropagation)
+                                        e.stopPropagation()
+                                    dispatch(changeSelectedElement({ key: el.key }))
+                                
+                                },
+                                onDoubleClick: (e) => {
+                                    if (e.stopPropagation)
+                                        e.stopPropagation()
+                                    if(isContentEditable(el.title))
+                                        dispatch(setInputAtKey({ key: el.key }))
+                                }
+                            },
+                            el.text
+                        ))
+                    }
+                    else {
+                        if(fromInput === false)
                         value.push(el.text)
+                    }
+                    
             }
 
             else
