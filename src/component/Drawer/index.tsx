@@ -6,23 +6,42 @@ import { nanoid } from "@reduxjs/toolkit"
 import useToggleDrawer from "../../hooks/useToggleDrawer"
 import store from "../../redux"
 import { RootState, ComponentMember, HtmlElement } from "../../types"
+import { isTextBasedTag } from "../../helper"
 
-function generateTextBasedElement(name: string): ComponentMember {
-    // take html element name and return an object with ComponentMember
+function genereateElement(name: string): ComponentMember {
+    // take html element name and return an object with ComponentMember    
     name = name.toLowerCase()
-    const innerTextKey = nanoid()
     const elementKey = nanoid()
-    store.dispatch(setInputAtKey({ key: elementKey }))
-    return {
-        title: name,
-        props: {
-            className: name + "_" + nanoid(6),
-            style: {
-                color: 'white'
-            } 
-        },
-        key: elementKey,
-        text: 'Text', 
+    const innerKey = nanoid()
+    
+    if(isTextBasedTag(name) || name === 'button')
+        store.dispatch(setInputAtKey({ key: elementKey }))
+    if(name === 'text'){
+        return {
+            text: 'text',
+            key: elementKey
+        }
+    }
+    if(isTextBasedTag(name))
+        return {
+            title: name,
+            props: {
+                className: name + "_" + nanoid(6),
+               
+            },
+            key: elementKey,
+            text: 'Text', 
+        }
+    else {
+        return {
+            title: name,
+            props: {
+                className: name + "_" + nanoid(6),
+                
+            },
+            key: elementKey,
+            children: [{text: 'ff', key: innerKey}], 
+        }
     }
 }
 
@@ -34,7 +53,7 @@ const Drawer = () => {
     const handleAddingChild = (name) => {
         dispatch(
             addNodeInTree({
-                element: generateTextBasedElement(name),
+                element: genereateElement(name),
             })
         )
         toggleDrawer()

@@ -184,8 +184,9 @@ export function findNodeText(tree, key: string, callback: (result: string) => vo
 
 
 const elements = ['h1','h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'label']
+
 export function isTextBasedTag(tag: string): boolean{
-    return !elements.indexOf(tag) 
+    return elements.indexOf(tag) >= 0
 }
 
 export function isEmptyObject (value): boolean {
@@ -204,3 +205,20 @@ export function isTextOnly (value) {
 export function isHtmlTag (value) {
     return elementsList.filter(item => item.tag === value).length > 0
 } 
+
+export function isText (value) {
+    if(Object.keys(value).length > 2) return false 
+    if(value['text'] && value['key'])
+        return true 
+}
+// @TODO clean this 
+export const getElementParent = (tree, key, callback, parent = null) => {
+    tree.forEach((item) => {
+        if (item.key === key) {
+            if(parent){
+                callback(parent)
+            }
+        }
+        else if (item.children) getElementParent(item.children, key, callback, item)
+    })
+}

@@ -12,7 +12,7 @@ const list =  [
     {
         tag: 'h1',
         textOnly: true,
-        contentEditable: true  
+        contentEditable: true 
     },
     {
         tag: 'h2',
@@ -59,6 +59,11 @@ const list =  [
         textOnly: false,
         contentEditable: false 
     },
+    {
+        tag: 'text',
+        textOnly: true, 
+        contentEditable: true
+    }
 ]
 
 export default list 

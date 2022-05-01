@@ -56,6 +56,7 @@ const Display = () => {
                         marginLeft: "8px",
                         paddingLeft: "8px",
                         borderLeft: "1px solid darkgray",
+                        marginTop: '8px'
                     }}
                 >
                     <Select

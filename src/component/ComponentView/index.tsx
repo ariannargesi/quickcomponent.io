@@ -49,6 +49,7 @@ const ComponentView = () => {
                                 onBlur: (e ) => {
                                     if(temp)
                                         dispatch(updateTreeInputValue({value: temp }))
+                                        dispatch(changeSelectedElement({key: null}))
                                         
                                 },
 

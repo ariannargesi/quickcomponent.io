@@ -23,6 +23,7 @@ const App = (props: Props) => {
             )}
             <Slider
                 min={props.min}
+                size={'small'}
                 max={props.max}
                 value={props.value}
                 onChange={({ target }) => {

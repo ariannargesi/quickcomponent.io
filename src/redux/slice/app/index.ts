@@ -121,23 +121,31 @@ const counterSlice = createSlice({
         },
         addNodeInTree: (state, action) => {
 
-            findNodeInTree(state.map, state.addChildTo, res => {
-                if(isTextBasedTag((res.title)))
-                    alert('you cant do this')
-                else {
-                    if (state.map.length === 0) {
-                        state.map.push(action.payload.element)
-                        state.selectedKey = action.payload.element.key
-                    } else {
-                        const elemetn = action.payload.element
-                        const elementKey = elemetn.key
-                        state.expandedKey.push(state.addChildTo, elementKey)
-                        addNode(state.map, state.addChildTo, action.payload.element)
-                    }
-                }
-            })
+            const element = action.payload.element 
+            if(state.map.length === 0){
+                state.map.push(element)
+                state.selectedKey = element.key 
+            } else {
+                state.expandedKey.push(state.addChildTo, element.key)
+                addNode(state.map, state.addChildTo, element)
+            }
 
-            
+
+            // findNodeInTree(state.map, state.addChildTo, res => {
+            //         const element = action.payload.element
+
+            //         if (state.map.length === 0) {
+            //             console.log('This should run');
+                        
+            //             state.map.push(element)
+            //             state.selectedKey = action.payload.element.key
+            //         } else {   
+            //             console.log('but not running')
+            //             const elementKey = element.key
+            //             state.expandedKey.push(state.addChildTo, elementKey)
+            //             addNode(state.map, state.addChildTo, element)
+            //         }
+            // })
         },
         setInputAtKey: (state, action) => {
             state.inputKey = action.payload.key

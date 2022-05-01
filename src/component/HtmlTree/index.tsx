@@ -13,6 +13,7 @@ import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
 import { Icon } from "@mui/material"
 import { Type } from 'react-feather'
+import { isText, getElementParent } from "../../helper"
 
 function formatMap(html) {
     // convert html map to proper format for showign in antd tree component
@@ -30,17 +31,26 @@ const Title = (props: { data: ComponentMember }) => {
     // and you can update the inner text
     // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
-
+    const app = useSelector((state: RootState) => state.app)
     const { data } = props
 
     const handleClick = () => {
-        if (data.text) 
-            dispatch(changeSelectedElement({ key: data.key }))
-        
+        if(isText(data))
+            getElementParent(app.map, data.key, (res) => {
+                dispatch(changeSelectedElement({key: res.key}))
+            }) 
+        else 
+            dispatch(changeSelectedElement({ key: data.key }))        
     }
 
     const handleDoubleClick = () => {
-        dispatch(setInputAtKey({key: data.key}))
+        if(isText(data))
+            getElementParent(app.map, data.key, (res) => {
+                dispatch(setInputAtKey({key: res.key}))
+            }) 
+        else 
+            dispatch(setInputAtKey({ key: data.key }))     
+        
     }
 
     return (
@@ -63,7 +73,7 @@ const HtmlTree = () => {
     const { map, expandedKey } = app
 
     const formattedData = formatMap(JSON.parse(JSON.stringify(map)))
-    console.log(formattedData)
+   
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
         const { key: dropKey } = info.node
@@ -87,7 +97,7 @@ const HtmlTree = () => {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.mainTitle}>Elements</h2>
+            <h2>Elements</h2>
             <Tree
                 showLine={false}
                 showIcon={true}
@@ -98,7 +108,6 @@ const HtmlTree = () => {
                     dispatch(updateExpandedkeys(value))
                 }}
                 draggable
-                onClick={e => console.log(e.target)}
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelection}
                 titleRender={(nodeData: ComponentMember) => {

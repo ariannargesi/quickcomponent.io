@@ -3,6 +3,7 @@ import { LabeledValue } from "antd/lib/select"
 
 import style from "../Selectors/styles.module.sass"
 
+import styles from './styles.module.sass'
 const Component = (props: {
     label: string
     onChange: (value: string | number) => void
@@ -10,7 +11,7 @@ const Component = (props: {
     value: string | number
 }) => {
     return (
-        <div>
+        <div className={styles.container}>
             <span className={style.label}>{props.label}</span>
             <Select
                 style={{ width: 120 }}

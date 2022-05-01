@@ -12,10 +12,10 @@ import Drawer from "./component/Drawer"
 import useEmptyTree from "./hooks/useEmptyTree"
 import EmptyTree from "./component/EmptyTree"
 
-
 const { Sider } = Layout
 
 function App() {
+    
     const [styleVsibile, toggleStyle] = useState(true)
     const [htmlTreeAndActiveStylesVisible, toggleHtmlTreeAndActiveStyles] = useState(true)
     const treeIsEmpty = useEmptyTree()
