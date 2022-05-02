@@ -192,7 +192,8 @@ const generateCSS = (map: ComponentMember[]): string => {
                     objectToStyle(el.props.style, true) +
                     "}"
             }
-            value += generateCSS(el.children)
+            if(el.children)
+                value += generateCSS(el.children)
         })
     return value
 }
@@ -209,7 +210,8 @@ const generateSASS = (map: ComponentMember[],  indent = 0): string => {
                 indent + 4
             )}`
         }
-        value +=generateSASS(el.children, indent + 4)
+        if(el.children)
+            value +=generateSASS(el.children, indent + 4)
     })
    
     return value

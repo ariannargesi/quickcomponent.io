@@ -24,7 +24,8 @@ const Action = (props: Props) => {
         toggleDrawer()
     }
 
-    function removeElement() {
+    function removeElement(event) {
+        event.stopPropagation()
         dispatch(deleteNode({ key }))
     }
 

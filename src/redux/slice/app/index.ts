@@ -26,6 +26,7 @@ const initialState: App = {
     selectedKey: initialMap[0].key,
     expandedKey: [initialMap[0].key],
     addChildTo: null,
+    emptyTree: false, 
     inputKey: null,
     map: initialMap,
     config: {
@@ -75,6 +76,8 @@ const counterSlice = createSlice({
             const key = action.payload.key
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
             deleteNodeInTree(state.map, key)
+            if(state.map.length === 0) 
+                state.emptyTree = true 
         },
         applyStyle: (state, action) => {
             const { key, value } = action.payload
@@ -124,6 +127,7 @@ const counterSlice = createSlice({
             const element = action.payload.element 
             if(state.map.length === 0){
                 state.map.push(element)
+                state.emptyTree = false 
                 state.selectedKey = element.key 
             } else {
                 state.expandedKey.push(state.addChildTo, element.key)

@@ -32,8 +32,7 @@ const StylePannel = () => {
     const state = useSelector((state: RootState) => state)
     const element = getElement(state.app.selectedKey, state.app.map)
 
-    console.log('Element')
-    console.log(element);
+    console.log('STYLE PANEL')
     
 
     let message

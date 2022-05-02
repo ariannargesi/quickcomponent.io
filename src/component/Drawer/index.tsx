@@ -7,6 +7,7 @@ import useToggleDrawer from "../../hooks/useToggleDrawer"
 import store from "../../redux"
 import { RootState, ComponentMember, HtmlElement } from "../../types"
 import { isTextBasedTag } from "../../helper"
+import EmptyTree from "../EmptyTree"
 
 function genereateElement(name: string): ComponentMember {
     // take html element name and return an object with ComponentMember    
@@ -48,7 +49,10 @@ function genereateElement(name: string): ComponentMember {
 const Drawer = () => {
     const toggleDrawer = useToggleDrawer()
     const visible = useSelector((state: RootState) => state.app.openDrawer)
+    const empty = useSelector((state: RootState) => state.app.emptyTree)
     const dispatch = useDispatch()
+
+    console.log('drawer')
 
     const handleAddingChild = (name) => {
         dispatch(
@@ -67,7 +71,7 @@ const Drawer = () => {
             onClose={() => toggleDrawer()}
         >
             <List
-                dataSource={elementsList}
+                dataSource={empty ? elementsList.filter(element => element.tag != 'text') : elementsList}
                 renderItem={(item: HtmlElement) => (
                     <List.Item onClick={() => handleAddingChild(item.tag)}>
                         {item.tag}

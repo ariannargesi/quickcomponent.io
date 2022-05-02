@@ -23,7 +23,6 @@ const ComponentView = () => {
                 let nodeText 
                 findNodeText(map, el.key, (res) => {
                     nodeText = res 
-                    console.log('This is result ',nodeText )
                 })
                 value.push(React.createElement(
                     el.title,

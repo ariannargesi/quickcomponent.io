@@ -95,6 +95,8 @@ const HtmlTree = () => {
             dispatch(changeSelectedElement({ key: value[0] }))
     }
 
+    console.log("HTML TREE")
+
     return (
         <div className={styles.container}>
             <h2>Elements</h2>
