@@ -52,7 +52,6 @@ const Drawer = () => {
     const empty = useSelector((state: RootState) => state.app.emptyTree)
     const dispatch = useDispatch()
 
-    console.log('drawer')
 
     const handleAddingChild = (name) => {
         dispatch(

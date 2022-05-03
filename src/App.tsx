@@ -16,11 +16,10 @@ const { Sider } = Layout
 
 function App() {
     
-
-
-    const [styleVsibile, toggleStyle] = useState(true)
     const [htmlTreeAndActiveStylesVisible, toggleHtmlTreeAndActiveStyles] = useState(true)
     const treeIsEmpty = useEmptyTree()
+
+    
 
     return (
         <div className="App">
@@ -37,7 +36,7 @@ function App() {
                     >
                         {htmlTreeAndActiveStylesVisible &&
                             <div style={{height: '100%', position: 'relative', zIndex: 1, }}>
-                                <HtmlTree />
+                                <HtmlTree /> 
                                 <ActiveStyles />
                             </div>
                         }

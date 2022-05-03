@@ -73,6 +73,7 @@ export interface Output {
 export interface App extends Output {
     openDrawer: boolean,
     emptyTree: boolean, 
+    treeHash: string,
     selectedKey: string
     expandedKey: string[]
     config: Config

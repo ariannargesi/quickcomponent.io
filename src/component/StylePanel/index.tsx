@@ -29,39 +29,28 @@ function getElement(key: string, html: ComponentMember[]): ComponentMember {
 }
 
 const StylePannel = () => {
-    const state = useSelector((state: RootState) => state)
-    const element = getElement(state.app.selectedKey, state.app.map)
 
-    console.log('STYLE PANEL')
-    
+    const key = useSelector((state: RootState) => state.app.selectedKey)
 
-    let message
-    if (!element) message = "Please select an element."
 
     return (
         <div className={styles.container}>
-            {message && <h3 className={styles.message}>{message}</h3>}
-            {element && (
                 <>
                     <UpdateClassname/>
-                    <WidthAndHeight />
+                     <WidthAndHeight />
                     <Margin />
                     <Padding />
                     <Color />
-                    <BackgroundColor />
+                    <BackgroundColor />  
                     <BoxShadow />
-                    {state.app.map[0].key != state.app.selectedKey && (
-                        <Positions />
-                    )}
-                    
+                    <Positions />                    
                     <Display />
                     <BorderRadius />
                     <Border />
                     <TextAlign />
                     <FontSize />
-                    <FontWeight />
+                    <FontWeight /> 
                 </>
-            )}
         </div>
     )
 }

@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import { createSlice } from "@reduxjs/toolkit"
 import {
     findNodeInTree,
@@ -23,9 +24,11 @@ import initialMap from "../../../welcome-map"
 
 const initialState: App = {
     openDrawer: false,
+
     selectedKey: initialMap[0].key,
     expandedKey: [initialMap[0].key],
     addChildTo: null,
+    treeHash: null, 
     emptyTree: false, 
     inputKey: null,
     map: initialMap,
@@ -73,6 +76,7 @@ const counterSlice = createSlice({
                 state.inputKey = null 
         },
         deleteNode: (state, action) => {
+            state.treeHash = nanoid()
             const key = action.payload.key
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
             deleteNodeInTree(state.map, key)
@@ -123,7 +127,7 @@ const counterSlice = createSlice({
             state.addChildTo = action.payload.key
         },
         addNodeInTree: (state, action) => {
-
+            state.treeHash = nanoid()
             const element = action.payload.element 
             if(state.map.length === 0){
                 state.map.push(element)

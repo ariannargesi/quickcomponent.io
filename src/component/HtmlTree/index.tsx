@@ -14,17 +14,9 @@ import styles from "./styles.module.sass"
 import { Icon } from "@mui/material"
 import { Type } from 'react-feather'
 import { isText, getElementParent } from "../../helper"
+import { useEffect, useState } from "react"
 
-function formatMap(html) {
-    // convert html map to proper format for showign in antd tree component
-    html.map((item) => {
-        if (Array.isArray(item.children)) {
-            formatMap(item.children)
-        }
-    })
-    return html
-}
-
+import store from '../../redux'
 const Title = (props: { data: ComponentMember }) => {
     // This component is responsible for rendering the title of tree members.
     // If the member is a text node, with clicking on it, the title get replaced with an input
@@ -68,11 +60,26 @@ const Title = (props: { data: ComponentMember }) => {
 }
 
 const HtmlTree = () => {
-    const dispatch = useDispatch()
-    const app = useSelector((state: RootState) => state.app)
-    const { map, expandedKey } = app
 
-    const formattedData = formatMap(JSON.parse(JSON.stringify(map)))
+    const [state, setState] = useState([])
+
+    const treeHash = useSelector((state: RootState) => state.app.treeHash)
+
+    useEffect(() => {
+        setState(store.getState().app.map)
+    }, [])
+
+    useEffect(() => {
+        setState(store.getState().app.map)
+    }, [treeHash])
+
+    const dispatch = useDispatch()
+    // const app = useSelector((state: RootState) => {
+    //     return state.app 
+    // })
+    // const { map, expandedKey } = app
+
+    // const formattedData = app.map 
    
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
@@ -95,20 +102,16 @@ const HtmlTree = () => {
             dispatch(changeSelectedElement({ key: value[0] }))
     }
 
-    console.log("HTML TREE")
-
+console.log("HTML TREE")
     return (
         <div className={styles.container}>
             <h2>Elements</h2>
-            <Tree
-                showLine={false}
-                showIcon={true}
-                treeData={formattedData}
-                expandedKeys={expandedKey}
-
-                onExpand={(value) => {
-                    dispatch(updateExpandedkeys(value))
-                }}
+            <Tree    
+                treeData={state}
+                // expandedKeys={expandedKey}
+                // onExpand={(value) => {
+                //     dispatch(updateExpandedkeys(value))
+                // }}
                 draggable
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelection}
