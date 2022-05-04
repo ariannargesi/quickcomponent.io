@@ -196,13 +196,9 @@ export function isText (value) {
         return true 
 }
 // @TODO clean this 
-export const getElementParent = (tree, key, callback, parent = null) => {
-    tree.forEach((item) => {
-        if (item.key === key) {
-            if(parent){
-                callback(parent)
-            }
-        }
-        else if (item.children) getElementParent(item.children, key, callback, item)
-    })
-}
+export function getElementParent(map, key, item = null) {
+    let result;
+    if(!Array.isArray(map)) return map 
+    map.some(o => result = o.key === key && item || getElementParent(o.children, key, o));
+    return result || undefined;
+  }

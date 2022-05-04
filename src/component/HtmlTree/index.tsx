@@ -27,11 +27,13 @@ const Title = (props: { data: ComponentMember }) => {
     const app = useSelector((state: RootState) => state.app)
     const { data } = props
 
+    
+
     const handleClick = () => {
-        if(isText(data))
-            getElementParent(app.map, data.key, (res) => {
-                dispatch(changeSelectedElement({key: res.key}))
-            }) 
+        if(isText(data)) {
+            const res = getElementParent(app.map, data.key)
+            dispatch(changeSelectedElement({key: res.key}))
+        }
         else 
             dispatch(changeSelectedElement({ key: data.key }))        
     }
@@ -40,9 +42,8 @@ const Title = (props: { data: ComponentMember }) => {
         if(isTextBasedTag(data.title))
                 dispatch(setInputAtKey({key: data.key}))
         else if(isText(data)) {
-            getElementParent(app.map, data.key, (res) => {
-                dispatch(setInputAtKey({key: res.key}))
-            }) 
+            const res = getElementParent(app.map, data.key)
+            dispatch(setInputAtKey({key: res.key}))
         }
     }
 
