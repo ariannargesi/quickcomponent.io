@@ -45,12 +45,12 @@ export function objectToStyle(object, semi) {
     return main
 }
 
-export const findNodeInTree = (tree, key, callback) => {
-    tree.forEach((item) => {
-        if (item.key === key) callback(item)
-        else if (item.children) findNodeInTree(item.children, key, callback)
-    })
-}
+export function findNodeInTree(map, key) {
+    let result;
+    if(!Array.isArray(map)) return map 
+    map.some(o => result = o.key === key && o || findNodeInTree(o.children, key));
+    return result || undefined;
+  }
 
 export function deleteNodeInTree(tree, key) {
     tree.forEach((item, index) => {
@@ -164,22 +164,6 @@ export function formatScript(str: string): string {
 export function formatStyle(str: string, format: StyleFormats): string {
     if (format === StyleFormats.SASS) return str
     else return prettier.format(str, { parser: "css", plugins: [css] })
-}
-
-export function findNodeText(tree, key: string, callback: (result: string) => void){ 
-    findNodeInTree(tree, key, (value) => {
-        let res = undefined
-        res = ''
-        if(value)
-            if(value.text)
-                res = value.text 
-            else 
-                value.children.forEach(el => {
-                    if(el.text)
-                        res = el.text  
-                })
-        callback(res)
-    })
 }
 
 

@@ -3,14 +3,12 @@ import { RootState } from "../types"
 import { findNodeInTree } from "../helper"
 
 const useStyleValue = (name: string): string | undefined => {
-    const { map, selectedKey } = useSelector((state: RootState) => state.app)
-    let value
-    findNodeInTree(map, selectedKey, (res) => {
-        value = res
+    const styleValue = useSelector((state: RootState) => {
+        const res = findNodeInTree(state.app.map , state.app.selectedKey)
+        if(res.props.style)
+            return res.props.style[name]
     })
-    const styles = value.props?.style
-    if (styles) return styles[name]
-    else undefined
+    return styleValue 
 }
 
 export default useStyleValue

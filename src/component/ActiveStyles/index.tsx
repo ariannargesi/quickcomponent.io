@@ -27,10 +27,7 @@ const ActiveStylesItem = (props: ItemProps) => {
 }
 
 function getStyles(key: string, html: ComponentMember[]): ComponentMember {
-    let res
-    findNodeInTree(html, key, (value) => {
-        res = value
-    })
+    const res = findNodeInTree(html, key)
     if (!res) return null
     else if (res.props?.style) return res.props.style
 }

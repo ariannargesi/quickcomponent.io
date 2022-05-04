@@ -13,10 +13,11 @@ import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
 import { Icon } from "@mui/material"
 import { Type } from 'react-feather'
-import { isText, getElementParent } from "../../helper"
+import { isText, getElementParent, isTextBasedTag } from "../../helper"
 import { useEffect, useState } from "react"
 
 import store from '../../redux'
+import { getPanelId } from "@mui/base"
 const Title = (props: { data: ComponentMember }) => {
     // This component is responsible for rendering the title of tree members.
     // If the member is a text node, with clicking on it, the title get replaced with an input
@@ -36,13 +37,13 @@ const Title = (props: { data: ComponentMember }) => {
     }
 
     const handleDoubleClick = () => {
-        if(isText(data))
+        if(isTextBasedTag(data.title))
+                dispatch(setInputAtKey({key: data.key}))
+        else if(isText(data)) {
             getElementParent(app.map, data.key, (res) => {
                 dispatch(setInputAtKey({key: res.key}))
             }) 
-        else 
-            dispatch(setInputAtKey({ key: data.key }))     
-        
+        }
     }
 
     return (
@@ -64,6 +65,7 @@ const HtmlTree = () => {
     const [state, setState] = useState([])
 
     const treeHash = useSelector((state: RootState) => state.app.treeHash)
+    const expandedKey = useSelector((state: RootState) => state.app.expandedKey)
 
     useEffect(() => {
         setState(store.getState().app.map)
@@ -108,10 +110,10 @@ console.log("HTML TREE")
             <h2>Elements</h2>
             <Tree    
                 treeData={state}
-                // expandedKeys={expandedKey}
-                // onExpand={(value) => {
-                //     dispatch(updateExpandedkeys(value))
-                // }}
+                expandedKeys={expandedKey}
+                onExpand={(value) => {
+                    dispatch(updateExpandedkeys(value))
+                }}
                 draggable
                 onDrop={handleElementsDragAndDrop}
                 onSelect={handleElementSelection}

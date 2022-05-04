@@ -59,16 +59,16 @@ const counterSlice = createSlice({
     reducers: {
         moveElementInTree: (state, action) => {
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
-            findNodeInTree(state.map, dragKey, (dargNode) => {
+            state.treeHash = nanoid()
+            const dragNode = findNodeInTree(state.map, dragKey)
                 deleteNodeInTree(state.map, dragKey)
                 addNodeInPosition(
                     state.map,
                     dropKey,
                     dropPosition,
-                    dargNode,
+                    dragNode,
                     dropToGap
                 )
-            })
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
@@ -127,12 +127,13 @@ const counterSlice = createSlice({
             state.addChildTo = action.payload.key
         },
         addNodeInTree: (state, action) => {
-            state.treeHash = nanoid()
             const element = action.payload.element 
+            state.treeHash = nanoid()
+            state.selectedKey = element.key 
+
             if(state.map.length === 0){
                 state.map.push(element)
                 state.emptyTree = false 
-                state.selectedKey = element.key 
             } else {
                 state.expandedKey.push(state.addChildTo, element.key)
                 addNode(state.map, state.addChildTo, element)

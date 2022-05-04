@@ -2,7 +2,7 @@ import FormItemInput from 'antd/lib/form/FormItemInput'
 import React from 'react'
 import { AlignJustify } from 'react-feather'
 import { useDispatch, useSelector } from "react-redux"
-import { findNodeText, isContentEditable } from '../../helper'
+import {  isContentEditable } from '../../helper'
 import { changeSelectedElement, setInputAtKey, updateTreeInputValue, clearInputAtKey } from '../../redux/slice/app'
 import { RootState, ComponentMember } from "../../types"
 
@@ -20,10 +20,6 @@ const ComponentView = () => {
         const value = []
         map.forEach((el) => {
             if (inputKey === el.key) {
-                let nodeText 
-                findNodeText(map, el.key, (res) => {
-                    nodeText = res 
-                })
                 value.push(React.createElement(
                     el.title,
                     {
@@ -34,7 +30,7 @@ const ComponentView = () => {
                         React.createElement('input', 
                             { 
                                 autoFocus: true, 
-                                defaultValue: nodeText,
+                                
                                 className: styles.editInnerText,
                                 onKeyDown: (e ) => {
                                     if(e.key === 'Enter')
@@ -46,9 +42,10 @@ const ComponentView = () => {
                                 },
                             
                                 onBlur: (e ) => {
-                                    if(temp)
+                                    if(temp) {
                                         dispatch(updateTreeInputValue({value: temp }))
-                                        dispatch(changeSelectedElement({key: null}))
+                                    }
+                                        
                                         
                                 },
 

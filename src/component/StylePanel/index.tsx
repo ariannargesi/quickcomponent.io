@@ -18,15 +18,15 @@ import { RootState, ComponentMember } from "../../types"
 
 import styles from "./styles.module.sass"
 
-function getElement(key: string, html: ComponentMember[]): ComponentMember {
-    let res
-    findNodeInTree(html, key, (value) => {
-        res = value
-    })
+// function getElement(key: string, html: ComponentMember[]): ComponentMember {
+//     let res
+//     findNodeInTree(html, key, (value) => {
+//         res = value
+//     })
 
-    if (res) return res
-    else return null
-}
+//     if (res) return res
+//     else return null
+// }
 
 const StylePannel = () => {
 
@@ -37,7 +37,7 @@ const StylePannel = () => {
         <div className={styles.container}>
                 <>
                     <UpdateClassname/>
-                     <WidthAndHeight />
+                    <WidthAndHeight />
                     <Margin />
                     <Padding />
                     <Color />

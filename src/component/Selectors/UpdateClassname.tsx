@@ -4,14 +4,10 @@ import { updateClassName } from '../../redux/slice/app'
 import { Input } from 'antd'
 import styles from './styles.module.sass'
 import { RootState } from '../../types'
-import { findNodeInTree, findNodeText } from '../../helper'
+import { findNodeInTree } from '../../helper'
 
 function getClassName (map, key) {
-    let res 
-    findNodeInTree(map, key, value => {
-        res = value.props.className   
-    })
-    return res
+    return findNodeInTree(map, key).props.className 
 }
 
 const UpdateClassname = () => {

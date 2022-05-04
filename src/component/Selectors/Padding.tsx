@@ -9,7 +9,7 @@ import { getNumbericValue } from "../../helper"
 const Padding = () => {
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
-
+    console.log('Padding')
     const paddingString = useStyleValue("padding") || "0px"
     const paddingSplit = paddingString.split(" ")
 
