@@ -1,5 +1,4 @@
-import React from "react"
-import { isEmptyObject } from "."
+import { isEmptyObject } from "./"
 
 import {
     ComponentMember,
@@ -8,6 +7,7 @@ import {
     ScriptFormats,
     typesDecleration,
 } from "../types"
+import { CSSProperties } from "react"
 
 interface ScriptGeneratorConfig {
     componentName: string
@@ -36,8 +36,10 @@ const generateTypeSscriptProps = (list: PropItem[]): string => {
 
 const generateJavascriptProps = (
     list: PropItem[],
-    componentName: string
 ): string => {
+
+    const componentName = 'App'
+
     let value = ""
     value += `${componentName}.propTypes  = {`
     value += "\n"
@@ -61,7 +63,7 @@ const extractItemsFromProps = (list: PropItem[]): string => {
     return value
 }
 
-export const scriptGenerator = (config: ScriptGeneratorConfig) => {
+export const scriptGenerator = (config: ScriptGeneratorConfig): string => {
     const {
         componentName,
         propsList,
@@ -136,18 +138,18 @@ export const scriptGenerator = (config: ScriptGeneratorConfig) => {
     // Javascript props
     if (scriptType === ScriptFormats.JS && propsExsit) {
         newLine()
-        componentString += generateJavascriptProps(propsList, componentName)
+        componentString += generateJavascriptProps(propsList)
     }
     return componentString
 }
 
-const indentGenerator = (num) => {
+const indentGenerator = (num: number): string => {
     let value = ""
     for (let c = 1; c <= num; c++) value += "\xa0"
     return value
 }
 
-const objectToStyle = (object, semi, indent = undefined) => {
+const objectToStyle = (object: CSSProperties, semi: boolean, indent = undefined): string => {
     /*
     input: borderRadius: "40px"
     output: border-radius: 40px 
@@ -218,10 +220,11 @@ const generateSASS = (map: ComponentMember[],  indent = 0): string => {
 }
 
 
-export const arrayToJSX = (map: ComponentMember[]) => {
+export const arrayToJSX = (map: ComponentMember[]): string => {
     let value = ""
     map.forEach((el) => {
-        if (el.text) value += el.text
+        if (el.text)
+            value += el.text
         else {
             const className =
                 el.props.className && el.props.style

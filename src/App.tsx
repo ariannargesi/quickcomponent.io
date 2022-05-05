@@ -1,74 +1,41 @@
-import { useState } from 'react'
 import { Link } from "react-router-dom"
-import { Layout } from 'antd'
+import { useSelector } from "react-redux"
 import { ChevronRight } from 'react-feather'
-import styles from './App.module.sass'
+import { RootState } from "./types"
 import Header from "./component/Header"
-import HtmlTree from "./component/HtmlTree"
-import ActiveStyles from "./component/ActiveStyles"
 import ComponentView from "./component/ComponentView"
 import StylePanel from "./component/StylePanel"
 import Drawer from "./component/Drawer"
-import useEmptyTree from "./hooks/useEmptyTree"
 import EmptyTree from "./component/EmptyTree"
-
-const { Sider } = Layout
-
+import TreeAndStyles from './component/Sider/TreeAndStyles'
 function App() {
     
-    const [htmlTreeAndActiveStylesVisible, toggleHtmlTreeAndActiveStyles] = useState(true)
-    const treeIsEmpty = useEmptyTree()
+    const treeIsEmpty = useSelector((state: RootState) => state.app.emptyTree)
 
-    
+
+    if(treeIsEmpty)
+        return (
+            <div className="App">
+                <Header />
+                <EmptyTree/>
+                <Drawer/>
+            </div>
+        )
 
     return (
         <div className="App">
             <Header />
-            {treeIsEmpty ? (
-                <EmptyTree />
-            ) : (
                 <div className="main-container">
                     <StylePanel /> 
-                    <Sider
-                        trigger={null}
-                        style={{ position: 'relative', backgroundColor: '#eee' }}
-                        collapsible width={htmlTreeAndActiveStylesVisible ? 300 : 0}
-                    >
-                        {htmlTreeAndActiveStylesVisible &&
-                            <div style={{height: '100%', position: 'relative', zIndex: 1, }}>
-                                <HtmlTree /> 
-                                <ActiveStyles />
-                            </div>
-                        }
-                        <div
-                            className={styles.siderControl}
-                            onClick={() => {
-                                toggleHtmlTreeAndActiveStyles(!htmlTreeAndActiveStylesVisible)
-                            }}>
-                            <ChevronRight />
-                        </div>
-                    </Sider> 
+                    <TreeAndStyles/>                    
                     <ComponentView />
                 </div>
-            )}
+            )
             <Drawer />
-
             <Link to="/export">
-                <button
-                    style={{
-                        position: "fixed",
-                        right: "50px",
-                        bottom: "50px",
-                        background: "purple",
-                        borderRadius: "15px",
-                        color: "white",
-                        padding: "16px 32px",
-                        border: "none",
-                        fontSize: "18px",
-                    }}
-                >
-                    
-                    Export
+                <button className='export-button'>                   
+                    View code
+                    <ChevronRight/>
                 </button>
             </Link>
         </div>

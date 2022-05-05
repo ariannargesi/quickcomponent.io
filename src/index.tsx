@@ -1,12 +1,11 @@
 import ReactDOM from "react-dom"
-import "./styles.css"
+import "./styles.sass"
 import App from "./App"
 import store from "./redux"
 import "antd/dist/antd.min.css"
 import { Provider } from "react-redux"
 import { HashRouter, Route, Routes } from "react-router-dom"
 import Export from "./component/Export"
-import { useMediaQuery } from "react-responsive"
 const root = document.getElementById("root")
 
 const Main = () => {

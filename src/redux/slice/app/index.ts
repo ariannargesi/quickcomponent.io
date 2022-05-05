@@ -9,9 +9,8 @@ import {
     removeStyleFromTree,
     updateNodeTitle,
     updateClassName as changeClassname, 
-    isTextBasedTag,
-
 } from "../../../helper"
+
 import {
     ExportTypes,
     ScriptFormats,
@@ -78,8 +77,12 @@ const counterSlice = createSlice({
         deleteNode: (state, action) => {
             state.treeHash = nanoid()
             const key = action.payload.key
-            if (key === state.selectedKey) state.selectedKey = state.map[0].key
+            // select root 
+            if (key === state.selectedKey) 
+                state.selectedKey = state.map[0].key
+
             deleteNodeInTree(state.map, key)
+
             if(state.map.length === 0) 
                 state.emptyTree = true 
         },

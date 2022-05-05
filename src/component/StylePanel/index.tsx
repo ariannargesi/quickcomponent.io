@@ -18,16 +18,6 @@ import { RootState, ComponentMember } from "../../types"
 
 import styles from "./styles.module.sass"
 
-// function getElement(key: string, html: ComponentMember[]): ComponentMember {
-//     let res
-//     findNodeInTree(html, key, (value) => {
-//         res = value
-//     })
-
-//     if (res) return res
-//     else return null
-// }
-
 const StylePannel = () => {
 
     const key = useSelector((state: RootState) => state.app.selectedKey)

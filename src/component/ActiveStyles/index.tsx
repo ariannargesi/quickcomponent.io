@@ -26,34 +26,36 @@ const ActiveStylesItem = (props: ItemProps) => {
     )
 }
 
-function getStyles(key: string, html: ComponentMember[]): ComponentMember {
-    const res = findNodeInTree(html, key)
-    if (!res) return null
-    else if (res.props?.style) return res.props.style
+const getStyles = (key: string, html: ComponentMember[]) => {
+    const element = findNodeInTree(html, key)
+    if (!element.props.style) return null
+    else return element.props.style 
 }
 
 const ActiveStyles: React.FC = () => {
-    const { map, selectedKey } = useSelector((state: RootState) => state.app)
-    const stylesList = getStyles(selectedKey, map)
 
-    let keys = []
+    const stylesList = useSelector((state: RootState) => {
+        return getStyles(state.app.selectedKey, state.app.map )
+    })
+
+    let styleKeys = []
     if (stylesList) {
-        keys = Object.keys(stylesList)
+        styleKeys = Object.keys(stylesList)
     }
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>Active styles</h2>
-            <div className={styles.content}>
-                {keys.length === 0 ? (
+            <h2>Active styles</h2>
+            <div>
+                {styleKeys.length === 0 ? (
                     <span>You dont have any style at the moment</span>
                 ) : (
-                    keys.map((key) => {
+                    styleKeys.map((key) => {
                         const name = cssToCamelCase(key)
                         const value = stylesList[key]
                         return (
                             <ActiveStylesItem
-                                title={`${name}:${value}`}
+                                title={`${name}: ${value}`}
                                 key={key}
                             />
                         )

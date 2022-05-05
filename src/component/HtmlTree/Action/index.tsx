@@ -7,6 +7,7 @@ import {
 import useToggleDrawer from "../../../hooks/useToggleDrawer"
 
 import "./styles.sass"
+
 interface Props {
     elementKey: string,
     addChild: boolean 
@@ -15,8 +16,8 @@ interface Props {
 const iconSize = 17
 
 const Action = (props: Props) => {
-    const toggleDrawer = useToggleDrawer()
     const dispatch = useDispatch()
+    const toggleDrawer = useToggleDrawer()
     const key = props.elementKey
 
     function addChild() {

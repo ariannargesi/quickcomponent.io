@@ -4,20 +4,15 @@ import {
     updateExpandedkeys,
     moveElementInTree,
     changeSelectedElement,
-    updateTreeInputValue,
-    clearInputAtKey,
     setInputAtKey,
 } from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
-import { Icon } from "@mui/material"
-import { Type } from 'react-feather'
-import { isText, getElementParent, isTextBasedTag } from "../../helper"
+import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
 import { useEffect, useState } from "react"
 
 import store from '../../redux'
-import { getPanelId } from "@mui/base"
 const Title = (props: { data: ComponentMember }) => {
     // This component is responsible for rendering the title of tree members.
     // If the member is a text node, with clicking on it, the title get replaced with an input
@@ -25,12 +20,10 @@ const Title = (props: { data: ComponentMember }) => {
     // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state.app)
-    const { data } = props
-
-    
+    const { data } = props    
 
     const handleClick = () => {
-        if(isText(data)) {
+        if(isTextNode(data)) {
             const res = getElementParent(app.map, data.key)
             dispatch(changeSelectedElement({key: res.key}))
         }
@@ -41,7 +34,7 @@ const Title = (props: { data: ComponentMember }) => {
     const handleDoubleClick = () => {
         if(isTextBasedTag(data.title))
                 dispatch(setInputAtKey({key: data.key}))
-        else if(isText(data)) {
+        else if(isTextNode(data)) {
             const res = getElementParent(app.map, data.key)
             dispatch(setInputAtKey({key: res.key}))
         }
@@ -77,12 +70,6 @@ const HtmlTree = () => {
     }, [treeHash])
 
     const dispatch = useDispatch()
-    // const app = useSelector((state: RootState) => {
-    //     return state.app 
-    // })
-    // const { map, expandedKey } = app
-
-    // const formattedData = app.map 
    
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
@@ -105,7 +92,6 @@ const HtmlTree = () => {
             dispatch(changeSelectedElement({ key: value[0] }))
     }
 
-console.log("HTML TREE")
     return (
         <div className={styles.container}>
             <h2>Elements</h2>

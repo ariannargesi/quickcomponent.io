@@ -4,7 +4,7 @@ import Slider from "../Slider"
 import useStyleValue from "../../hooks/useStyleValue"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import { getUnit, getNumbericValue as getValue } from "../../helper"
-const units = ["px", "%", "rem"]
+const units = ["px", "rem"]
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
@@ -30,7 +30,7 @@ const WidthAndHeight = () => {
                 <div className={style.body}>
                     <Slider
                         min={0}
-                        max={1500}
+                        max={500}
                         value={widthValue}
                         onChange={(value) => {
                             applyStyle("width", value + widthUnit)
