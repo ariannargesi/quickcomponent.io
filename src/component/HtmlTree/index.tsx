@@ -21,7 +21,7 @@ const Title = (props: { data: ComponentMember }) => {
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state.app)
     const { data } = props    
-
+    
     const handleClick = () => {
         if(isTextNode(data)) {
             const res = getElementParent(app.map, data.key)
@@ -60,6 +60,13 @@ const HtmlTree = () => {
 
     const treeHash = useSelector((state: RootState) => state.app.treeHash)
     const expandedKey = useSelector((state: RootState) => state.app.expandedKey)
+    const rootKey = useSelector((state: RootState) => state.app.map[0].key)
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(updateExpandedkeys([rootKey]))
+        }, 1000)
+    }, [])
 
     useEffect(() => {
         setState(store.getState().app.map)

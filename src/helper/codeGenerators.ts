@@ -8,6 +8,7 @@ import {
     typesDecleration,
 } from "../types"
 import { CSSProperties } from "react"
+import { current } from "@reduxjs/toolkit"
 
 interface ScriptGeneratorConfig {
     componentName: string
@@ -127,7 +128,7 @@ export const scriptGenerator = (config: ScriptGeneratorConfig): string => {
 
     newLine()
 
-    componentString += `retrun (${arrayToJSX(map)})}`
+    componentString += `return (${arrayToJSX(map)})}`
 
     newLine()
 
@@ -220,17 +221,20 @@ const generateSASS = (map: ComponentMember[],  indent = 0): string => {
 }
 
 
-export const arrayToJSX = (map: ComponentMember[]): string => {
+export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {
-        if (el.text)
+        if (!el.title && el.text){
+            console.log(current(el))
             value += el.text
+        }
+            
         else {
             const className =
                 el.props.className && el.props.style
                     ? `className='${el.props.className}'`
                     : ""
-            value += `<${el.title} ${className}>${arrayToJSX(el.children)}</${
+            value += `<${el.title} ${className}>${ el.text ? el.text : arrayToJSX(el.children)}</${
                 el.title
             }>`
         }

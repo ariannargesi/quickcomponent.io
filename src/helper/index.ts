@@ -5,7 +5,7 @@ import { StyleFormats, ComponentMember} from "../types"
 import elementsList from '../data/html-elements'
 import {nanoid} from 'nanoid'
 import { setInputAtKey } from "../redux/slice/app"
-
+import { current } from "@reduxjs/toolkit"
 export const cssToCamelCase = (str: string): string => {
     /*
      * input: "border-radius"
@@ -149,7 +149,7 @@ export const isHtmlTag = (value: string): boolean => {
 
 export const isTextNode = (value: any): boolean => {
     if(Object.keys(value).length > 2) return false 
-    if(value['text'] && value['key'])
+    if(value['text'].length >= 0 && value['key'])
         return true 
 }
 

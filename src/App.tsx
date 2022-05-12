@@ -12,7 +12,6 @@ function App() {
     
     const treeIsEmpty = useSelector((state: RootState) => state.app.emptyTree)
 
-
     if(treeIsEmpty)
         return (
             <div className="App">
@@ -26,9 +25,9 @@ function App() {
         <div className="App">
             <Header />
                 <div className="main-container">
-                    <StylePanel /> 
+                    {/* <StylePanel />  */}
                      <TreeAndStyles/>                    
-                    <ComponentView />
+                    {/* <ComponentView /> */}
                 </div>
             )
             <Drawer />

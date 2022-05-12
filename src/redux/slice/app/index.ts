@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import { nanoid } from "nanoid"
 import { createSlice } from "@reduxjs/toolkit"
 import {
     findNodeInTree,
@@ -8,7 +8,9 @@ import {
     addStyleInNode,
     removeStyleFromTree,
     updateNodeTitle,
-    updateClassName as changeClassname, 
+    updateClassName as changeClassname,
+    isTextNode,
+    getElementParent,
 } from "../../../helper"
 
 import {
@@ -23,12 +25,11 @@ import initialMap from "../../../welcome-map"
 
 const initialState: App = {
     openDrawer: false,
-
     selectedKey: initialMap[0].key,
-    expandedKey: [initialMap[0].key],
+    expandedKey: [],
     addChildTo: null,
-    treeHash: null, 
-    emptyTree: false, 
+    treeHash: null,
+    emptyTree: false,
     inputKey: null,
     map: initialMap,
     config: {
@@ -60,31 +61,29 @@ const counterSlice = createSlice({
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
             state.treeHash = nanoid()
             const dragNode = findNodeInTree(state.map, dragKey)
-                deleteNodeInTree(state.map, dragKey)
-                addNodeInPosition(
-                    state.map,
-                    dropKey,
-                    dropPosition,
-                    dragNode,
-                    dropToGap
-                )
+            deleteNodeInTree(state.map, dragKey)
+            addNodeInPosition(
+                state.map,
+                dropKey,
+                dropPosition,
+                dragNode,
+                dropToGap
+            )
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
-            if(state.inputKey && state.inputKey != state.selectedKey)
-                state.inputKey = null 
+            if (state.inputKey && state.inputKey != state.selectedKey)
+                state.inputKey = null
         },
         deleteNode: (state, action) => {
             state.treeHash = nanoid()
             const key = action.payload.key
-            // select root 
-            if (key === state.selectedKey) 
-                state.selectedKey = state.map[0].key
+            // select root
+            if (key === state.selectedKey) state.selectedKey = state.map[0].key
 
             deleteNodeInTree(state.map, key)
 
-            if(state.map.length === 0) 
-                state.emptyTree = true 
+            if (state.map.length === 0) state.emptyTree = true
         },
         applyStyle: (state, action) => {
             const { key, value } = action.payload
@@ -130,34 +129,21 @@ const counterSlice = createSlice({
             state.addChildTo = action.payload.key
         },
         addNodeInTree: (state, action) => {
-            const element = action.payload.element 
+            const element = action.payload.element
             state.treeHash = nanoid()
-            state.selectedKey = element.key 
 
-            if(state.map.length === 0){
+            if (state.map.length === 0) {
                 state.map.push(element)
-                state.emptyTree = false 
+                state.emptyTree = false
             } else {
                 state.expandedKey.push(state.addChildTo, element.key)
                 addNode(state.map, state.addChildTo, element)
             }
 
-
-            // findNodeInTree(state.map, state.addChildTo, res => {
-            //         const element = action.payload.element
-
-            //         if (state.map.length === 0) {
-            //             console.log('This should run');
-                        
-            //             state.map.push(element)
-            //             state.selectedKey = action.payload.element.key
-            //         } else {   
-            //             console.log('but not running')
-            //             const elementKey = element.key
-            //             state.expandedKey.push(state.addChildTo, elementKey)
-            //             addNode(state.map, state.addChildTo, element)
-            //         }
-            // })
+            if (isTextNode(element)) {
+                const el = getElementParent(state.map, element.key)
+                state.selectedKey = el.key
+            } else state.selectedKey = element.key
         },
         setInputAtKey: (state, action) => {
             state.inputKey = action.payload.key
@@ -167,7 +153,7 @@ const counterSlice = createSlice({
         },
         updateTreeInputValue: (state, action) => {
             updateNodeTitle(state.map, state.selectedKey, action.payload.value)
-            state.inputKey = null 
+            state.inputKey = null
         },
         removeStyle: (state, action) => {
             const property = action.payload
@@ -180,9 +166,9 @@ const counterSlice = createSlice({
             state.openDrawer = !state.openDrawer
         },
         updateClassName: (state, action) => {
-            const {value} = action.payload 
-            changeClassname(state.map, state.selectedKey, value )    
-        }
+            const { value } = action.payload
+            changeClassname(state.map, state.selectedKey, value)
+        },
     },
 })
 
@@ -202,6 +188,6 @@ export const {
     removeStyle,
     updateExpandedkeys,
     toggleDrawer,
-    updateClassName  
+    updateClassName,
 } = counterSlice.actions
 export default counterSlice.reducer

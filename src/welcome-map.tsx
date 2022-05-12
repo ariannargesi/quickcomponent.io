@@ -28,59 +28,34 @@ const map: ComponentMember[] = [
                     },
                 },
                 key: nanoid(),
-                children: [
-                    {
-                        text: "Welcome to quickcomponent.io",
-                        key: nanoid(),
-                    },
-                ],
-            },
-            {
-                title: "h2",
-                props: {},
-                key: nanoid(),
-                children: [
-                    {
-                        text: "- Try changing the styles ",
-                        key: nanoid(),
-                    },
-                ],
+                text: "Welcome to quickcomponent.io",
             },
             {
                 title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- Add or remove elements ",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- Try changing the styles ",
             },
             {
-                title: "h4",
+                title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- Click export button to see your ",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- Add or remove elements ",
             },
             {
-                title: "h5",
+                title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- copy or download your code with your custom settings",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- Click export button to see your ",
             },
             {
-                title: "article",
+                title: "h3",
+                props: {},
+                key: nanoid(),
+                text: "- copy or download your code with your custom settings",
+            },
+            {
+                title: "div",
                 props: {
                     className: "div_6Hy3cW",
                     style: {
