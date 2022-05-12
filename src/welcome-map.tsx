@@ -28,35 +28,59 @@ const map: ComponentMember[] = [
                     },
                 },
                 key: nanoid(),
-                text: "Welcome to quickcomponent.io",
+                children: [
+                    {
+                        text: "Welcome to quickcomponent.io",
+                        key: nanoid(),
+                    },
+                ],
+            },
+            {
+                title: "h2",
+                props: {},
+                key: nanoid(),
+                children: [
+                    {
+                        text: "- Try changing the styles ",
+                        key: nanoid(),
+                    },
+                ],
             },
             {
                 title: "h3",
                 props: {},
                 key: nanoid(),
-                text: "- Try changing the styles ",
+                children: [
+                    {
+                        text: "- Add or remove elements ",
+                        key: nanoid(),
+                    },
+                ],
             },
             {
-                title: "h3",
+                title: "h4",
                 props: {},
                 key: nanoid(),
-                text: "- Add or remove elements ",
+                children: [
+                    {
+                        text: "- Click export button to see your ",
+                        key: nanoid(),
+                    },
+                ],
             },
             {
-                title: "h3",
+                title: "h5",
                 props: {},
                 key: nanoid(),
-                text: "- Click export button to see your ",
-                
+                children: [
+                    {
+                        text: "- copy or download your code with your custom settings",
+                        key: nanoid(),
+                    },
+                ],
             },
             {
-                title: "h3",
-                props: {},
-                key: nanoid(),
-                text: '- copy or download your code with your custom settings'
-            },
-            {
-                title: "div",
+                title: "article",
                 props: {
                     className: "div_6Hy3cW",
                     style: {

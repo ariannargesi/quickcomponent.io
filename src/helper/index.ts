@@ -61,7 +61,7 @@ export const addNodeInPosition = (map: ComponentMember[], dropKey: string, dropP
     }
 }
 
-const generateClassName = (name = 'class_', length = 6): string => {
+export const generateClassName = (name = 'class_', length = 6): string => {
     return name + nanoid(length)
 }
 

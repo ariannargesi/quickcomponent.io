@@ -1,5 +1,5 @@
 import Slider from "@mui/material/Slider"
-
+import styles from '../Selectors/styles.module.sass'
 interface Props {
     label?: string
     value: number
@@ -19,7 +19,7 @@ const App = (props: Props) => {
     return (
         <div style={props.labelInline && inlineStyle}>
             {props.label && (
-                <span style={{ paddingRight: "20px" }}>{props.label}</span>
+                <span className={styles.label}>{props.label}</span>
             )}
             <Slider
                 min={props.min}

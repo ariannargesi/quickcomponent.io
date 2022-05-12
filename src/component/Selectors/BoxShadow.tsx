@@ -8,11 +8,7 @@ import useStyleValue from "../../hooks/useStyleValue"
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
-
-    console.log("BOX ")
-
     const [showMore, setShowMore] = useState(true)
-
     const shadow =
         useStyleValue("boxShadow") || "2px 2px 2px 4px rgba(128,154,145, 0.5)"
     const shadowPieces: string[] = shadow.split("px")

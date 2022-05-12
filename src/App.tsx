@@ -16,9 +16,9 @@ function App() {
     if(treeIsEmpty)
         return (
             <div className="App">
-                <Header />
-                <EmptyTree/>
-                <Drawer/>
+                 <Header />  
+                 <EmptyTree/> 
+                 <Drawer/>
             </div>
         )
 
@@ -27,7 +27,7 @@ function App() {
             <Header />
                 <div className="main-container">
                     <StylePanel /> 
-                    <TreeAndStyles/>                    
+                     <TreeAndStyles/>                    
                     <ComponentView />
                 </div>
             )
