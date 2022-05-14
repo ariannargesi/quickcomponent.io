@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import AceEditor from "react-ace"
 import { useSelector } from "react-redux"
 import { Clipboard, Check } from "react-feather"
-import { App } from "../../types"
 import { RootState } from "../../types"
 import { StyleFormats, EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
@@ -14,12 +13,12 @@ import "ace-builds/src-noconflict/theme-dracula"
 
 const Editor = () => {
     const [showClipboard, setShowClipboard] = useState(true)
-    const app = useSelector((state: RootState) => state.app) as App
+    const app = useSelector((state: RootState) => state)
     const code = useSelector((state: RootState) => {
         // get code depend on eidtor view
-        if (state.app.editorView === EditorView.Script)
-            return formatScript(state.app.output.script)
-        else return formatStyle(state.app.output.style, app.config.styleType)
+        if (state.editorView === EditorView.Script)
+            return formatScript(state.output.script)
+        else return formatStyle(state.output.style, app.config.styleType)
     })
 
     let mode

@@ -1,7 +1,3 @@
-export interface RootState {
-    app: App
-}
-
 export enum StyleFormats {
     CSS = "css",
     SASS = "sass",
@@ -70,7 +66,7 @@ export interface Output {
     }
 }
 
-export interface App extends Output {
+export interface RootState extends Output {
     openDrawer: boolean,
     emptyTree: boolean, 
     treeHash: string,

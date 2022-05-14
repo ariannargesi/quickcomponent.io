@@ -20,10 +20,10 @@ import {
     EditorView,
 } from "../../../types"
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
-import { App, typesDecleration } from "../../../types"
+import {  typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
 
-const initialState: App = {
+const initialState: RootState = {
     openDrawer: false,
     selectedKey: initialMap[0].key,
     expandedKey: [],
@@ -91,6 +91,7 @@ const counterSlice = createSlice({
             addStyleInNode(state.map, state.selectedKey, key, value)
         },
         generateCode: (state) => {
+            console.log('im the last call generatecode')
             state.output.style = styleGenerator(
                 state.map,
                 state.config.styleType

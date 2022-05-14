@@ -38,7 +38,8 @@ const generateTypeSscriptProps = (list: PropItem[]): string => {
 const generateJavascriptProps = (
     list: PropItem[],
 ): string => {
-
+    console.log('This isl ist')
+    console.log(list)
     const componentName = 'App'
 
     let value = ""

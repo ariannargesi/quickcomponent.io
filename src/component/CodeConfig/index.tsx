@@ -17,7 +17,7 @@ const hooksList = ["useState", "useEffect", "useRef", "useCallback", "useMemo"]
 const CompnentConfig = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const config = useSelector((state: RootState) => state.app.config)
+    const config = useSelector((state: RootState) => state.config)
 
     const goBack = () => {
         navigate(-1)

@@ -12,27 +12,30 @@ interface Prop {
 }
 
 // form initial state
-const initialForm = {
-    name: "",
-    type: "any",
-    required: false,
-}
+
 
 const PropConfig = (props: Prop) => {
-    console.log('render')
+    console.log("render")
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [modalVisible, setModalVisible] = useState(false)
 
-    const scriptType = useSelector((state: RootState) => state.app.config.scriptType)
-    const statePropsList = useSelector((state: RootState) => state.app.config.propsList)
+    const scriptType = useSelector(
+        (state: RootState) => state.config.scriptType
+    )
 
-    
+    const statePropsList = useSelector(
+        (state: RootState) => state.config.propsList
+    )
+
     // using this state to show props list insdie the modal
     const [propsList, setPropsList] = useState([])
-    const [form, setForm] = useState(initialForm)
+    const [form, setForm] = useState({
+        name: null,
+        type: null,
+        required: false 
+    })
 
-    
     const handleChange = (e) => {
         setForm((prev) => {
             return {
@@ -42,7 +45,8 @@ const PropConfig = (props: Prop) => {
         })
     }
 
-    const typesList = scriptType === ScriptFormats.TS ? prop_types.ts : prop_types.js
+    const typesList =
+        scriptType === ScriptFormats.TS ? prop_types.ts : prop_types.js
 
     const handleInputChange = (e) => {
         const value = e.target.value.trim()
@@ -65,7 +69,11 @@ const PropConfig = (props: Prop) => {
 
     const handleAddProp = () => {
         setPropsList((prev) => [...prev, form])
-        setForm(initialForm)
+        setForm({
+            name: null,
+            type: null,
+            required: false
+        })
     }
 
     const handleDeleteProp = (index) => {
@@ -86,19 +94,23 @@ const PropConfig = (props: Prop) => {
             {statePropsList.length != 0 && (
                 <div style={{ textAlign: "left" }}>
                     <table className={styles.table} style={{ width: "70%" }}>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Required</th>
-                        </tr>
-                        {propsList.map((item) => {
-                            console.log('render')
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        {statePropsList.map((item) => {
+                            console.log("render")
                             return (
-                                <tr key={item.name}>
-                                    <td>{item.name}</td>
-                                    <td>{item.type}</td>
-                                    <td>{item.required ? "True" : "False"}</td>
-                                </tr>
+                                <tbody key={item.name}>
+                                    <tr>
+                                        <td>{item.name}</td>
+                                        <td>{item.type}</td>    
+                                        <td>{item.required ? "True" : "False"}</td>
+                                    </tr>
+                                </tbody>
                             )
                         })}
                     </table>
@@ -115,16 +127,17 @@ const PropConfig = (props: Prop) => {
                 width={600}
             >
                 <div className={styles.formContainer}>
-                    <div>
+                    <div style={{ width: "150px" }}>
                         <label htmlFor="name">Name</label>
                         <Input value={form.name} onChange={handleInputChange} />
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Type</label>
                         <Select
-                            placeholder='Select type'
+                            placeholder="Select type"
+                            value={form.type}
                             onChange={(e) => handleChange({ type: e })}
-                            style={{ width: 200, margin: '0 16px' }}
+                            style={{ width: 200 }}
                         >
                             {typesList.map((item) => {
                                 return (
@@ -143,22 +156,25 @@ const PropConfig = (props: Prop) => {
                         />
                     </div>
                     <Button
-                        disabled={error || !form.name}
+                        style={{ marginTop: "16px" }}
+                        disabled={error || !form.name || !form.type}
                         onClick={handleAddProp}
                     >
                         Add
                     </Button>
                 </div>
                 {error && <span className={styles.error}>{errorMessage}</span>}
-                {propsList.length != 0 && (
+                {statePropsList.length != 0 && (
                     <table className={styles.table}>
                         <thead>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Required</th>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            {propsList.map((item, index) => {
+                            {statePropsList.map((item, index) => {
                                 return (
                                     <tr key={item.name}>
                                         <td>{item.name}</td>

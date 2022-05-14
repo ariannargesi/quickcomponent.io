@@ -10,7 +10,7 @@ const style = {
     },
     flex: {
         display: "flex",
-        justifyContent: "space-between",
+       
     },
 }
 

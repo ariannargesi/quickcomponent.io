@@ -5,7 +5,7 @@ import styles from "./styles.module.sass"
 
 const ComponentView = () => {
     const { map, inputKey, selectedKey } = useSelector(
-        (state: RootState) => state.app
+        (state: RootState) => state
     )
     const component = arrayToComponent(map, inputKey, selectedKey)
 

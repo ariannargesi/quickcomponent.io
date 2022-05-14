@@ -3,7 +3,9 @@ import { ComponentMember } from '../types'
 import { updateTreeInputValue, changeSelectedElement, setInputAtKey } from '../redux/slice/app'
 import { useDispatch } from 'react-redux'
 import { isContentEditable } from '.'
-import styles from '../component/Selectors/styles.module.sass'
+import styles from '../component/ComponentView/styles.module.sass'
+
+console.log('stlyes, ', styles.editInnerText)
 
 const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey: string): React.ReactNode => {
 
@@ -22,8 +24,9 @@ const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey:
                 [
                     React.createElement('input', 
                         { 
-                            autoFocus: true, 
+
                             className: styles.editInnerText,
+                            autoFocus: true, 
                             onKeyDown: (event) => {
                                 if(event.key === 'Enter' && inputValue)
                                     dispatch(updateTreeInputValue({value: inputValue }))

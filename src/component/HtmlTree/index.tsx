@@ -19,12 +19,12 @@ const Title = (props: { data: ComponentMember }) => {
     // and you can update the inner text
     // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
-    const app = useSelector((state: RootState) => state.app)
+    const { map } = useSelector((state: RootState) => state)
     const { data } = props    
     
     const handleClick = () => {
         if(isTextNode(data)) {
-            const res = getElementParent(app.map, data.key)
+            const res = getElementParent(map, data.key)
             dispatch(changeSelectedElement({key: res.key}))
         }
         else 
@@ -35,7 +35,7 @@ const Title = (props: { data: ComponentMember }) => {
         if(isTextBasedTag(data.title))
                 dispatch(setInputAtKey({key: data.key}))
         else if(isTextNode(data)) {
-            const res = getElementParent(app.map, data.key)
+            const res = getElementParent(map, data.key)
             dispatch(setInputAtKey({key: res.key}))
         }
     }
@@ -58,9 +58,9 @@ const HtmlTree = () => {
 
     const [state, setState] = useState([])
 
-    const treeHash = useSelector((state: RootState) => state.app.treeHash)
-    const expandedKey = useSelector((state: RootState) => state.app.expandedKey)
-    const rootKey = useSelector((state: RootState) => state.app.map[0].key)
+    const treeHash = useSelector((state: RootState) => state.treeHash)
+    const expandedKey = useSelector((state: RootState) => state.expandedKey)
+    const rootKey = useSelector((state: RootState) => state.map[0].key)
 
     useEffect(() => {
         setTimeout(() => {
@@ -69,11 +69,11 @@ const HtmlTree = () => {
     }, [])
 
     useEffect(() => {
-        setState(store.getState().app.map)
+        setState(store.getState().map)
     }, [])
 
     useEffect(() => {
-        setState(store.getState().app.map)
+        setState(store.getState().map)
     }, [treeHash])
 
     const dispatch = useDispatch()

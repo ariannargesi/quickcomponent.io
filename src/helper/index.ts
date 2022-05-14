@@ -197,10 +197,15 @@ export const genereateElement =(name: string, dispatch: any): ComponentMember =>
 }
 
 export const convertProps = (propsList) => {
-    const isJS = propsList[0].type.startsWith('PropTypes')
+    const isJsProp = propsList[0].type.startsWith('PropTypes')
     const clone = JSON.parse(JSON.stringify(propsList))
-    clone.forEach((item, index) => {
-      item.type = isJS ? prop_types.ts[index] : prop_types.js[index]
+    clone.forEach((item) => {
+      let index = 0 
+      if(isJsProp)
+        index = prop_types.js.indexOf(item.type)
+      else 
+        index = prop_types.ts.indexOf(item.type)
+      item.type = isJsProp ? prop_types.ts[index] : prop_types.js[index]
     })
     return clone
 }

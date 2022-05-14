@@ -12,8 +12,8 @@ const Drawer = () => {
     const toggleDrawer = useToggleDrawer()
     const {visible, empty} = useSelector((state: RootState) => {
         return {
-            visible: state.app.openDrawer,
-            empty: state.app.emptyTree
+            visible: state.openDrawer,
+            empty: state.emptyTree
         }
     })
 

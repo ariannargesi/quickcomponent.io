@@ -35,7 +35,7 @@ const getStyles = (key: string, html: ComponentMember[]) => {
 const ActiveStyles: React.FC = () => {
 
     const stylesList = useSelector((state: RootState) => {
-        return getStyles(state.app.selectedKey, state.app.map )
+        return getStyles(state.selectedKey, state.map )
     })
 
     let styleKeys = []

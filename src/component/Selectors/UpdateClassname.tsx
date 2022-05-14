@@ -9,7 +9,7 @@ import styles from "./styles.module.sass"
 const UpdateClassname = () => {
 
     const defaultValue = useSelector((state: RootState) => {
-        return findNodeInTree(state.app.map, state.app.selectedKey).props.className
+        return findNodeInTree(state.map, state.selectedKey).props.className
     })
 
     const [value, setValue] = useState(defaultValue)
