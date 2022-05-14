@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid"
 import { createSlice } from "@reduxjs/toolkit"
 import {
     findNodeInTree,
@@ -11,6 +10,7 @@ import {
     updateClassName as changeClassname,
     isTextNode,
     getElementParent,
+    convertProps
 } from "../../../helper"
 
 import {
@@ -59,7 +59,7 @@ const counterSlice = createSlice({
     reducers: {
         moveElementInTree: (state, action) => {
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
-            state.treeHash = nanoid()
+            state.treeHash = dragKey
             const dragNode = findNodeInTree(state.map, dragKey)
             deleteNodeInTree(state.map, dragKey)
             addNodeInPosition(
@@ -76,8 +76,9 @@ const counterSlice = createSlice({
                 state.inputKey = null
         },
         deleteNode: (state, action) => {
-            state.treeHash = nanoid()
+            
             const key = action.payload.key
+            state.treeHash = key 
             // select root
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
 
@@ -106,6 +107,11 @@ const counterSlice = createSlice({
             })
         },
         updateConfig: (state, action) => {
+            const key = action.payload.key 
+            const value = action.payload.value 
+            if(key === 'scriptType' && state.config.scriptType != value && state.config.propsList.length > 0){
+                state.config.propsList = convertProps(state.config.propsList)
+            }
             state.config[action.payload.key] = action.payload.value
             state.output.style = styleGenerator(
                 state.map,
@@ -130,7 +136,7 @@ const counterSlice = createSlice({
         },
         addNodeInTree: (state, action) => {
             const element = action.payload.element
-            state.treeHash = nanoid()
+            state.treeHash = state.selectedKey
 
             if (state.map.length === 0) {
                 state.map.push(element)

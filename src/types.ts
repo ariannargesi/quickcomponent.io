@@ -89,3 +89,26 @@ export interface HtmlElement {
     textOnly  
 }
 
+const ts = [
+    'string',
+    'string[]', 
+    'number',
+    'number[]',
+    'boolean',
+    'boolean[]',
+  ]
+  
+  const js = [
+    'PropTypes.string', 
+    'PropTypes.arrayOf(PropTypes.string)',
+    'PropTypes.number',
+    'PropTypes.arrayOf(PropTypes.number)',
+    'PropTypes.bool',
+    'PropTypes.arrayOf(PropTypes.bool)',
+  ]
+
+export const prop_types = { 
+    ts,
+    js 
+} 
+

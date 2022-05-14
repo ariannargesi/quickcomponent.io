@@ -45,7 +45,7 @@ const generateJavascriptProps = (
     value += `${componentName}.propTypes  = {`
     value += "\n"
     list.forEach((item) => {
-        value += `${item.name}: propTypes.${item.type}${
+        value += `${item.name}: ${item.type}${
             item.required ? ".isRequired" : ""
         },`
         value += "\n"
@@ -150,7 +150,7 @@ const indentGenerator = (num: number): string => {
     return value
 }
 
-const objectToStyle = (object: CSSProperties, semi: boolean, indent = undefined): string => {
+const objectToStyle = (object: CSSProperties, semi: boolean, indent = null): string => {
     /*
     input: borderRadius: "40px"
     output: border-radius: 40px 
@@ -160,7 +160,7 @@ const objectToStyle = (object: CSSProperties, semi: boolean, indent = undefined)
     let value = ""
     keys.forEach((key, index) => {
         let currentLine = ""
-        if (indent != undefined) value += indentGenerator(indent)
+        if (indent != null) value += indentGenerator(indent)
         key.split("").forEach((char) => {
             if (char === char.toUpperCase())
                 currentLine += "-" + char.toLowerCase()

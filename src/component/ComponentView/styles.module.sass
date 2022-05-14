@@ -1,27 +1,31 @@
-.container
-    
-    flex: 1 
-    display: flex 
-    overflow: auto
-    min-height: 100% 
-    max-height: 100%
-    padding: 16px 
-    min-width: 100%
-    .content 
-        margin: auto
-        *   
-            all: revert
-            cursor: pointer
-            &:hover 
-                outline: 2px dashed
-
 
 .wrapper 
-        width: 50% 
-        flex: 1
-        padding: 12px 
-        background: white;
-        height:  calc(100% - 60px)
+    display: block 
+    flex: 1
+    width: 0
+    background: white
+    height:  calc(100%)
+    .container
+        flex: 1 
+        display: flex 
+        overflow: scroll
+        height: calc(100% - 60px)
+        min-height: calc(100%-60px) 
+        max-height: calc(100%-60px)
+        padding: 16px 
+        min-width: 100%
+        max-width: 100%
+        width: 100%
+        .content 
+            margin: auto
+            *   
+                all: revert
+                cursor: pointer
+                &:hover 
+                    outline: 2px dashed
+
+
+
         
 
 .header 

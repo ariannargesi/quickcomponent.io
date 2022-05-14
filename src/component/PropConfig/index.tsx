@@ -4,37 +4,9 @@ import { Switch, Modal } from "antd"
 import { useSelector } from "react-redux"
 import isVarName from "is-var-name"
 import { Trash } from "react-feather"
-import { PropItem, RootState, ScriptFormats } from "../../types"
+import { PropItem, RootState, ScriptFormats, prop_types } from "../../types"
 import styles from "./styles.module.sass"
 const { Option } = Select
-
-const types_types = [
-    "array",
-    "bigint",
-    "bool",
-    "fun",
-    "number",
-    "object",
-    "string",
-    "symbol",
-    "node",
-    "element",
-    "elementType",
-    "any",
-]
-
-const tsx_types = [
-    "string",
-    "number",
-    "boolean",
-    "string[]",
-    "number[]",
-    "boolean[]",
-    "object",
-    "Function",
-    "ReactNode",
-]
-
 interface Prop {
     onConfirm: (list: PropItem[]) => void
 }
@@ -47,16 +19,20 @@ const initialForm = {
 }
 
 const PropConfig = (props: Prop) => {
+    console.log('render')
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [modalVisible, setModalVisible] = useState(false)
-    const config = useSelector((state: RootState) => state.app.config)
-    // using statePropsList to show props list outside of the modal
-    const { propsList: statePropsList, scriptType } = config
+
+    const scriptType = useSelector((state: RootState) => state.app.config.scriptType)
+    const statePropsList = useSelector((state: RootState) => state.app.config.propsList)
+
+    
     // using this state to show props list insdie the modal
     const [propsList, setPropsList] = useState([])
     const [form, setForm] = useState(initialForm)
 
+    
     const handleChange = (e) => {
         setForm((prev) => {
             return {
@@ -66,7 +42,7 @@ const PropConfig = (props: Prop) => {
         })
     }
 
-    const typesList = scriptType === ScriptFormats.TS ? tsx_types : types_types
+    const typesList = scriptType === ScriptFormats.TS ? prop_types.ts : prop_types.js
 
     const handleInputChange = (e) => {
         const value = e.target.value.trim()
@@ -116,6 +92,7 @@ const PropConfig = (props: Prop) => {
                             <th>Required</th>
                         </tr>
                         {propsList.map((item) => {
+                            console.log('render')
                             return (
                                 <tr key={item.name}>
                                     <td>{item.name}</td>
@@ -145,9 +122,9 @@ const PropConfig = (props: Prop) => {
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         <label htmlFor="name">Name</label>
                         <Select
-                            defaultValue={form.type}
+                            placeholder='Select type'
                             onChange={(e) => handleChange({ type: e })}
-                            style={{ width: 120 }}
+                            style={{ width: 200, margin: '0 16px' }}
                         >
                             {typesList.map((item) => {
                                 return (

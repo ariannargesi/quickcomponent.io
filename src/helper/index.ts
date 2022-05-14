@@ -1,7 +1,7 @@
 import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
-import { StyleFormats, ComponentMember} from "../types"
+import { StyleFormats, ComponentMember, prop_types} from "../types"
 import elementsList from '../data/html-elements'
 import {nanoid} from 'nanoid'
 import { setInputAtKey } from "../redux/slice/app"
@@ -26,7 +26,7 @@ export const findNodeInTree = (map: ComponentMember[], key: string): ComponentMe
     if(!Array.isArray(map))
         return map 
     map.some(o => result = o.key === key && o || findNodeInTree(o.children, key))
-    return result || undefined;
+    return result || null;
   }
 
 //   CLEAN 
@@ -157,7 +157,7 @@ export const getElementParent = (map: ComponentMember[], key: string, item = nul
     let result;
     if(!Array.isArray(map)) return map 
     map.some(o => result = o.key === key && item || getElementParent(o.children, key, o));
-    return result || undefined;
+    return result || null;
 }
 
 export const genereateElement =(name: string, dispatch: any): ComponentMember => {
@@ -194,4 +194,13 @@ export const genereateElement =(name: string, dispatch: any): ComponentMember =>
             children: [{text: 'ff', key: innerKey}], 
         }
     }
+}
+
+export const convertProps = (propsList) => {
+    const isJS = propsList[0].type.startsWith('PropTypes')
+    const clone = JSON.parse(JSON.stringify(propsList))
+    clone.forEach((item, index) => {
+      item.type = isJS ? prop_types.ts[index] : prop_types.js[index]
+    })
+    return clone
 }

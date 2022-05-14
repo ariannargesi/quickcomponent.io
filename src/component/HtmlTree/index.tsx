@@ -93,12 +93,6 @@ const HtmlTree = () => {
         )
     }
 
-    const handleElementSelection = (value, e) => {
-        if (e.nativeEvent.srcElement.tagName != "DIV") return
-        if (value.length != 0)
-            dispatch(changeSelectedElement({ key: value[0] }))
-    }
-
     return (
         <div className={styles.container}>
             <h2>Elements</h2>
@@ -110,7 +104,6 @@ const HtmlTree = () => {
                 }}
                 draggable
                 onDrop={handleElementsDragAndDrop}
-                onSelect={handleElementSelection}
                 titleRender={(nodeData: ComponentMember) => {
                     return <Title data={nodeData} />
                 }}

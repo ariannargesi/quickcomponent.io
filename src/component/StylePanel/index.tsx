@@ -13,15 +13,10 @@ import BackgroundColor from "../Selectors/Background"
 import Margin from "../Selectors/Margin"
 import Padding from "../Selectors/Padding"
 import UpdateClassname from '../Selectors/UpdateClassname'
-import { findNodeInTree } from "../../helper"
-import { RootState, ComponentMember } from "../../types"
 
 import styles from "./styles.module.sass"
 
 const StylePannel = () => {
-
-    const key = useSelector((state: RootState) => state.app.selectedKey)
-
 
     return (
         <div className={styles.container}>
@@ -32,12 +27,12 @@ const StylePannel = () => {
                     <Padding />
                     <Color />
                     <BackgroundColor />  
+                    <TextAlign />
                     <BoxShadow />
                     <Positions />                    
                     <Display />
                     <BorderRadius />
                     <Border />
-                    <TextAlign />
                     <FontSize />
                     <FontWeight /> 
                 </>
