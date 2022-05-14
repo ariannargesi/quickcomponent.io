@@ -22,7 +22,7 @@ const TreeAndStyles = () => {
             {visible &&
                 <div style={{height: "100%"}}>
                     <HtmlTree />
-                    {/* <ActiveStyles /> */}
+                    <ActiveStyles />
                 </div>
             }
             <div

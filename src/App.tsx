@@ -25,9 +25,9 @@ function App() {
         <div className="App">
             <Header />
                 <div className="main-container">
-                    {/* <StylePanel />  */}
+                    <StylePanel /> 
                      <TreeAndStyles/>                    
-                    {/* <ComponentView /> */}
+                    <ComponentView />
                 </div>
             )
             <Drawer />
