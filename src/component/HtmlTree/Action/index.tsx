@@ -5,15 +5,19 @@ import {
     selectElementForAddingChild,
 } from "../../../redux/slice/app"
 import useToggleDrawer from "../../../hooks/useToggleDrawer"
+
 import "./styles.sass"
+
 interface Props {
-    elementKey: string
+    elementKey: string,
+    addChild: boolean 
 }
 
 const iconSize = 17
+
 const Action = (props: Props) => {
-    const toggleDrawer = useToggleDrawer()
     const dispatch = useDispatch()
+    const toggleDrawer = useToggleDrawer()
     const key = props.elementKey
 
     function addChild() {
@@ -21,15 +25,16 @@ const Action = (props: Props) => {
         toggleDrawer()
     }
 
-    function removeElement() {
+    function removeElement(event) {
+        event.stopPropagation()
         dispatch(deleteNode({ key }))
     }
 
     return (
-        <div className={"tree-item-action"}>
-            <Plus onClick={addChild} size={iconSize} />
-            <Trash onClick={removeElement} size={iconSize} />
-        </div>
+        <span className={"tree-item-action"}>            
+             {props.addChild && <Plus onClick={addChild} size={iconSize} /> } 
+             <Trash onClick={removeElement} size={iconSize} /> 
+        </span>
     )
 }
 

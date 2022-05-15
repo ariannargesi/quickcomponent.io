@@ -12,48 +12,30 @@ import Color from "../Selectors/Color"
 import BackgroundColor from "../Selectors/Background"
 import Margin from "../Selectors/Margin"
 import Padding from "../Selectors/Padding"
-import { findNodeInTree } from "../../helper"
-import { RootState, ComponentMember } from "../../types"
+import UpdateClassname from '../Selectors/UpdateClassname'
 
 import styles from "./styles.module.sass"
 
-function getElement(key: string, html: ComponentMember[]): ComponentMember {
-    let res
-    findNodeInTree(html, key, (value) => {
-        res = value
-    })
-
-    if (res) return res
-    else return null
-}
-
 const StylePannel = () => {
-    const state = useSelector((state: RootState) => state)
-    const element = getElement(state.app.selectedKey, state.app.map)
-
-    let message
-    if (!element) message = "Please select an element."
 
     return (
         <div className={styles.container}>
-            {message && <h3 className={styles.message}>{message}</h3>}
-            {element && !element.text && (
                 <>
+                    <UpdateClassname/>
                     <WidthAndHeight />
                     <Margin />
                     <Padding />
                     <Color />
-                    <BackgroundColor />
+                    <BackgroundColor />  
+                    <TextAlign />
                     <BoxShadow />
-                    <Positions />
+                    <Positions />                    
                     <Display />
                     <BorderRadius />
                     <Border />
-                    <TextAlign />
                     <FontSize />
-                    <FontWeight />
+                    <FontWeight /> 
                 </>
-            )}
         </div>
     )
 }

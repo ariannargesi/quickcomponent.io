@@ -43,7 +43,9 @@ const ColorPicker = (props: PickerProps) => {
                         </div>
                     )}
                     <ReacetColorPicker
+                        onStartChange={handleChange}
                         onChange={handleChange}
+                        onEndChange={handleChange}
                         isGradient={showGradient}
                     />
                     <Button

@@ -7,7 +7,12 @@ import {
     addStyleInNode,
     removeStyleFromTree,
     updateNodeTitle,
+    updateClassName as changeClassname,
+    isTextNode,
+    getElementParent,
+    convertProps
 } from "../../../helper"
+
 import {
     ExportTypes,
     ScriptFormats,
@@ -15,14 +20,16 @@ import {
     EditorView,
 } from "../../../types"
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
-import { App, typesDecleration } from "../../../types"
+import {  typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
 
-const initialState: App = {
+const initialState: RootState = {
     openDrawer: false,
     selectedKey: initialMap[0].key,
     expandedKey: [],
     addChildTo: null,
+    treeHash: null,
+    emptyTree: false,
     inputKey: null,
     map: initialMap,
     config: {
@@ -52,24 +59,32 @@ const counterSlice = createSlice({
     reducers: {
         moveElementInTree: (state, action) => {
             const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
-            findNodeInTree(state.map, dragKey, (dargNode) => {
-                deleteNodeInTree(state.map, dragKey)
-                addNodeInPosition(
-                    state.map,
-                    dropKey,
-                    dropPosition,
-                    dargNode,
-                    dropToGap
-                )
-            })
+            state.treeHash = dragKey
+            const dragNode = findNodeInTree(state.map, dragKey)
+            deleteNodeInTree(state.map, dragKey)
+            addNodeInPosition(
+                state.map,
+                dropKey,
+                dropPosition,
+                dragNode,
+                dropToGap
+            )
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
+            if (state.inputKey && state.inputKey != state.selectedKey)
+                state.inputKey = null
         },
         deleteNode: (state, action) => {
+            
             const key = action.payload.key
+            state.treeHash = key 
+            // select root
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
+
             deleteNodeInTree(state.map, key)
+
+            if (state.map.length === 0) state.emptyTree = true
         },
         applyStyle: (state, action) => {
             const { key, value } = action.payload
@@ -92,6 +107,11 @@ const counterSlice = createSlice({
             })
         },
         updateConfig: (state, action) => {
+            const key = action.payload.key 
+            const value = action.payload.value 
+            if(key === 'scriptType' && state.config.scriptType != value && state.config.propsList.length > 0){
+                state.config.propsList = convertProps(state.config.propsList)
+            }
             state.config[action.payload.key] = action.payload.value
             state.output.style = styleGenerator(
                 state.map,
@@ -115,15 +135,21 @@ const counterSlice = createSlice({
             state.addChildTo = action.payload.key
         },
         addNodeInTree: (state, action) => {
+            const element = action.payload.element
+            state.treeHash = element.key
+
             if (state.map.length === 0) {
-                state.map.push(action.payload.element)
-                state.selectedKey = action.payload.element.key
+                state.map.push(element)
+                state.emptyTree = false
             } else {
-                const elemetn = action.payload.element
-                const elementKey = elemetn.key
-                state.expandedKey.push(state.addChildTo, elementKey)
-                addNode(state.map, state.addChildTo, action.payload.element)
+                state.expandedKey.push(state.addChildTo, element.key)
+                addNode(state.map, state.addChildTo, element)
             }
+
+            if (isTextNode(element)) {
+                const el = getElementParent(state.map, element.key)
+                state.selectedKey = el.key
+            } else state.selectedKey = element.key
         },
         setInputAtKey: (state, action) => {
             state.inputKey = action.payload.key
@@ -132,7 +158,8 @@ const counterSlice = createSlice({
             state.inputKey = null
         },
         updateTreeInputValue: (state, action) => {
-            updateNodeTitle(state.map, state.inputKey, action.payload.value)
+            updateNodeTitle(state.map, state.selectedKey, action.payload.value)
+            state.inputKey = null
         },
         removeStyle: (state, action) => {
             const property = action.payload
@@ -143,6 +170,10 @@ const counterSlice = createSlice({
         },
         toggleDrawer: (state) => {
             state.openDrawer = !state.openDrawer
+        },
+        updateClassName: (state, action) => {
+            const { value } = action.payload
+            changeClassname(state.map, state.selectedKey, value)
         },
     },
 })
@@ -163,5 +194,6 @@ export const {
     removeStyle,
     updateExpandedkeys,
     toggleDrawer,
+    updateClassName,
 } = counterSlice.actions
 export default counterSlice.reducer

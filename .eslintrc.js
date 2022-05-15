@@ -20,6 +20,7 @@ module.exports = {
         "react/jsx-key": "warn",
         "no-prototype-builtins": "warn",
         "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/ban-ts-comment": "off"
     },
     overrides: [
         {

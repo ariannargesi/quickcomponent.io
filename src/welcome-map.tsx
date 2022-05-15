@@ -28,56 +28,31 @@ const map: ComponentMember[] = [
                     },
                 },
                 key: nanoid(),
-                children: [
-                    {
-                        text: "Welcome to quickcomponent.io",
-                        key: nanoid(),
-                    },
-                ],
+                text: "Welcome to quickcomponent.io",
             },
             {
                 title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- Try changing the styles ",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- Try changing the styles ",
             },
             {
                 title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- Add or remove elements ",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- Add or remove elements ",
             },
             {
                 title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- Click export button to see your ",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- Click export button to see your ",
             },
             {
                 title: "h3",
                 props: {},
                 key: nanoid(),
-                children: [
-                    {
-                        text: "- copy or download your code with your custom settings",
-                        key: nanoid(),
-                    },
-                ],
+                text: "- copy or download your code with your custom settings",
             },
             {
                 title: "div",

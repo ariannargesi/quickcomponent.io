@@ -1,41 +1,31 @@
 import { useSelector, useDispatch } from "react-redux"
 import { Drawer as AntDrawer, List } from "antd"
-import { addNodeInTree, setInputAtKey } from "../../redux/slice/app"
+import { addNodeInTree } from "../../redux/slice/app"
 import elementsList from "../../data/html-elements"
-import { nanoid } from "@reduxjs/toolkit"
 import useToggleDrawer from "../../hooks/useToggleDrawer"
-import store from "../../redux"
-import { RootState, ComponentMember } from "../../types"
-
-function generateTextBasedElement(name: string): ComponentMember {
-    // take html element name and return an object with ComponentMember
-    name = name.toLowerCase()
-    const innerTextKey = nanoid()
-    const elementKey = nanoid()
-    store.dispatch(setInputAtKey({ key: innerTextKey }))
-    return {
-        title: name,
-        props: {
-            className: name + "_" + nanoid(6),
-        },
-        key: elementKey,
-        children: name === "div" ? [] : [{ text: "Text", key: innerTextKey }],
-    }
-}
+import { RootState, HtmlElement } from "../../types"
+import { genereateElement } from "../../helper"
 
 const Drawer = () => {
-    const toggleDrawer = useToggleDrawer()
-    const visible = useSelector((state: RootState) => state.app.openDrawer)
+
     const dispatch = useDispatch()
+    const toggleDrawer = useToggleDrawer()
+    const {visible, empty} = useSelector((state: RootState) => {
+        return {
+            visible: state.openDrawer,
+            empty: state.emptyTree
+        }
+    })
 
     const handleAddingChild = (name) => {
         dispatch(
             addNodeInTree({
-                element: generateTextBasedElement(name),
+                element: genereateElement(name, dispatch),
             })
         )
         toggleDrawer()
     }
+
     return (
         <AntDrawer
             title="Elements List"
@@ -45,10 +35,10 @@ const Drawer = () => {
             onClose={() => toggleDrawer()}
         >
             <List
-                dataSource={elementsList}
-                renderItem={(item) => (
-                    <List.Item onClick={() => handleAddingChild(item)}>
-                        {item}
+                dataSource={empty ? elementsList.filter(element => element.tag != 'text') : elementsList}
+                renderItem={(item: HtmlElement) => (
+                    <List.Item onClick={() => handleAddingChild(item.tag)}>
+                        {item.tag}
                     </List.Item>
                 )}
             />

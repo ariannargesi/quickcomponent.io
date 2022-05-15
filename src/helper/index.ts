@@ -1,127 +1,103 @@
 import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
-import { StyleFormats } from "../types"
-
-export function cssToCamelCase(string) {
+import { StyleFormats, ComponentMember, prop_types} from "../types"
+import elementsList from '../data/html-elements'
+import {nanoid} from 'nanoid'
+import { setInputAtKey } from "../redux/slice/app"
+import { current } from "@reduxjs/toolkit"
+export const cssToCamelCase = (str: string): string => {
     /*
      * input: "border-radius"
      * output: borderRadius
      * */
-    const charsArray = string.split("")
+    const chars = str.split("")
 
-    string.split("").map((character, index) => {
-        if (character === "-" && index != 0) {
-            charsArray[index + 1] = charsArray[index + 1].toUpperCase()
+    str.split("").map((char, index) => {
+        if (char === "-") 
+            chars[index + 1] = chars[index + 1].toUpperCase()        
+    })
+    return chars.filter( char => char != '-').join('')
+}
+
+
+export const findNodeInTree = (map: ComponentMember[], key: string): ComponentMember => {
+    let result;
+    if(!Array.isArray(map))
+        return map 
+    map.some(o => result = o.key === key && o || findNodeInTree(o.children, key))
+    return result || null;
+  }
+
+//   CLEAN 
+export const deleteNodeInTree = (map: ComponentMember[], key: string): void => {
+
+    if(key === map[0].key){
+        map.splice(0, 1)
+        return 
+    }
+
+    const parent = getElementParent(map, key)    
+    let nodeIndex 
+    parent.children.find((item, index) => {
+        if(item.key === key){
+            nodeIndex = index 
+            return true 
         }
     })
 
-    const resultString = charsArray
-        .filter((character) => character != "-")
-        .join("")
-    return resultString
+    parent.children.splice(nodeIndex, 1)
 }
-export function objectToStyle(object, semi) {
-    /*
-    input: borderRadius: "40px"
-    output: border-radius: 40px 
-    * */
-    const keys = Object.keys(object)
-    const values = Object.values(object)
-    let main = ""
-    keys.map((key, index) => {
-        let currentLine = ""
-        key.split("").map((char) => {
-            if (char === char.toUpperCase())
-                currentLine += "-" + char.toLowerCase()
-            else currentLine += char
-        })
-        currentLine += ": "
-        currentLine += values[index]
-        if (semi) currentLine += ";"
-        currentLine += "\n"
-        main += currentLine
-    })
-    return main
+//  CLEAN THIS 
+export const addNodeInPosition = (map: ComponentMember[], dropKey: string, dropPosition: number, node: ComponentMember, dropToGap: boolean 
+): void => {
+
+    if(dropToGap) { 
+        const element = getElementParent(map, dropKey)
+        element.children.splice(dropPosition, 0, node)
+    } else {
+        const element = findNodeInTree(map, dropKey)
+        element.children.splice(dropPosition, 0, node)
+    }
 }
 
-export const findNodeInTree = (tree, key, callback) => {
-    tree.forEach((item) => {
-        if (item.key === key) callback(item)
-        else if (item.children) findNodeInTree(item.children, key, callback)
-    })
+export const generateClassName = (name = 'class_', length = 6): string => {
+    return name + nanoid(length)
 }
 
-export function deleteNodeInTree(tree, key) {
-    tree.forEach((item, index) => {
-        if (item.key === key) tree.splice(index, 1)
-        else if (item.children) deleteNodeInTree(item.children, key)
-    })
+export const addStyleInNode = (map: ComponentMember[], key: string, propertyName: string, prpoertyValue: string ): void => {
+    const element = findNodeInTree(map, key)
+    const style = element.props.style 
+    if(!element.props.className)
+        element.props.className = generateClassName(element.title)
+    element.props.style = {
+        ...style,
+        [propertyName]: prpoertyValue
+    }
 }
 
-export function addNodeInPosition(
-    tree,
-    dropKey,
-    dropPosition,
-    node,
-    dropToGap
-) {
-    tree.forEach((item) => {
-        if (item.key === dropKey) {
-            if (dropToGap) {
-                tree.splice(dropPosition, 0, node)
-            } else item.children.splice(dropPosition, 0, node)
-        } else if (item.children)
-            addNodeInPosition(
-                item.children,
-                dropKey,
-                dropPosition,
-                node,
-                dropToGap
-            )
-    })
+export const addNodeInTree = (map: ComponentMember[], key: string, node: ComponentMember): void => {
+    const element = findNodeInTree(map, key) 
+    element.children.push(node)
 }
 
-export function addStyleInNode(tree, key, propertyName, prpoertyValue) {
-    tree.forEach((item) => {
-        if (item.key === key) {
-            const style = item.props.style
-            item.props = {
-                ...item.props,
-                style: {
-                    ...style,
-                    [propertyName]: prpoertyValue,
-                },
-            }
-        } else if (item.children)
-            addStyleInNode(item.children, key, propertyName, prpoertyValue)
-    })
+export const updateNodeTitle = (map: ComponentMember[], key: string, value: string): void => {
+    const element = findNodeInTree(map, key)
+    element.text = value
 }
 
-export function addNodeInTree(tree, key, node) {
-    tree.forEach((item) => {
-        if (item.key === key) item.children.push(node)
-        else if (item.children) addNodeInTree(item.children, key, node)
-    })
+export const updateClassName = (map: ComponentMember[], key: string, value: string): void => {
+    const element = findNodeInTree(map, key)
+    element.props.className = value 
 }
 
-export function updateNodeTitle(tree, key, value) {
-    tree.forEach((item) => {
-        if (item.key === key) item.text = value
-        else if (item.children) updateNodeTitle(item.children, key, value)
-    })
+export const removeStyleFromTree = (map: ComponentMember[], key: string, property: string): void => {
+    const element = findNodeInTree(map, key)
+    delete element.props.style[property]
 }
 
-export function removeStyleFromTree(tree, key, property) {
-    tree.forEach((item) => {
-        if (item.key === key) delete item.props.style[property]
-        else if (item.children)
-            removeStyleFromTree(item.children, key, property)
-    })
-}
-
-export function getUnit(str: string): string {
-    if (str === undefined) return "px"
+export const getUnit = (str: string): string => {
+    if (!str) return "px"
     let unit = ""
     str.split("").forEach((char) => {
         if (isNaN(Number(char))) unit += char
@@ -129,7 +105,7 @@ export function getUnit(str: string): string {
     return unit
 }
 
-export function getNumbericValue(str: string): number {
+export const getNumbericValue = (str: string): number => {
     if (str === undefined) return 0
     let value = ""
     str.split("").forEach((char) => {
@@ -138,7 +114,7 @@ export function getNumbericValue(str: string): number {
     return Number(value)
 }
 
-export function formatScript(str: string): string {
+export const formatScript = (str: string): string => {
     return prettier.format(str, {
         parser: "babel",
         plugins: [babel],
@@ -146,7 +122,90 @@ export function formatScript(str: string): string {
     })
 }
 
-export function formatStyle(str: string, format: StyleFormats): string {
+export const formatStyle = (str: string, format: StyleFormats): string => {
     if (format === StyleFormats.SASS) return str
     else return prettier.format(str, { parser: "css", plugins: [css] })
+}
+
+
+const elements = ['h1','h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'label']
+
+export const isTextBasedTag = (tag: string): boolean => {
+    return elements.indexOf(tag) >= 0
+}
+
+export const isEmptyObject = (value): boolean => {
+    if(!value) return null 
+    return Object.keys(value).length > 0
+}
+
+export const isContentEditable = (value): boolean => {
+    return elementsList.filter(item => item.tag === value)[0].contentEditable
+} 
+
+export const isHtmlTag = (value: string): boolean => {
+    return elementsList.filter(item => item.tag === value).length > 0
+} 
+
+export const isTextNode = (value: any): boolean => {
+    if(Object.keys(value).length > 2) return false 
+    if(value['text'].length >= 0 && value['key'])
+        return true 
+}
+
+export const getElementParent = (map: ComponentMember[], key: string, item = null): ComponentMember => {
+    let result;
+    if(!Array.isArray(map)) return map 
+    map.some(o => result = o.key === key && item || getElementParent(o.children, key, o));
+    return result || null;
+}
+
+export const genereateElement =(name: string, dispatch: any): ComponentMember => {
+    // take html element name and return an object with ComponentMember    
+    name = name.toLowerCase()
+    const elementKey = nanoid()
+    const innerKey = nanoid()
+    
+    if(isTextBasedTag(name) || name === 'button')
+        dispatch(setInputAtKey({ key: elementKey }))
+    if(name === 'text'){
+        return {
+            text: 'text',
+            key: elementKey
+        }
+    }
+    if(isTextBasedTag(name))
+        return {
+            title: name,
+            props: {
+                className: generateClassName(name)
+            },
+            key: elementKey,
+            text: 'Text', 
+        }
+    else {
+        return {
+            title: name,
+            props: {
+                className: generateClassName(name)
+                
+            },
+            key: elementKey,
+            children: [{text: 'ff', key: innerKey}], 
+        }
+    }
+}
+
+export const convertProps = (propsList) => {
+    const isJsProp = propsList[0].type.startsWith('PropTypes')
+    const clone = JSON.parse(JSON.stringify(propsList))
+    clone.forEach((item) => {
+      let index = 0 
+      if(isJsProp)
+        index = prop_types.js.indexOf(item.type)
+      else 
+        index = prop_types.ts.indexOf(item.type)
+      item.type = isJsProp ? prop_types.ts[index] : prop_types.js[index]
+    })
+    return clone
 }

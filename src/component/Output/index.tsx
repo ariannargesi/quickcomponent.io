@@ -11,7 +11,7 @@ import { formatScript, formatStyle } from "../../helper"
 
 const CodeView = () => {
     const dispatch = useDispatch()
-    const app = useSelector((state: RootState) => state.app)
+    const app = useSelector((state: RootState) => state)
     const scriptFileName =
         app.config.scriptFileName + "." + app.config.scriptType
     const styleFileName = app.config.styleFileName + "." + app.config.styleType

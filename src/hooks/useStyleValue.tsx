@@ -2,15 +2,13 @@ import { useSelector } from "react-redux"
 import { RootState } from "../types"
 import { findNodeInTree } from "../helper"
 
-const useStyleValue = (name: string): string | undefined => {
-    const { map, selectedKey } = useSelector((state: RootState) => state.app)
-    let value
-    findNodeInTree(map, selectedKey, (res) => {
-        value = res
+const useStyleValue = (name: string): string | null => {
+    const styleValue = useSelector((state: RootState) => {
+        const res = findNodeInTree(state.map , state.selectedKey)
+        if(res.props.style)
+            return res.props.style[name]
     })
-    const styles = value.props?.style
-    if (styles) return styles[name]
-    else undefined
+    return styleValue 
 }
 
 export default useStyleValue

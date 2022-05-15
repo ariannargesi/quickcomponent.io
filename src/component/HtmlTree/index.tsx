@@ -1,86 +1,92 @@
-import { Tree, Input } from "antd"
+import { Tree } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import {
     updateExpandedkeys,
     moveElementInTree,
     changeSelectedElement,
-    updateTreeInputValue,
-    clearInputAtKey,
     setInputAtKey,
 } from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
+import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
+import { useEffect, useState } from "react"
 
-function formatMap(html) {
-    // convert html map to proper format for showign in antd tree component
-    html.map((item) => {
-        if (Array.isArray(item.children)) {
-            formatMap(item.children)
-        } else if (item.text) item.title = item.text
-    })
-    return html
-}
+// if is a text based element show title and text inline > else show it seperetlay
 
+
+import store from '../../redux'
 const Title = (props: { data: ComponentMember }) => {
     // This component is responsible for rendering the title of tree members.
     // If the member is a text node, with clicking on it, the title get replaced with an input
     // and you can update the inner text
     // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
-    const inputAtKey = useSelector((state: RootState) => state.app.inputKey)
-
-    const { data } = props
-
-    const handleInputChange = (e) => {
-        const value = e.target.value
-        dispatch(
-            updateTreeInputValue({
-                value,
-            })
-        )
+    const { map } = useSelector((state: RootState) => state)
+    const { data } = props    
+    
+    const handleClick = () => {
+        if(isTextNode(data)) {
+            const res = getElementParent(map, data.key)
+            dispatch(changeSelectedElement({key: res.key}))
+        }
+        else 
+            dispatch(changeSelectedElement({ key: data.key }))        
     }
 
-    const handleTitleClick = () => {
-        if (data.text) dispatch(setInputAtKey({ key: data.key }))
-        else dispatch(changeSelectedElement({ key: data.key }))
+    const handleDoubleClick = () => {
+        if(isTextBasedTag(data.title))
+                dispatch(setInputAtKey({key: data.key}))
+        else if(isTextNode(data)) {
+            const res = getElementParent(map, data.key)
+            dispatch(setInputAtKey({key: res.key}))
+        }
     }
-
-    const disableInput = () => {
-        dispatch(clearInputAtKey())
-    }
-
-    if (data.key === inputAtKey)
-        return (
-            <>
-                <Input
-                    onChange={handleInputChange}
-                    onBlur={() => disableInput()}
-                    onKeyPress={(event) => {
-                        if (event.key === "Enter") disableInput()
-                    }}
-                    autoFocus
-                />
-            </>
-        )
 
     return (
-        <div>
-            <span onClick={handleTitleClick} className={styles.title}>
-                {data.title}
+        <div 
+            onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
+        >
+            <span className={styles.title}>
+
+                 {
+                     isTextBasedTag(data.title) ?
+                     <>
+                        <b>{data.title} </b>
+                        <span>( {data.text} )</span>
+                     </>
+                     :
+                     isTextNode(data) ? <span>{data.text}</span> : <b>{data.title}</b>
+                 }
+                
             </span>
-            <Action elementKey={data.key} />
+            <Action elementKey={data.key} addChild={!data.text} />
         </div>
     )
 }
 
 const HtmlTree = () => {
+
+    const [state, setState] = useState([])
+    const treeHash = useSelector((state: RootState) => state.treeHash)
+    const expandedKey = useSelector((state: RootState) => state.expandedKey)
+    const rootKey = useSelector((state: RootState) => state.map[0].key)
+
+    useEffect(() => {    
+        setTimeout(() => {
+            dispatch(updateExpandedkeys([rootKey]))
+            setState(store.getState().map)
+        }, 1000)
+        
+    }, [])
+
+    useEffect(() => {
+        setState(store.getState().map)
+    }, [treeHash])
+
     const dispatch = useDispatch()
-    const app = useSelector((state: RootState) => state.app)
-    const { map, expandedKey } = app
-
-    const formattedData = formatMap(JSON.parse(JSON.stringify(map)))
-
+   
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
         const { key: dropKey } = info.node
@@ -96,26 +102,18 @@ const HtmlTree = () => {
         )
     }
 
-    const handleElementSelection = (value, e) => {
-        if (e.nativeEvent.srcElement.tagName != "DIV") return
-        if (value.length != 0)
-            dispatch(changeSelectedElement({ key: value[0] }))
-    }
-
     return (
         <div className={styles.container}>
-            <h2 className={styles.mainTitle}>Elements</h2>
-            <Tree
-                showIcon={true}
-                showLine={true}
-                treeData={formattedData}
+            <h2>Elements</h2>
+            <Tree                    
+                treeData={state}
                 expandedKeys={expandedKey}
                 onExpand={(value) => {
                     dispatch(updateExpandedkeys(value))
                 }}
+                
                 draggable
                 onDrop={handleElementsDragAndDrop}
-                onSelect={handleElementSelection}
                 titleRender={(nodeData: ComponentMember) => {
                     return <Title data={nodeData} />
                 }}

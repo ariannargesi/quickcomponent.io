@@ -1,7 +1,3 @@
-export interface RootState {
-    app: App
-}
-
 export enum StyleFormats {
     CSS = "css",
     SASS = "sass",
@@ -70,8 +66,10 @@ export interface Output {
     }
 }
 
-export interface App extends Output {
-    openDrawer: boolean
+export interface RootState extends Output {
+    openDrawer: boolean,
+    emptyTree: boolean, 
+    treeHash: string,
     selectedKey: string
     expandedKey: string[]
     config: Config
@@ -80,3 +78,33 @@ export interface App extends Output {
     map: ComponentMember[]
     editorView: EditorView
 }
+
+export interface HtmlElement {
+    tag: string,
+    contentEditable: boolean,
+    textOnly  
+}
+
+const ts = [
+    'string',
+    'string[]', 
+    'number',
+    'number[]',
+    'boolean',
+    'boolean[]',
+  ]
+  
+  const js = [
+    'PropTypes.string', 
+    'PropTypes.arrayOf(PropTypes.string)',
+    'PropTypes.number',
+    'PropTypes.arrayOf(PropTypes.number)',
+    'PropTypes.bool',
+    'PropTypes.arrayOf(PropTypes.bool)',
+  ]
+
+export const prop_types = { 
+    ts,
+    js 
+} 
+

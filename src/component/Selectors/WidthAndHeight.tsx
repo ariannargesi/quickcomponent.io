@@ -4,7 +4,7 @@ import Slider from "../Slider"
 import useStyleValue from "../../hooks/useStyleValue"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import { getUnit, getNumbericValue as getValue } from "../../helper"
-const units = ["px", "%", "rem"]
+const units = ["px", "rem"]
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
@@ -18,7 +18,7 @@ const WidthAndHeight = () => {
         <>
             <div className={style.container}>
                 <div className={style.header}>
-                    <span>Width:</span>
+                    <span className={style.label}>Width:</span>
                     <Radio
                         options={units}
                         activeItem={widthUnit}
@@ -40,7 +40,7 @@ const WidthAndHeight = () => {
             </div>
             <div className={style.container}>
                 <div className={style.header}>
-                    <span>Height:</span>
+                    <span className={style.label}>Height:</span>
                     <Radio
                         options={units}
                         activeItem={heightUnit}

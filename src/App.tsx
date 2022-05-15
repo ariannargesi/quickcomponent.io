@@ -1,48 +1,40 @@
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { ChevronRight } from 'react-feather'
+import { RootState } from "./types"
 import Header from "./component/Header"
-import HtmlTree from "./component/HtmlTree"
-import ActiveStyles from "./component/ActiveStyles"
 import ComponentView from "./component/ComponentView"
 import StylePanel from "./component/StylePanel"
 import Drawer from "./component/Drawer"
-import useEmptyTree from "./hooks/useEmptyTree"
 import EmptyTree from "./component/EmptyTree"
+import TreeAndStyles from './component/Sider/TreeAndStyles'
 function App() {
-    const treeIsEmpty = useEmptyTree()
+    
+    const treeIsEmpty = useSelector((state: RootState) => state.emptyTree)
+
+    if(treeIsEmpty)
+        return (
+            <div className="App">
+                 <Header />  
+                 <EmptyTree/> 
+                 <Drawer/>
+            </div>
+        )
 
     return (
         <div className="App">
             <Header />
-            {treeIsEmpty ? (
-                <EmptyTree />
-            ) : (
                 <div className="main-container">
-                    <StylePanel />
-                    <div style={{ width: "300px" }}>
-                        <HtmlTree />
-                        <ActiveStyles />
-                    </div>
+                    <StylePanel />  
+                    <TreeAndStyles/>                    
                     <ComponentView />
                 </div>
-            )}
+            )
             <Drawer />
-
             <Link to="/export">
-                <button
-                    style={{
-                        position: "fixed",
-                        right: "50px",
-                        bottom: "50px",
-                        background: "purple",
-                        borderRadius: "15px",
-                        color: "white",
-                        padding: "16px 32px",
-                        border: "none",
-                        fontSize: "18px",
-                    }}
-                >
-                    {" "}
-                    Export
+                <button className='export-button'>                   
+                    View code
+                    <ChevronRight/>
                 </button>
             </Link>
         </div>
