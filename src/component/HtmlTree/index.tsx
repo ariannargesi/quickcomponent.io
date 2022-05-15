@@ -1,4 +1,4 @@
-import { Tree, Input } from "antd"
+import { Tree } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import {
     updateExpandedkeys,
@@ -11,6 +11,9 @@ import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
 import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
 import { useEffect, useState } from "react"
+
+// if is a text based element show title and text inline > else show it seperetlay
+
 
 import store from '../../redux'
 const Title = (props: { data: ComponentMember }) => {
@@ -46,8 +49,17 @@ const Title = (props: { data: ComponentMember }) => {
             onDoubleClick={handleDoubleClick}
         >
             <span className={styles.title}>
-                <b>{data.title}</b>
-                <i>{data.text ? ` ( ${data.text}` : ''}</i>
+
+                 {
+                     isTextBasedTag(data.title) ?
+                     <>
+                        <b>{data.title} </b>
+                        <span>( {data.text} )</span>
+                     </>
+                     :
+                     isTextNode(data) ? <span>{data.text}</span> : <b>{data.title}</b>
+                 }
+                
             </span>
             <Action elementKey={data.key} addChild={!data.text} />
         </div>
@@ -57,19 +69,16 @@ const Title = (props: { data: ComponentMember }) => {
 const HtmlTree = () => {
 
     const [state, setState] = useState([])
-
     const treeHash = useSelector((state: RootState) => state.treeHash)
     const expandedKey = useSelector((state: RootState) => state.expandedKey)
     const rootKey = useSelector((state: RootState) => state.map[0].key)
 
-    useEffect(() => {
+    useEffect(() => {    
         setTimeout(() => {
             dispatch(updateExpandedkeys([rootKey]))
+            setState(store.getState().map)
         }, 1000)
-    }, [])
-
-    useEffect(() => {
-        setState(store.getState().map)
+        
     }, [])
 
     useEffect(() => {
@@ -96,12 +105,13 @@ const HtmlTree = () => {
     return (
         <div className={styles.container}>
             <h2>Elements</h2>
-            <Tree    
+            <Tree                    
                 treeData={state}
                 expandedKeys={expandedKey}
                 onExpand={(value) => {
                     dispatch(updateExpandedkeys(value))
                 }}
+                
                 draggable
                 onDrop={handleElementsDragAndDrop}
                 titleRender={(nodeData: ComponentMember) => {

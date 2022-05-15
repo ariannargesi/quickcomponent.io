@@ -8,8 +8,6 @@ import { getNumbericValue } from "../../helper"
 
 const Margin = () => {
 
-    console.log('render')
-
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
 

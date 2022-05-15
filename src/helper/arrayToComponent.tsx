@@ -1,15 +1,13 @@
 import React from 'react'
 import { ComponentMember } from '../types'
 import { updateTreeInputValue, changeSelectedElement, setInputAtKey } from '../redux/slice/app'
-import { useDispatch } from 'react-redux'
 import { isContentEditable } from '.'
-import styles from '../component/ComponentView/styles.module.sass'
+import store from '../redux'
 
-console.log('stlyes, ', styles.editInnerText)
+import styles from '../component/ComponentView/styles.module.sass'
 
 const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey: string): React.ReactNode => {
 
-    const dispatch = useDispatch()
     const component = []
     let inputValue = ''
     
@@ -24,12 +22,13 @@ const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey:
                 [
                     React.createElement('input', 
                         { 
-
+                            
+                            key: element.key,
                             className: styles.editInnerText,
                             autoFocus: true, 
                             onKeyDown: (event) => {
                                 if(event.key === 'Enter' && inputValue)
-                                    dispatch(updateTreeInputValue({value: inputValue }))
+                                    store.dispatch(updateTreeInputValue({value: inputValue }))
                             },
                             onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
                                 const value = event.target.value 
@@ -37,7 +36,7 @@ const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey:
                             },
                             onBlur: () => {
                                 if(inputValue) {
-                                    dispatch(updateTreeInputValue({value: inputValue }))
+                                    store.dispatch(updateTreeInputValue({value: inputValue }))
                                 }
                             },
                         })
@@ -55,14 +54,14 @@ const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey:
                             onClick: (e) => {
                                 if (e.stopPropagation)
                                     e.stopPropagation()
-                                dispatch(changeSelectedElement({ key: element.key }))
+                                store.dispatch(changeSelectedElement({ key: element.key }))
                             
                             },
                             onDoubleClick: (e) => {
                                 if (e.stopPropagation)
                                     e.stopPropagation()
                                 if(isContentEditable(element.title))
-                                    dispatch(setInputAtKey({ key: element.key }))
+                                    store.dispatch(setInputAtKey({ key: element.key }))
                             }
                         },
                         element.text
@@ -81,13 +80,13 @@ const arrayToComponent = (map: ComponentMember[], inputKey: string, selectedKey:
                     onClick: (e) => {
                         if (e.stopPropagation)
                             e.stopPropagation()
-                        dispatch(changeSelectedElement({ key: element.key }))
+                        store.dispatch(changeSelectedElement({ key: element.key }))
                     },
                     onDoubleClick: (e) => {
                         if (e.stopPropagation)
                             e.stopPropagation()
                         if(isContentEditable(element.title))
-                            dispatch(setInputAtKey({ key: element.key }))
+                            store.dispatch(setInputAtKey({ key: element.key }))
                     }
                 },
                 arrayToComponent(element.children, inputKey, selectedKey)

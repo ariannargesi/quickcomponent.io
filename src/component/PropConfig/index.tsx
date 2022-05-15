@@ -15,7 +15,7 @@ interface Prop {
 
 
 const PropConfig = (props: Prop) => {
-    console.log("render")
+
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [modalVisible, setModalVisible] = useState(false)
@@ -102,7 +102,6 @@ const PropConfig = (props: Prop) => {
                             </tr>
                         </thead>
                         {statePropsList.map((item) => {
-                            console.log("render")
                             return (
                                 <tbody key={item.name}>
                                     <tr>

@@ -8,8 +8,6 @@ import {
     typesDecleration,
 } from "../types"
 import { CSSProperties } from "react"
-import { current } from "@reduxjs/toolkit"
-
 interface ScriptGeneratorConfig {
     componentName: string
     propsList: PropItem[]
@@ -38,8 +36,7 @@ const generateTypeSscriptProps = (list: PropItem[]): string => {
 const generateJavascriptProps = (
     list: PropItem[],
 ): string => {
-    console.log('This isl ist')
-    console.log(list)
+
     const componentName = 'App'
 
     let value = ""
@@ -226,7 +223,6 @@ export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {
         if (!el.title && el.text){
-            console.log(current(el))
             value += el.text
         }
             

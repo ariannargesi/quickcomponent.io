@@ -91,7 +91,6 @@ const counterSlice = createSlice({
             addStyleInNode(state.map, state.selectedKey, key, value)
         },
         generateCode: (state) => {
-            console.log('im the last call generatecode')
             state.output.style = styleGenerator(
                 state.map,
                 state.config.styleType
@@ -137,7 +136,7 @@ const counterSlice = createSlice({
         },
         addNodeInTree: (state, action) => {
             const element = action.payload.element
-            state.treeHash = state.selectedKey
+            state.treeHash = element.key
 
             if (state.map.length === 0) {
                 state.map.push(element)

@@ -10,6 +10,7 @@ interface Props {
 }
 
 const App = (props: Props) => {
+
     const inlineStyle = {
         display: "flex",
         alignItems: "center",
