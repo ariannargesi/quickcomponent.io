@@ -9,8 +9,8 @@ import useToggleDrawer from "../../../hooks/useToggleDrawer"
 import "./styles.sass"
 
 interface Props {
-    elementKey: string,
-    addChild: boolean 
+    elementKey: string
+    addChild: boolean
 }
 
 const iconSize = 17
@@ -31,9 +31,9 @@ const Action = (props: Props) => {
     }
 
     return (
-        <span className={"tree-item-action"}>            
-             {props.addChild && <Plus onClick={addChild} size={iconSize} /> } 
-             <Trash onClick={removeElement} size={iconSize} /> 
+        <span className={"tree-item-action"}>
+            {props.addChild && <Plus onClick={addChild} size={iconSize} />}
+            <Trash onClick={removeElement} size={iconSize} />
         </span>
     )
 }

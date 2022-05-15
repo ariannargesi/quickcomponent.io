@@ -29,13 +29,12 @@ const ActiveStylesItem = (props: ItemProps) => {
 const getStyles = (key: string, html: ComponentMember[]) => {
     const element = findNodeInTree(html, key)
     if (!element.props.style) return null
-    else return element.props.style 
+    else return element.props.style
 }
 
 const ActiveStyles: React.FC = () => {
-
     const stylesList = useSelector((state: RootState) => {
-        return getStyles(state.selectedKey, state.map )
+        return getStyles(state.selectedKey, state.map)
     })
 
     let styleKeys = []

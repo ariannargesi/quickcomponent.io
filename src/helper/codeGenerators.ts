@@ -33,11 +33,8 @@ const generateTypeSscriptProps = (list: PropItem[]): string => {
     return value
 }
 
-const generateJavascriptProps = (
-    list: PropItem[],
-): string => {
-
-    const componentName = 'App'
+const generateJavascriptProps = (list: PropItem[]): string => {
+    const componentName = "App"
 
     let value = ""
     value += `${componentName}.propTypes  = {`
@@ -148,7 +145,11 @@ const indentGenerator = (num: number): string => {
     return value
 }
 
-const objectToStyle = (object: CSSProperties, semi: boolean, indent = null): string => {
+const objectToStyle = (
+    object: CSSProperties,
+    semi: boolean,
+    indent = null
+): string => {
     /*
     input: borderRadius: "40px"
     output: border-radius: 40px 
@@ -183,23 +184,22 @@ export const styleGenerator = (
 
 const generateCSS = (map: ComponentMember[]): string => {
     let value = ""
-        map.forEach((el) => {
-            if (el.props === undefined) return
-            if (el.props.style && isEmptyObject(el.props.style)) {
-                value +=
-                    "." +
-                    el.props.className +
-                    "{\n" +
-                    objectToStyle(el.props.style, true) +
-                    "}"
-            }
-            if(el.children)
-                value += generateCSS(el.children)
-        })
+    map.forEach((el) => {
+        if (el.props === undefined) return
+        if (el.props.style && isEmptyObject(el.props.style)) {
+            value +=
+                "." +
+                el.props.className +
+                "{\n" +
+                objectToStyle(el.props.style, true) +
+                "}"
+        }
+        if (el.children) value += generateCSS(el.children)
+    })
     return value
 }
 
-const generateSASS = (map: ComponentMember[],  indent = 0): string => {
+const generateSASS = (map: ComponentMember[], indent = 0): string => {
     let value = ""
     map.forEach((el) => {
         const indentStr = indentGenerator(indent)
@@ -211,29 +211,25 @@ const generateSASS = (map: ComponentMember[],  indent = 0): string => {
                 indent + 4
             )}`
         }
-        if(el.children)
-            value +=generateSASS(el.children, indent + 4)
+        if (el.children) value += generateSASS(el.children, indent + 4)
     })
-   
+
     return value
 }
-
 
 export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {
-        if (!el.title && el.text){
+        if (!el.title && el.text) {
             value += el.text
-        }
-            
-        else {
+        } else {
             const className =
                 el.props.className && el.props.style
                     ? `className='${el.props.className}'`
                     : ""
-            value += `<${el.title} ${className}>${ el.text ? el.text : arrayToJSX(el.children)}</${
-                el.title
-            }>`
+            value += `<${el.title} ${className}>${
+                el.text ? el.text : arrayToJSX(el.children)
+            }</${el.title}>`
         }
     })
     return value

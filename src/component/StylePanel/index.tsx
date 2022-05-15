@@ -12,30 +12,29 @@ import Color from "../Selectors/Color"
 import BackgroundColor from "../Selectors/Background"
 import Margin from "../Selectors/Margin"
 import Padding from "../Selectors/Padding"
-import UpdateClassname from '../Selectors/UpdateClassname'
+import UpdateClassname from "../Selectors/UpdateClassname"
 
 import styles from "./styles.module.sass"
 
 const StylePannel = () => {
-
     return (
         <div className={styles.container}>
-                <>
-                    <UpdateClassname/>
-                    <WidthAndHeight />
-                    <Margin />
-                    <Padding />
-                    <Color />
-                    <BackgroundColor />  
-                    <TextAlign />
-                    <BoxShadow />
-                    <Positions />                    
-                    <Display />
-                    <BorderRadius />
-                    <Border />
-                    <FontSize />
-                    <FontWeight /> 
-                </>
+            <>
+                <UpdateClassname />
+                <WidthAndHeight />
+                <Margin />
+                <Padding />
+                <Color />
+                <BackgroundColor />
+                <TextAlign />
+                <BoxShadow />
+                <Positions />
+                <Display />
+                <BorderRadius />
+                <Border />
+                <FontSize />
+                <FontWeight />
+            </>
         </div>
     )
 }

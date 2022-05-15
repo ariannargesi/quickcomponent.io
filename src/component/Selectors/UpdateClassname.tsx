@@ -7,7 +7,6 @@ import { findNodeInTree, generateClassName } from "../../helper"
 import styles from "./styles.module.sass"
 
 const UpdateClassname = () => {
-
     const defaultValue = useSelector((state: RootState) => {
         return findNodeInTree(state.map, state.selectedKey).props.className
     })

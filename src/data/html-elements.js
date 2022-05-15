@@ -1,70 +1,69 @@
-const list =  [
+const list = [
     {
-        tag: 'div',
+        tag: "div",
         textOnly: false,
-        contentEditable: false 
+        contentEditable: false,
     },
     {
-        tag: 'button',
+        tag: "button",
         textOnly: false,
-        contentEditable: true
+        contentEditable: true,
     },
     {
-        tag: 'h1',
+        tag: "h1",
         textOnly: true,
-        contentEditable: true 
+        contentEditable: true,
     },
     {
-        tag: 'h2',
+        tag: "h2",
         textOnly: true,
-        contentEditable: true
+        contentEditable: true,
     },
     {
-        tag: 'h3',
+        tag: "h3",
         textOnly: true,
-        contentEditable: true 
+        contentEditable: true,
     },
     {
-        tag: 'h4',
+        tag: "h4",
         textOnly: true,
-        contentEditable: true 
+        contentEditable: true,
     },
     {
-        tag: 'h5',
+        tag: "h5",
         textOnly: true,
-        contentEditable: true 
+        contentEditable: true,
     },
     {
-        tag: 'h6',
+        tag: "h6",
         textOnly: true,
-        contentEditable: true 
+        contentEditable: true,
     },
     {
-        tag: 'p',
+        tag: "p",
         textOnly: true,
-        contentEditable: true 
+        contentEditable: true,
     },
     {
-        tag: 'ul',
+        tag: "ul",
         textOnly: false,
-        contentEditable: false  
+        contentEditable: false,
     },
     {
-        tag: 'ol',
+        tag: "ol",
         textOnly: false,
-        contentEditable: false 
+        contentEditable: false,
     },
     {
-        tag: 'li',
+        tag: "li",
         textOnly: false,
-        contentEditable: false 
+        contentEditable: false,
     },
     {
-        tag: 'text',
-        textOnly: true, 
-        contentEditable: true
-    }
+        tag: "text",
+        textOnly: true,
+        contentEditable: true,
+    },
 ]
 
-export default list 
-
+export default list

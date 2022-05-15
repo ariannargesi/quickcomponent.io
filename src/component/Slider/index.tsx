@@ -1,5 +1,5 @@
 import Slider from "@mui/material/Slider"
-import styles from '../Selectors/styles.module.sass'
+import styles from "../Selectors/styles.module.sass"
 interface Props {
     label?: string
     value: number
@@ -10,7 +10,6 @@ interface Props {
 }
 
 const App = (props: Props) => {
-
     const inlineStyle = {
         display: "flex",
         alignItems: "center",
@@ -19,12 +18,10 @@ const App = (props: Props) => {
 
     return (
         <div style={props.labelInline && inlineStyle}>
-            {props.label && (
-                <span className={styles.label}>{props.label}</span>
-            )}
+            {props.label && <span className={styles.label}>{props.label}</span>}
             <Slider
                 min={props.min}
-                size={'small'}
+                size={"small"}
                 max={props.max}
                 value={props.value}
                 onChange={({ target }) => {

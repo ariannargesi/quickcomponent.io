@@ -1,8 +1,8 @@
 import AceEditor from "react-ace"
 import { useSelector } from "react-redux"
 import { RootState } from "../../types"
-    import { StyleFormats, EditorView } from "../../types"
-    import { formatScript, formatStyle } from "../../helper"
+import { StyleFormats, EditorView } from "../../types"
+import { formatScript, formatStyle } from "../../helper"
 import styles from "./styles.module.sass"
 import "ace-builds/src-noconflict/mode-javascript"
 import "ace-builds/src-noconflict/mode-css"
@@ -11,7 +11,7 @@ import "ace-builds/src-noconflict/theme-dracula"
 
 const Editor = () => {
     const editorView = useSelector((state: RootState) => state.editorView)
-    
+
     const config = useSelector((state: RootState) => state.config)
     const code = useSelector((state: RootState) => {
         // get code depend on eidtor view
@@ -29,9 +29,6 @@ const Editor = () => {
         else if (config.styleType === StyleFormats.CSS) mode = "css"
 
     // Show copy icon when user update config or change view
-  
-
-   
 
     return (
         <div className={styles.container}>

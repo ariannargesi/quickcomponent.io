@@ -13,9 +13,7 @@ interface Prop {
 
 // form initial state
 
-
 const PropConfig = (props: Prop) => {
-
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [modalVisible, setModalVisible] = useState(false)
@@ -33,7 +31,7 @@ const PropConfig = (props: Prop) => {
     const [form, setForm] = useState({
         name: null,
         type: null,
-        required: false 
+        required: false,
     })
 
     const handleChange = (e) => {
@@ -72,7 +70,7 @@ const PropConfig = (props: Prop) => {
         setForm({
             name: null,
             type: null,
-            required: false
+            required: false,
         })
     }
 
@@ -106,8 +104,10 @@ const PropConfig = (props: Prop) => {
                                 <tbody key={item.name}>
                                     <tr>
                                         <td>{item.name}</td>
-                                        <td>{item.type}</td>    
-                                        <td>{item.required ? "True" : "False"}</td>
+                                        <td>{item.type}</td>
+                                        <td>
+                                            {item.required ? "True" : "False"}
+                                        </td>
                                     </tr>
                                 </tbody>
                             )

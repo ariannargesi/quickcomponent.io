@@ -10,7 +10,6 @@ import Export from "./component/Export"
 const root = document.getElementById("root")
 
 const Main = () => {
- 
     const isBigEnough = useMediaQuery({
         query: "(min-width: 768px)",
     })

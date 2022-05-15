@@ -1,9 +1,9 @@
 import prettier from "prettier/standalone"
 import babel from "prettier/parser-babel"
 import css from "prettier/parser-postcss"
-import { StyleFormats, ComponentMember, prop_types} from "../types"
-import elementsList from '../data/html-elements'
-import {nanoid} from 'nanoid'
+import { StyleFormats, ComponentMember, prop_types } from "../types"
+import elementsList from "../data/html-elements"
+import { nanoid } from "nanoid"
 import { setInputAtKey } from "../redux/slice/app"
 import { current } from "@reduxjs/toolkit"
 export const cssToCamelCase = (str: string): string => {
@@ -14,45 +14,51 @@ export const cssToCamelCase = (str: string): string => {
     const chars = str.split("")
 
     str.split("").map((char, index) => {
-        if (char === "-") 
-            chars[index + 1] = chars[index + 1].toUpperCase()        
+        if (char === "-") chars[index + 1] = chars[index + 1].toUpperCase()
     })
-    return chars.filter( char => char != '-').join('')
+    return chars.filter((char) => char != "-").join("")
 }
 
+export const findNodeInTree = (
+    map: ComponentMember[],
+    key: string
+): ComponentMember => {
+    let result
+    if (!Array.isArray(map)) return map
+    map.some(
+        (o) =>
+            (result = (o.key === key && o) || findNodeInTree(o.children, key))
+    )
+    return result || null
+}
 
-export const findNodeInTree = (map: ComponentMember[], key: string): ComponentMember => {
-    let result;
-    if(!Array.isArray(map))
-        return map 
-    map.some(o => result = o.key === key && o || findNodeInTree(o.children, key))
-    return result || null;
-  }
-
-//   CLEAN 
+//   CLEAN
 export const deleteNodeInTree = (map: ComponentMember[], key: string): void => {
-
-    if(key === map[0].key){
+    if (key === map[0].key) {
         map.splice(0, 1)
-        return 
+        return
     }
 
-    const parent = getElementParent(map, key)    
-    let nodeIndex 
+    const parent = getElementParent(map, key)
+    let nodeIndex
     parent.children.find((item, index) => {
-        if(item.key === key){
-            nodeIndex = index 
-            return true 
+        if (item.key === key) {
+            nodeIndex = index
+            return true
         }
     })
 
     parent.children.splice(nodeIndex, 1)
 }
-//  CLEAN THIS 
-export const addNodeInPosition = (map: ComponentMember[], dropKey: string, dropPosition: number, node: ComponentMember, dropToGap: boolean 
+//  CLEAN THIS
+export const addNodeInPosition = (
+    map: ComponentMember[],
+    dropKey: string,
+    dropPosition: number,
+    node: ComponentMember,
+    dropToGap: boolean
 ): void => {
-
-    if(dropToGap) { 
+    if (dropToGap) {
         const element = getElementParent(map, dropKey)
         element.children.splice(dropPosition, 0, node)
     } else {
@@ -61,37 +67,58 @@ export const addNodeInPosition = (map: ComponentMember[], dropKey: string, dropP
     }
 }
 
-export const generateClassName = (name = 'class_', length = 6): string => {
+export const generateClassName = (name = "class_", length = 6): string => {
     return name + nanoid(length)
 }
 
-export const addStyleInNode = (map: ComponentMember[], key: string, propertyName: string, prpoertyValue: string ): void => {
+export const addStyleInNode = (
+    map: ComponentMember[],
+    key: string,
+    propertyName: string,
+    prpoertyValue: string
+): void => {
     const element = findNodeInTree(map, key)
-    const style = element.props.style 
-    if(!element.props.className)
+    const style = element.props.style
+    if (!element.props.className)
         element.props.className = generateClassName(element.title)
     element.props.style = {
         ...style,
-        [propertyName]: prpoertyValue
+        [propertyName]: prpoertyValue,
     }
 }
 
-export const addNodeInTree = (map: ComponentMember[], key: string, node: ComponentMember): void => {
-    const element = findNodeInTree(map, key) 
+export const addNodeInTree = (
+    map: ComponentMember[],
+    key: string,
+    node: ComponentMember
+): void => {
+    const element = findNodeInTree(map, key)
     element.children.push(node)
 }
 
-export const updateNodeTitle = (map: ComponentMember[], key: string, value: string): void => {
+export const updateNodeTitle = (
+    map: ComponentMember[],
+    key: string,
+    value: string
+): void => {
     const element = findNodeInTree(map, key)
     element.text = value
 }
 
-export const updateClassName = (map: ComponentMember[], key: string, value: string): void => {
+export const updateClassName = (
+    map: ComponentMember[],
+    key: string,
+    value: string
+): void => {
     const element = findNodeInTree(map, key)
-    element.props.className = value 
+    element.props.className = value
 }
 
-export const removeStyleFromTree = (map: ComponentMember[], key: string, property: string): void => {
+export const removeStyleFromTree = (
+    map: ComponentMember[],
+    key: string,
+    property: string
+): void => {
     const element = findNodeInTree(map, key)
     delete element.props.style[property]
 }
@@ -127,85 +154,91 @@ export const formatStyle = (str: string, format: StyleFormats): string => {
     else return prettier.format(str, { parser: "css", plugins: [css] })
 }
 
-
-const elements = ['h1','h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'label']
+const elements = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "label"]
 
 export const isTextBasedTag = (tag: string): boolean => {
     return elements.indexOf(tag) >= 0
 }
 
 export const isEmptyObject = (value): boolean => {
-    if(!value) return null 
+    if (!value) return null
     return Object.keys(value).length > 0
 }
 
 export const isContentEditable = (value): boolean => {
-    return elementsList.filter(item => item.tag === value)[0].contentEditable
-} 
+    return elementsList.filter((item) => item.tag === value)[0].contentEditable
+}
 
 export const isHtmlTag = (value: string): boolean => {
-    return elementsList.filter(item => item.tag === value).length > 0
-} 
+    return elementsList.filter((item) => item.tag === value).length > 0
+}
 
 export const isTextNode = (value: any): boolean => {
-    if(Object.keys(value).length > 2) return false 
-    if(value['text'].length >= 0 && value['key'])
-        return true 
+    if (Object.keys(value).length > 2) return false
+    if (value["text"].length >= 0 && value["key"]) return true
 }
 
-export const getElementParent = (map: ComponentMember[], key: string, item = null): ComponentMember => {
-    let result;
-    if(!Array.isArray(map)) return map 
-    map.some(o => result = o.key === key && item || getElementParent(o.children, key, o));
-    return result || null;
+export const getElementParent = (
+    map: ComponentMember[],
+    key: string,
+    item = null
+): ComponentMember => {
+    let result
+    if (!Array.isArray(map)) return map
+    map.some(
+        (o) =>
+            (result =
+                (o.key === key && item) || getElementParent(o.children, key, o))
+    )
+    return result || null
 }
 
-export const genereateElement =(name: string, dispatch: any): ComponentMember => {
-    // take html element name and return an object with ComponentMember    
+export const genereateElement = (
+    name: string,
+    dispatch: any
+): ComponentMember => {
+    // take html element name and return an object with ComponentMember
     name = name.toLowerCase()
     const elementKey = nanoid()
     const innerKey = nanoid()
-    
-    if(isTextBasedTag(name) || name === 'button')
+
+    if (isTextBasedTag(name) || name === "button")
         dispatch(setInputAtKey({ key: elementKey }))
-    if(name === 'text'){
+    if (name === "text") {
         return {
-            text: 'text',
-            key: elementKey
+            text: "text",
+            key: elementKey,
         }
     }
-    if(isTextBasedTag(name))
+    if (isTextBasedTag(name))
         return {
             title: name,
             props: {
-                className: generateClassName(name)
+                className: generateClassName(name),
             },
             key: elementKey,
-            text: 'Text', 
+            text: "Text",
         }
     else {
         return {
             title: name,
             props: {
-                className: generateClassName(name)
-                
+                className: generateClassName(name),
             },
             key: elementKey,
-            children: [{text: 'ff', key: innerKey}], 
+            children: [{ text: "ff", key: innerKey }],
         }
     }
 }
 
 export const convertProps = (propsList) => {
-    const isJsProp = propsList[0].type.startsWith('PropTypes')
+    const isJsProp = propsList[0].type.startsWith("PropTypes")
     const clone = JSON.parse(JSON.stringify(propsList))
     clone.forEach((item) => {
-      let index = 0 
-      if(isJsProp)
-        index = prop_types.js.indexOf(item.type)
-      else 
-        index = prop_types.ts.indexOf(item.type)
-      item.type = isJsProp ? prop_types.ts[index] : prop_types.js[index]
+        let index = 0
+        if (isJsProp) index = prop_types.js.indexOf(item.type)
+        else index = prop_types.ts.indexOf(item.type)
+        item.type = isJsProp ? prop_types.ts[index] : prop_types.js[index]
     })
     return clone
 }

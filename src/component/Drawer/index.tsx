@@ -7,13 +7,12 @@ import { RootState, HtmlElement } from "../../types"
 import { genereateElement } from "../../helper"
 
 const Drawer = () => {
-
     const dispatch = useDispatch()
     const toggleDrawer = useToggleDrawer()
-    const {visible, empty} = useSelector((state: RootState) => {
+    const { visible, empty } = useSelector((state: RootState) => {
         return {
             visible: state.openDrawer,
-            empty: state.emptyTree
+            empty: state.emptyTree,
         }
     })
 
@@ -35,7 +34,13 @@ const Drawer = () => {
             onClose={() => toggleDrawer()}
         >
             <List
-                dataSource={empty ? elementsList.filter(element => element.tag != 'text') : elementsList}
+                dataSource={
+                    empty
+                        ? elementsList.filter(
+                              (element) => element.tag != "text"
+                          )
+                        : elementsList
+                }
                 renderItem={(item: HtmlElement) => (
                     <List.Item onClick={() => handleAddingChild(item.tag)}>
                         {item.tag}

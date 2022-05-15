@@ -10,7 +10,7 @@ import {
     updateClassName as changeClassname,
     isTextNode,
     getElementParent,
-    convertProps
+    convertProps,
 } from "../../../helper"
 
 import {
@@ -20,7 +20,7 @@ import {
     EditorView,
 } from "../../../types"
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
-import {  typesDecleration, RootState } from "../../../types"
+import { typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
 
 const initialState: RootState = {
@@ -76,9 +76,8 @@ const counterSlice = createSlice({
                 state.inputKey = null
         },
         deleteNode: (state, action) => {
-            
             const key = action.payload.key
-            state.treeHash = key 
+            state.treeHash = key
             // select root
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
 
@@ -107,9 +106,13 @@ const counterSlice = createSlice({
             })
         },
         updateConfig: (state, action) => {
-            const key = action.payload.key 
-            const value = action.payload.value 
-            if(key === 'scriptType' && state.config.scriptType != value && state.config.propsList.length > 0){
+            const key = action.payload.key
+            const value = action.payload.value
+            if (
+                key === "scriptType" &&
+                state.config.scriptType != value &&
+                state.config.propsList.length > 0
+            ) {
                 state.config.propsList = convertProps(state.config.propsList)
             }
             state.config[action.payload.key] = action.payload.value

@@ -67,9 +67,9 @@ export interface Output {
 }
 
 export interface RootState extends Output {
-    openDrawer: boolean,
-    emptyTree: boolean, 
-    treeHash: string,
+    openDrawer: boolean
+    emptyTree: boolean
+    treeHash: string
     selectedKey: string
     expandedKey: string[]
     config: Config
@@ -80,31 +80,23 @@ export interface RootState extends Output {
 }
 
 export interface HtmlElement {
-    tag: string,
-    contentEditable: boolean,
-    textOnly  
+    tag: string
+    contentEditable: boolean
+    textOnly
 }
 
-const ts = [
-    'string',
-    'string[]', 
-    'number',
-    'number[]',
-    'boolean',
-    'boolean[]',
-  ]
-  
-  const js = [
-    'PropTypes.string', 
-    'PropTypes.arrayOf(PropTypes.string)',
-    'PropTypes.number',
-    'PropTypes.arrayOf(PropTypes.number)',
-    'PropTypes.bool',
-    'PropTypes.arrayOf(PropTypes.bool)',
-  ]
+const ts = ["string", "string[]", "number", "number[]", "boolean", "boolean[]"]
 
-export const prop_types = { 
+const js = [
+    "PropTypes.string",
+    "PropTypes.arrayOf(PropTypes.string)",
+    "PropTypes.number",
+    "PropTypes.arrayOf(PropTypes.number)",
+    "PropTypes.bool",
+    "PropTypes.arrayOf(PropTypes.bool)",
+]
+
+export const prop_types = {
     ts,
-    js 
-} 
-
+    js,
+}

@@ -45,7 +45,6 @@ const WidthAndHeight = () => {
         applyStyle("boxShadow", shadowString)
     }
 
-
     return (
         <>
             <div className={[style.container].join(" ")}>

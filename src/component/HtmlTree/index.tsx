@@ -14,8 +14,7 @@ import { useEffect, useState } from "react"
 
 // if is a text based element show title and text inline > else show it seperetlay
 
-
-import store from '../../redux'
+import store from "../../redux"
 const Title = (props: { data: ComponentMember }) => {
     // This component is responsible for rendering the title of tree members.
     // If the member is a text node, with clicking on it, the title get replaced with an input
@@ -23,43 +22,37 @@ const Title = (props: { data: ComponentMember }) => {
     // Also when user add a new element, an input apear and you can enter value as inner text for that element
     const dispatch = useDispatch()
     const { map } = useSelector((state: RootState) => state)
-    const { data } = props    
-    
+    const { data } = props
+
     const handleClick = () => {
-        if(isTextNode(data)) {
+        if (isTextNode(data)) {
             const res = getElementParent(map, data.key)
-            dispatch(changeSelectedElement({key: res.key}))
-        }
-        else 
-            dispatch(changeSelectedElement({ key: data.key }))        
+            dispatch(changeSelectedElement({ key: res.key }))
+        } else dispatch(changeSelectedElement({ key: data.key }))
     }
 
     const handleDoubleClick = () => {
-        if(isTextBasedTag(data.title))
-                dispatch(setInputAtKey({key: data.key}))
-        else if(isTextNode(data)) {
+        if (isTextBasedTag(data.title))
+            dispatch(setInputAtKey({ key: data.key }))
+        else if (isTextNode(data)) {
             const res = getElementParent(map, data.key)
-            dispatch(setInputAtKey({key: res.key}))
+            dispatch(setInputAtKey({ key: res.key }))
         }
     }
 
     return (
-        <div 
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-        >
+        <div onClick={handleClick} onDoubleClick={handleDoubleClick}>
             <span className={styles.title}>
-
-                 {
-                     isTextBasedTag(data.title) ?
-                     <>
+                {isTextBasedTag(data.title) ? (
+                    <>
                         <b>{data.title} </b>
                         <span>( {data.text} )</span>
-                     </>
-                     :
-                     isTextNode(data) ? <span>{data.text}</span> : <b>{data.title}</b>
-                 }
-                
+                    </>
+                ) : isTextNode(data) ? (
+                    <span>{data.text}</span>
+                ) : (
+                    <b>{data.title}</b>
+                )}
             </span>
             <Action elementKey={data.key} addChild={!data.text} />
         </div>
@@ -67,18 +60,16 @@ const Title = (props: { data: ComponentMember }) => {
 }
 
 const HtmlTree = () => {
-
     const [state, setState] = useState([])
     const treeHash = useSelector((state: RootState) => state.treeHash)
     const expandedKey = useSelector((state: RootState) => state.expandedKey)
     const rootKey = useSelector((state: RootState) => state.map[0].key)
 
-    useEffect(() => {    
+    useEffect(() => {
         setTimeout(() => {
             dispatch(updateExpandedkeys([rootKey]))
             setState(store.getState().map)
         }, 1000)
-        
     }, [])
 
     useEffect(() => {
@@ -86,7 +77,7 @@ const HtmlTree = () => {
     }, [treeHash])
 
     const dispatch = useDispatch()
-   
+
     const handleElementsDragAndDrop = (info) => {
         const { key: dragKey } = info.dragNode
         const { key: dropKey } = info.node
@@ -105,13 +96,12 @@ const HtmlTree = () => {
     return (
         <div className={styles.container}>
             <h2>Elements</h2>
-            <Tree                    
+            <Tree
                 treeData={state}
                 expandedKeys={expandedKey}
                 onExpand={(value) => {
                     dispatch(updateExpandedkeys(value))
                 }}
-                
                 draggable
                 onDrop={handleElementsDragAndDrop}
                 titleRender={(nodeData: ComponentMember) => {

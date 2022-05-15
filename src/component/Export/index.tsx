@@ -10,7 +10,6 @@ const style = {
     },
     flex: {
         display: "flex",
-       
     },
 }
 
