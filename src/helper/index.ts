@@ -226,7 +226,7 @@ export const genereateElement = (
                 className: generateClassName(name),
             },
             key: elementKey,
-            children: [{ text: "ff", key: innerKey }],
+            children: [{ text: "Text", key: innerKey }],
         }
     }
 }
