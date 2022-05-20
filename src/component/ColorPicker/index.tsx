@@ -48,6 +48,13 @@ const ColorPicker = (props: PickerProps) => {
                         onEndChange={handleChange}
                         isGradient={showGradient}
                     />
+                    {/* Add a hex input for the colour picker and update value*/}
+                    <input
+                        className={styles.hexInput}
+                        type="text"
+                        value={props.value}
+                        onChange={(e) => props.onChange(e.target.value)}
+                    />
                     <Button
                         block
                         type="primary"
