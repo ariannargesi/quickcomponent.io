@@ -71,7 +71,7 @@ const counterSlice = createSlice({
             )
         },
         changeSelectedElement: (state, action) => {
-            state.selectedKey = action.payload.key  
+            state.selectedKey = action.payload.key
         },
         deleteNode: (state, action) => {
             const key = action.payload.key
@@ -80,6 +80,11 @@ const counterSlice = createSlice({
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
 
             deleteNodeInTree(state.map, key)
+
+            const element = findNodeInTree(state.map, state.selectedKey)
+
+            if(element === null)
+                state.selectedKey = state.map[0].key 
 
             if (state.map.length === 0) state.emptyTree = true
         },
