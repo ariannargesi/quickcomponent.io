@@ -47,6 +47,7 @@ const arrayToComponent = (
                                 inputValue = value
                             },
                             onBlur: () => {
+                                store.dispatch(setInputAtKey({key: null}))
                                 if (inputValue) {
                                     store.dispatch(
                                         updateTreeInputValue({
