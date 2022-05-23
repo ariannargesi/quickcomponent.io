@@ -2145,7 +2145,7 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
-"@types/react-transition-group@^4.4.1", "@types/react-transition-group@^4.4.4":
+"@types/react-transition-group@^4.4.4":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.4.tgz#acd4cceaa2be6b757db61ed7b432e103242d163e"
   integrity sha512-7gAPz7anVK5xzbeQW9wFBDg7G++aPLAFY0QaSMOou9rJZpbuI58WAuJrgu+qR92l61grlnCUe7AFX8KGahAgug==
@@ -8013,19 +8013,6 @@ pretty-format@^27.5.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-primeicons@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-5.0.0.tgz#73a0b6028a77c58a9eeb331ad13aaf085e8451ee"
-  integrity sha512-heygWF0X5HFI1otlZE62pp6ye7sZ8om78J9au2BRkg8O7Y8AHTZ9qKMRzchZUHLe8zUAvdi6hZzzm9XxgwIExw==
-
-primereact@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/primereact/-/primereact-8.0.1.tgz#25cdba8cbca01a943a5d748ab6fa0640b3747f29"
-  integrity sha512-sCi5TZhabycDFhksuanOc9v8vA3Wz6MPRGKGLs1aC6dWTS8yIbVtKJ26CTntCjBDzC3gu55imH30MVjDYkUByA==
-  dependencies:
-    "@types/react-transition-group" "^4.4.1"
-    react-transition-group "^4.4.1"
-
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -8700,7 +8687,7 @@ react-scripts@5:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react-transition-group@^4.4.1, react-transition-group@^4.4.2:
+react-transition-group@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
   integrity sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==

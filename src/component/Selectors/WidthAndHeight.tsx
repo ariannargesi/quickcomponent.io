@@ -4,7 +4,7 @@ import Slider from "../Slider"
 import useStyleValue from "../../hooks/useStyleValue"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import { getUnit, getNumbericValue as getValue } from "../../helper"
-const units = ["px", "rem"]
+const units = ["px", "rem", "%", "vh", "vw"]
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()

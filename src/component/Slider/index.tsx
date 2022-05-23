@@ -29,6 +29,15 @@ const App = (props: Props) => {
                     props.onChange(value)
                 }}
             />
+            <input
+                className={styles.valueInput}
+                type="number"
+                value={props.value}
+                onChange={({ target }) => {
+                    const value = Number((target as HTMLInputElement).value)
+                    props.onChange(value)
+                }}
+            />
         </div>
     )
 }
