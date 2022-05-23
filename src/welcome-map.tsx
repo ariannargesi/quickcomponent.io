@@ -7,12 +7,11 @@ const map: ComponentMember[] = [
         props: {
             className: "container",
             style: {
-                width: "500px",
-                height: "500px",
+                width: "100%",
+                height: "100%",
                 background: "rgba(255, 255, 255, 1)",
-                borderRadius: "64px",
-                boxShadow:
-                    "2px                                                               2px 43px               0px                                                               rgba(128,154,145, 0.5)",
+                borderRadius: "0px",
+                boxShadow: "2px 2px 43px 0px rgba(128,154,145, 0.5)",
                 padding: "42px",
                 textAlign: "left",
             },
@@ -69,12 +68,10 @@ const map: ComponentMember[] = [
                         props: {
                             className: "button_B-tI26",
                             style: {
-                                backgroundColor: "rgba(89, 242, 112, 1)",
-                                fontSize: "24px",
-                                width: "149px",
+                                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                                fontSize: "1.2rem",
+                                width: "100%",
                                 padding: "8px",
-                                borderRadius: "30px",
-                                margin: "65px 0px 0px 0px",
                             },
                         },
                         key: nanoid(),

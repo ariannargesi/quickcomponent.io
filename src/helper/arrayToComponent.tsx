@@ -70,7 +70,7 @@ const arrayToComponent = (
                                 ...element.props.style,
                                 outlineColor:
                                     element.key === selectedKey
-                                        ? "lightgreen"
+                                        ? "#b000b5"
                                         : "#c9c9c9",
                             },
                             key: element.key,
@@ -101,7 +101,7 @@ const arrayToComponent = (
                             ...element.props.style,
                             outlineColor:
                                 element.key === selectedKey
-                                    ? "lightgreen"
+                                    ? "#b000b5"
                                     : "#c9c9c9",
                         },
                         key: element.key,

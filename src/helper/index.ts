@@ -154,7 +154,7 @@ export const formatStyle = (str: string, format: StyleFormats): string => {
     else return prettier.format(str, { parser: "css", plugins: [css] })
 }
 
-const elements = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "label"]
+const elements = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "label", "img"]
 
 export const isTextBasedTag = (tag: string): boolean => {
     return elements.indexOf(tag) >= 0
