@@ -35,8 +35,8 @@ const Editor = () => {
             <AceEditor
                 mode={mode}
                 theme="dracula"
-                readOnly
                 value={code}
+                className={'shit'}
                 name="text-editor"
                 fontSize={15}
                 highlightActiveLine

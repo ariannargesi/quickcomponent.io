@@ -2,6 +2,7 @@ import Select from "../Select"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import styles from "./styles.module.sass"
+import { Text } from "../Styled"
 
 const options = [
     { label: "400", value: 400 },
@@ -13,15 +14,23 @@ const FontWeight = () => {
     const fontWeight = useStyleValue("fontWeight") || 400
 
     return (
-        <div className={styles.container}>
-            <Select
-                label="Font weight"
-                value={fontWeight}
-                options={options}
-                onChange={(e) => {
-                    applyStyle("fontWeight", e)
-                }}
-            />
+        <div
+            style={{
+                display: "flex",
+                padding: "16px",
+                justifyContent: "space-between",
+            }}
+        >
+                <Select
+                    inline
+                    width='150px'
+                    label="Font weight"
+                    value={fontWeight}
+                    options={options}
+                    onChange={(e) => {
+                        applyStyle("fontWeight", e)
+                    }}
+                />
         </div>
     )
 }

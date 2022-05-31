@@ -43,6 +43,7 @@ const Border = () => {
                     onChange={(value) => handleChange(0, value)}
                 />
                 <Select
+                    inline
                     value={borderStyle}
                     label={"Border style"}
                     options={borderStyleOptions}

@@ -5,6 +5,8 @@ import { ChevronDown, ChevronUp } from "react-feather"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
+import { Text } from '../Styled'
+import ShowMore from "../ShowMore"
 
 const Padding = () => {
     const applyStyle = useApplyStyle()
@@ -84,10 +86,7 @@ const Padding = () => {
                         handleChange("all", value)
                     }}
                 />
-                <div className={style.alignCenter} onClick={handleToggle}>
-                    <span>more</span>
-                    {showMore ? <ChevronDown /> : <ChevronUp />}
-                </div>
+                <ShowMore state={showMore} onClick={handleToggle} />
                 {showMore && (
                     <div className={style.content}>
                         <Slider

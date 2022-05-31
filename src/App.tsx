@@ -29,13 +29,14 @@ function App() {
                 <ComponentView />
             </div>
             )
-            <Drawer />
+           
             <Link to="/export">
                 <button className="export-button">
                     View code
                     <ChevronRight />
                 </button>
             </Link>
+            <Drawer />
         </div>
     )
 }

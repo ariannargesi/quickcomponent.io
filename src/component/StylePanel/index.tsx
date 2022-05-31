@@ -13,12 +13,21 @@ import BackgroundColor from "../Selectors/Background"
 import Margin from "../Selectors/Margin"
 import Padding from "../Selectors/Padding"
 import UpdateClassname from "../Selectors/UpdateClassname"
-
-import styles from "./styles.module.sass"
-
+import styled from 'styled-components'
+import { scrollBarStyle } from "../Styled"
+const Container = styled.div`
+    width: 300px;
+    min-width: 300px ;
+    padding: 5px;
+    overflow: auto;
+    background: white ;
+    border-right: 4px solid #eee;
+    ${scrollBarStyle}
+    
+`
 const StylePannel = () => {
     return (
-        <div className={styles.container}>
+        <Container>
             <>
                 <UpdateClassname />
                 <WidthAndHeight />
@@ -35,7 +44,7 @@ const StylePannel = () => {
                 <FontSize />
                 <FontWeight />
             </>
-        </div>
+        </Container>
     )
 }
 

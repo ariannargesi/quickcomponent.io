@@ -1,12 +1,11 @@
 import { Plus, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
+import styled from 'styled-components'
 import {
     deleteNode,
     selectElementForAddingChild,
 } from "../../../redux/slice/app"
 import useToggleDrawer from "../../../hooks/useToggleDrawer"
-
-import "./styles.sass"
 
 interface Props {
     elementKey: string
@@ -15,12 +14,21 @@ interface Props {
 
 const iconSize = 17
 
+
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+    width: 40px;
+    justify-content: space-between;
+`
+
 const Action = (props: Props) => {
     const dispatch = useDispatch()
     const toggleDrawer = useToggleDrawer()
+
     const key = props.elementKey
 
-    function addChild() {
+    function addElement() {
         dispatch(selectElementForAddingChild({ key }))
         toggleDrawer()
     }
@@ -31,10 +39,10 @@ const Action = (props: Props) => {
     }
 
     return (
-        <span className={"tree-item-action"}>
-            {props.addChild && <Plus onClick={addChild} size={iconSize} />}
-            <Trash onClick={removeElement} size={iconSize} />
-        </span>
+        <Container>
+            <Plus size={iconSize} onClick={addElement} />
+            <Trash size={iconSize} onClick={removeElement}/>
+        </Container>
     )
 }
 

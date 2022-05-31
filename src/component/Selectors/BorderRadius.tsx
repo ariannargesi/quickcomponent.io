@@ -2,6 +2,7 @@ import Slider from "../Slider"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
+import { Text } from '../Styled'
 import styles from "../Selectors/styles.module.sass"
 
 const BorderRadius = () => {
@@ -10,7 +11,7 @@ const BorderRadius = () => {
 
     return (
         <div className={styles.container}>
-            <span>Border radius</span>
+            <Text>Border radius</Text>
             <Slider
                 value={getNumbericValue(borderRadius)}
                 onChange={(value) => {

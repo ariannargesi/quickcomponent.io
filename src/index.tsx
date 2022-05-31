@@ -2,18 +2,25 @@ import ReactDOM from "react-dom"
 import "./styles.sass"
 import App from "./App"
 import store from "./redux"
-import "antd/dist/antd.min.css"
 import { Provider } from "react-redux"
 import { HashRouter, Route, Routes } from "react-router-dom"
 import { useMediaQuery } from "react-responsive"
 import Export from "./component/Export"
+import styled from 'styled-components'
+import { Button } from './component/Styled'
+const Title = styled.h1`
+    color: red;
+    padding: 45px;
+`
+
 const root = document.getElementById("root")
+
+
 
 const Main = () => {
     const isBigEnough = useMediaQuery({
         query: "(min-width: 768px)",
     })
-
     if (!isBigEnough)
         return (
             <div

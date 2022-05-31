@@ -41,7 +41,6 @@ export interface ComponentMember {
 export interface PropItem {
     name: string
     type: string
-    defaultValue?: string
     required?: boolean
 }
 

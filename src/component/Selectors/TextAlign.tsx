@@ -2,7 +2,7 @@ import { AlignLeft, AlignCenter, AlignRight } from "react-feather"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import style from "./styles.module.sass"
-
+import { Text } from '../Styled'
 const TextAlign = () => {
     const applyStyle = useApplyStyle()
     const textAlign = useStyleValue("textAlign")
@@ -13,7 +13,7 @@ const TextAlign = () => {
 
     return (
         <div className={[style.container, style.textAlign].join(" ")}>
-            <span className={style.label}>Text align: </span>
+            <Text >Text align: </Text>
             <div className={style.buttons}>
                 <AlignLeft
                     onClick={() => handleClick("left")}

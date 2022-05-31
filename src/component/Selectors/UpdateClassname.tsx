@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { updateClassName } from "../../redux/slice/app"
-import { Input } from "antd"
+import {Input, Text} from '../Styled/'
 import { RootState } from "../../types"
 import { findNodeInTree, generateClassName } from "../../helper"
 import styles from "./styles.module.sass"
-
 const UpdateClassname = () => {
     const defaultValue = useSelector((state: RootState) => {
         return findNodeInTree(state.map, state.selectedKey).props.className
@@ -30,7 +29,7 @@ const UpdateClassname = () => {
 
     return (
         <div className={styles.container}>
-            <label htmlFor="input">Classname</label>
+            <Text htmlFor="input">Classname</Text>
             <Input value={value} onChange={handleChange} onBlur={handleBlur} />
         </div>
     )

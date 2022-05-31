@@ -1,4 +1,5 @@
-import styles from "./styles.module.sass"
+import styled from 'styled-components'
+import { fontFamily } from "../Styled"
 interface Props {
     options: string[]
     onChange: (value: string) => void
@@ -6,22 +7,43 @@ interface Props {
     type?: string
 }
 
+const Container = styled.ul`
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+    background: #eee;
+    font-family: ${fontFamily};
+    font-size: 12px;
+    border-radius: 10px;
+    li {
+       
+    }
+        
+`
+
+const Item = styled.div`
+    padding: 5px;
+    min-width: 40px;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+    ${props => props.active === true && 'color: white; background-color: blue;' }
+`
+
 const Radio = (props: Props) => {
     return (
-        <ul className={props.type === "gray" ? styles.big : styles.small}>
+        <Container>
             {props.options &&
                 props.options.map((item) => (
-                    <li
-                        className={
-                            item === props.activeItem ? styles.active : null
-                        }
+                    <Item
+                        active={item == props.activeItem}
                         onClick={() => props.onChange(item)}
                         key={item}
                     >
                         {item}
-                    </li>
+                    </Item>
                 ))}
-        </ul>
+        </Container>
     )
 }
 

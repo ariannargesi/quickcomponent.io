@@ -1,6 +1,7 @@
 import style from "./styles.module.sass"
 import Radio from "../Radio"
 import Slider from "../Slider"
+import {Text} from '../Styled'
 import useStyleValue from "../../hooks/useStyleValue"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import { getUnit, getNumbericValue as getValue } from "../../helper"
@@ -18,7 +19,7 @@ const WidthAndHeight = () => {
         <>
             <div className={style.container}>
                 <div className={style.header}>
-                    <span className={style.label}>Width:</span>
+                    <Text>Width:</Text>
                     <Radio
                         options={units}
                         activeItem={widthUnit}
@@ -40,7 +41,7 @@ const WidthAndHeight = () => {
             </div>
             <div className={style.container}>
                 <div className={style.header}>
-                    <span className={style.label}>Height:</span>
+                    <Text>Height</Text>
                     <Radio
                         options={units}
                         activeItem={heightUnit}

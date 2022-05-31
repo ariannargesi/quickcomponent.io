@@ -1,4 +1,3 @@
-import { Tree } from "antd"
 import { useSelector, useDispatch } from "react-redux"
 import {
     updateExpandedkeys,
@@ -11,105 +10,144 @@ import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
 import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
 import { useEffect, useState } from "react"
-
+import { fontFamily, Text, Title } from "../Styled"
+import { MinusSquare, PlusSquare, Plus, Trash, ChevronRight, ChevronDown } from "react-feather"
+import styled from "styled-components"
 // if is a text based element show title and text inline > else show it seperetlay
 
 import store from "../../redux"
-const Title = (props: { data: ComponentMember }) => {
-    // This component is responsible for rendering the title of tree members.
-    // If the member is a text node, with clicking on it, the title get replaced with an input
-    // and you can update the inner text
-    // Also when user add a new element, an input apear and you can enter value as inner text for that element
-    const dispatch = useDispatch()
-    const { map } = useSelector((state: RootState) => state)
-    const { data } = props
+import useToggleDrawer from "../../hooks/useToggleDrawer"
 
-    const handleClick = () => {
-        if (isTextNode(data)) {
-            const res = getElementParent(map, data.key)
-            dispatch(changeSelectedElement({ key: res.key }))
-        } else dispatch(changeSelectedElement({ key: data.key }))
+
+const Item = styled.div`
+    width: 100px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background: lightblue;
+    }
+`
+
+const FlexAlignCenter = styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+`
+const Child = styled.div`
+    padding-left: 15px;
+`
+
+const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
+    const [open, setOpen] = useState(false)
+    const dispatch = useDispatch()
+    const map = store.getState().map
+    const toggle = () => {
+        setOpen(!open)
     }
 
-    const handleDoubleClick = () => {
-        if (isTextBasedTag(data.title))
-            dispatch(setInputAtKey({ key: data.key }))
+    const handleClick = (element: ComponentMember) => {
+
+        console.log(element)
+
+        // if (isTextNode(data)) {
+        //     const res = getElementParent(map, element.key)
+        //     dispatch(changeSelectedElement({ key: res.key }))
+        // } else dispatch(changeSelectedElement({ key: element }))
+    }
+
+    const handleDoubleClick = (element: ComponentMember) => {
+        if (isTextBasedTag(element.title))
+            dispatch(changeSelectedElement({ key: element.key }))
         else if (isTextNode(data)) {
-            const res = getElementParent(map, data.key)
-            dispatch(setInputAtKey({ key: res.key }))
+            const res = getElementParent(map, element.key)
+            dispatch(changeSelectedElement({ key: res.key }))
         }
     }
 
+    const { data, padding } = props
+
     return (
-        <div onClick={handleClick} onDoubleClick={handleDoubleClick}>
-            <span className={styles.title}>
-                {isTextBasedTag(data.title) ? (
+        <>
+            {data.map((item) => {
+                return (
                     <>
-                        <b>{data.title} </b>
-                        <span>( {data.text} )</span>
+                        <Item
+                            
+                            key={item.key}
+                            onClick={() => handleClick(item)}
+                            onDoubleClick={() => handleDoubleClick(item)}
+                        >
+                           
+                        
+                                
+                                <div style={{width: '150px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+
+                                {item.children && (
+                                    <>
+                                        {open ? (
+                                            <ChevronDown
+                                                onClick={toggle}
+                                            />
+                                        ) : (
+                                            <ChevronRight
+                                                onClick={toggle}
+                                            />
+                                        )}
+                                    </>
+                                )}
+                                    {isTextBasedTag(item.title) ? (
+                                        <>
+                                            <Text bold>{item.title}</Text>
+                                            {/* {item.text && <Text style={{display: 'inline-block', width: '100px', paddingLeft: '8px'}}> ({item.text}) </Text>} */}
+                                        </>
+                                    )
+                                    :
+                                    <>
+                                        {item.text && <Text>{item.text}</Text>}
+                                        {item.title && <Text bold>{item.title}</Text>}
+                                    </>
+                                    
+                                
+                                }
+                                <Action
+                                    elementKey={item.key}
+                                    addChild={!!item.children}
+                                />
+                                </div>
+                                
+                                
+                        </Item>
+                        {open && (
+                            <Child>
+                                {item.children && (
+                                    <Tree data={item.children} padding />
+                                )}
+                            </Child>
+                        )}
                     </>
-                ) : isTextNode(data) ? (
-                    <span>{data.text}</span>
-                ) : (
-                    <b>{data.title}</b>
-                )}
-            </span>
-            <Action elementKey={data.key} addChild={!data.text} />
-        </div>
+                )
+            })}
+        </>
     )
 }
 
-const HtmlTree = () => {
-    const [state, setState] = useState([])
-    const treeHash = useSelector((state: RootState) => state.treeHash)
-    const expandedKey = useSelector((state: RootState) => state.expandedKey)
-    const rootKey = useSelector((state: RootState) => state.map[0].key)
+const TreeContainer = styled.div`
+    height: 50%;
+    overflow: scroll;
+    background: white;
+    font-family: ${fontFamily};
+    font-size: 12px;
+`
 
-    useEffect(() => {
-        setTimeout(() => {
-            dispatch(updateExpandedkeys([rootKey]))
-            setState(store.getState().map)
-        }, 1000)
-    }, [])
-
-    useEffect(() => {
-        setState(store.getState().map)
-    }, [treeHash])
-
-    const dispatch = useDispatch()
-
-    const handleElementsDragAndDrop = (info) => {
-        const { key: dragKey } = info.dragNode
-        const { key: dropKey } = info.node
-        const { dropPosition, dropToGap } = info
-
-        dispatch(
-            moveElementInTree({
-                dragKey,
-                dropKey,
-                dropPosition,
-                dropToGap,
-            })
-        )
-    }
-
+const Component = () => {
+    const map = useSelector((state: RootState) => state.map)
+    const toggleDrawer = useToggleDrawer()
     return (
-        <div className={styles.container}>
-            <h2>Elements</h2>
-            <Tree
-                treeData={state}
-                expandedKeys={expandedKey}
-                onExpand={(value) => {
-                    dispatch(updateExpandedkeys(value))
-                }}
-                draggable
-                onDrop={handleElementsDragAndDrop}
-                titleRender={(nodeData: ComponentMember) => {
-                    return <Title data={nodeData} />
-                }}
-            />
-        </div>
+        <TreeContainer>
+            <Tree data={map} />
+        </TreeContainer>
     )
 }
 
-export default HtmlTree
+export default Component

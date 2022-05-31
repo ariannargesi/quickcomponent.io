@@ -22,10 +22,8 @@ const Export = () => {
 
     return (
         <div style={style.container}>
-            <div style={style.flex}>
-                <div style={{ width: "50vw", height: "100vh" }}>
-                    <CodeConfig />
-                </div>
+            <div style={style.flex}>                
+                <CodeConfig />
                 <div style={{ width: "50vw", height: "100vh" }}>
                     <Output />
                 </div>

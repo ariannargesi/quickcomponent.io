@@ -4,6 +4,7 @@ import style from "./styles.module.sass"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
+import { Text } from '../Styled'
 import styles from "../Selectors/styles.module.sass"
 
 const options = [
@@ -23,7 +24,7 @@ const Positions = () => {
 
     return (
         <div className={styles.container}>
-            <span className={style.label}>Position</span>
+            <Text >Position</Text>
             <Select
                 style={{ width: "120px" }}
                 value={position}

@@ -8,15 +8,14 @@ import styles from "./styles.module.sass"
 
 const { Sider } = Layout
 
+
+
 const TreeAndStyles = () => {
     const [visible, setVisible] = useState(true)
 
     return (
-        <Sider
-            trigger={null}
-            style={{ position: "relative", backgroundColor: "#eee" }}
-            collapsible
-            width={visible ? 300 : 0}
+        <div
+            style={{width: visible ? '300px' : '0', position: 'relative'}}
         >
             {visible && (
                 <div style={{ height: "100%" }}>
@@ -32,7 +31,7 @@ const TreeAndStyles = () => {
             >
                 <ChevronRight />
             </div>
-        </Sider>
+        </div>
     )
 }
 

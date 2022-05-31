@@ -181,6 +181,14 @@ const counterSlice = createSlice({
             const { value } = action.payload
             changeClassname(state.map, state.selectedKey, value)
         },
+        addProp: (state, action) => {
+            const value = action.payload.value           
+            state.config.propsList.push(value)
+        },
+        deleteProp: (state, action) => {
+            const index1 = action.payload.index 
+            state.config.propsList = state.config.propsList.filter((item, index) =>  index != index1 )
+        }
     },
 })
 
@@ -201,5 +209,7 @@ export const {
     updateExpandedkeys,
     toggleDrawer,
     updateClassName,
+    addProp,
+    deleteProp
 } = counterSlice.actions
 export default counterSlice.reducer

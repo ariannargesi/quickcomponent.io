@@ -1,10 +1,6 @@
 import { useState } from "react"
-import { Button, Checkbox } from "antd"
-import { ColorPicker as ReacetColorPicker } from "react-color-gradient-picker"
-import ColorBox from "../ColorBox"
 import styles from "./styles.module.sass"
-import "react-color-gradient-picker/dist/index.css"
-
+import { Text } from '../Styled'
 interface PickerProps {
     label: string
     onChange: (value: string) => void
@@ -23,40 +19,12 @@ const ColorPicker = (props: PickerProps) => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <span className={styles.label}>{props.label}</span>
-                <ColorBox
-                    onClick={() => setShowPicker((state) => !state)}
-                    color={props.value}
-                />
-            </div>
-            {showPicker && (
-                <div className={styles.body}>
-                    {props.allowGradient && (
-                        <div className={styles.checkboxContainer}>
-                            <span className={styles.label}>Gradient: </span>
-                            <Checkbox
-                                value={showGradient}
-                                onChange={() =>
-                                    setShowGradient((state) => !state)
-                                }
-                            />
-                        </div>
-                    )}
-                    <ReacetColorPicker
-                        onStartChange={handleChange}
-                        onChange={handleChange}
-                        onEndChange={handleChange}
-                        isGradient={showGradient}
-                    />
-                    <Button
-                        block
-                        type="primary"
-                        onClick={() => setShowPicker(false)}
-                    >
-                        Done
-                    </Button>
+                <Text>{props.label}</Text>
+                <input type='color' onChange={event => {
+                  handleChange({style: event.target.value})
+                  console.log(event.target.value)
+              }}/>  
                 </div>
-            )}
         </div>
     )
 }

@@ -1,4 +1,3 @@
-import { Checkbox } from "antd"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
 import { ChevronLeft } from "react-feather"
@@ -9,10 +8,20 @@ import Box from "./Box"
 import { ScriptFormats, StyleFormats } from "../../types"
 import PropConfig from "../PropConfig"
 import styles from "./styles.module.sass"
-
-const CheckboxGroup = Checkbox.Group
-
-const hooksList = ["useState", "useEffect", "useRef", "useCallback", "useMemo"]
+import styled from "styled-components"
+import { Label, Text } from "../Styled"
+import { style } from "@mui/system"
+import { useEffect, useRef, useState } from "react"
+import { scrollBarStyle } from "../Styled"
+const Container = styled.div`
+    background: white;
+    width: 50%;
+    box-shadow: 0px -5px 100px -3px rgba(0,0,0,0.1);
+    padding: 0 16px;
+    height: 100vh;
+    overflow: auto;
+    ${scrollBarStyle}
+`
 
 const CompnentConfig = () => {
     const navigate = useNavigate()
@@ -32,13 +41,11 @@ const CompnentConfig = () => {
         )
     }
 
-    const handleHooksListChange = (list) => {
-        dispatch(handleChange("hooksList", list))
-    }
+ 
 
     return (
-        <div className={styles.container}>
-            <ChevronLeft onClick={goBack} />
+        <Container>
+            <ChevronLeft onClick={goBack} style={{margin: '16px 0'}} />
             <PropConfig
                 onConfirm={(value) => {
                     handleChange("propsList", value)
@@ -105,12 +112,77 @@ const CompnentConfig = () => {
                 />
             </Box>
             <Box title="Select your hooks (import statment)">
-                <CheckboxGroup
+                {/* <CheckboxGroup
                     options={hooksList}
                     value={config.hooksList}
                     onChange={handleHooksListChange}
-                />
+                /> */}
+                <HooksConfig onChange={value => {
+                    
+                    dispatch(handleChange("hooksList", value))  
+                  }}/>
             </Box>
+        </Container>
+    )
+}
+
+const In = styled.input`
+    height: 20px;
+    width: 20px;
+`
+const CheckboxContainer = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const Checkbox = (props) => {
+    const [state, setState] = useState(false)
+
+    const { label, id } = props
+
+    const toggle = () => {
+        setState(!state)
+        props.onChange(state)
+    }
+
+    return (
+        <CheckboxContainer onClick={toggle}>
+            <In type="checkbox" id={id} checked={state} />
+            <Label htmlFor={id} style={{ paddingLeft: "8px" }}>
+                {label}
+            </Label>
+        </CheckboxContainer>
+    )
+}
+
+const hooksList = ["useState", "useEffect", "useRef", "useCallback", "useMemo"]
+
+const HooksConfig = (props: {onChange}) => {
+    const [list, setList] = useState([])
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(updateConfig({key: 'hooksList', value: list}))
+    }, [list])
+
+    return (
+        <div>
+            {hooksList.map((item) => {
+                return (
+                    <Checkbox
+                        label={item}
+                        key={item}
+                        id={item}
+                        onChange={() => {
+                            if(list.indexOf(item) < 0)
+                                setList((prev) => [...prev, item])
+                            else setList(prev => prev.filter(el => el!= item))
+
+
+                        }}
+                    />
+                )
+            })}
         </div>
     )
 }
