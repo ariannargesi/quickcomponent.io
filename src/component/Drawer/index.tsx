@@ -28,8 +28,7 @@ const Item = styled.li`
     }
 `
 const Header = styled.div`
-    padding: 8px;
-    border-bottom: 1px solid #eee;
+padding: 8px 32px;    border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
 `
@@ -79,7 +78,7 @@ const Drawer = () => {
                 }}
             >
                 <Header>
-                    <Title.Small>Elements list</Title.Small>
+                    <Title.Small style={{fontWeight: '700'}}>Elements list</Title.Small>
                     <X onClick={toggleDrawer}/>
                 </Header>
                 <List>

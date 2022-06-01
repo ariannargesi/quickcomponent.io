@@ -64,10 +64,9 @@ const Component = (props: {
         <Container inline={props.inline}>
             <Text>{props.label}</Text>
             <Select
-                value={props.value}
                 onChange={(e) => props.onChange(e.target.value)}
             >
-                 <option value="" disabled selected>Please Choose...</option>
+                 <option disabled selected>Please Choose...</option>
                 {props.options.map((item) => {
                     return <option>{item.label}</option>
                 })}

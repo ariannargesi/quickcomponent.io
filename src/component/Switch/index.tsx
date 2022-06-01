@@ -14,7 +14,7 @@ const SwitchContainer = styled.div`
   height: 30px;
   border-radius: 20px;
   width: 75px;
-  background: ${props => props.active ? colorPrimary : 'darkgray'};
+  background: ${props => props.active ? 'darkgray' : colorPrimary};
   position: relative;
   cursor: pointer;
   padding: 1px;

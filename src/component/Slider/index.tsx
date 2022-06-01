@@ -19,7 +19,7 @@ const App = (props: Props) => {
 
     return (
         <div style={props.labelInline && inlineStyle}>
-            {props.label && <Text >{props.label}</Text>}
+            {props.label && <Text style={{width: '50px'}}>{props.label}</Text>}
             <Slider
                 min={props.min}
                 size={"small"}

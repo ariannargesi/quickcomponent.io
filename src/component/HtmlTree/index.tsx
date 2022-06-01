@@ -10,20 +10,30 @@ import { RootState, ComponentMember } from "../../types"
 import styles from "./styles.module.sass"
 import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
 import { useEffect, useState } from "react"
-import { fontFamily, Text, Title } from "../Styled"
-import { MinusSquare, PlusSquare, Plus, Trash, ChevronRight, ChevronDown } from "react-feather"
+import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
+import {
+    MinusSquare,
+    PlusSquare,
+    Plus,
+    Trash,
+    ChevronRight,
+    ChevronDown,
+} from "react-feather"
 import styled from "styled-components"
 // if is a text based element show title and text inline > else show it seperetlay
 
 import store from "../../redux"
 import useToggleDrawer from "../../hooks/useToggleDrawer"
 
+const size = 16
 
 const Item = styled.div`
-    width: 100px;
+    width: 150px;
     display: flex;
     align-items: center;
-
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
     &:hover {
         background: lightblue;
     }
@@ -35,7 +45,7 @@ const FlexAlignCenter = styled.div`
     width: 100%;
 `
 const Child = styled.div`
-    padding-left: 15px;
+    padding-left: 40px;
 `
 
 const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
@@ -47,9 +57,7 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
     }
 
     const handleClick = (element: ComponentMember) => {
-
-        console.log(element)
-
+        setOpen(!open)
         // if (isTextNode(data)) {
         //     const res = getElementParent(map, element.key)
         //     dispatch(changeSelectedElement({ key: res.key }))
@@ -73,50 +81,67 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
                 return (
                     <>
                         <Item
-                            
                             key={item.key}
                             onClick={() => handleClick(item)}
                             onDoubleClick={() => handleDoubleClick(item)}
                         >
-                           
-                        
-                                
-                                <div style={{width: '150px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-
-                                {item.children && (
-                                    <>
-                                        {open ? (
-                                            <ChevronDown
-                                                onClick={toggle}
-                                            />
-                                        ) : (
-                                            <ChevronRight
-                                                onClick={toggle}
-                                            />
-                                        )}
-                                    </>
-                                )}
-                                    {isTextBasedTag(item.title) ? (
+                            <div
+                                style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    {item.children && (
                                         <>
-                                            <Text bold>{item.title}</Text>
-                                            {/* {item.text && <Text style={{display: 'inline-block', width: '100px', paddingLeft: '8px'}}> ({item.text}) </Text>} */}
+                                            {open ? (
+                                                <ChevronDown
+                                                    onClick={toggle}
+                                                    size={size}
+                                                />
+                                            ) : (
+                                                <ChevronRight
+                                                    onClick={toggle}
+                                                    size={size}
+                                                />
+                                            )}
                                         </>
-                                    )
-                                    :
-                                    <>
-                                        {item.text && <Text>{item.text}</Text>}
-                                        {item.title && <Text bold>{item.title}</Text>}
-                                    </>
-                                    
-                                
-                                }
+                                    )}
+
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        {item.title && (
+                                            <Text bold>{item.title}</Text>
+                                        )}
+                                        {item.text && (
+                                            <Text
+                                                style={{
+                                                    maxWidth: "100px",
+                                                    minWidth: '100px',
+                                                    width: '100px',
+                                                    display: "inline-block",
+                                                    paddingLeft: '8px'
+                                                }}
+                                            >{` (  ${item.text} ) `}</Text>
+                                        )}
+                                    </div>
+                                </div>
                                 <Action
                                     elementKey={item.key}
                                     addChild={!!item.children}
                                 />
-                                </div>
-                                
-                                
+                            </div>
                         </Item>
                         {open && (
                             <Child>
@@ -134,10 +159,9 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
 
 const TreeContainer = styled.div`
     height: 50%;
-    overflow: scroll;
+    // overflow: scroll;
     background: white;
     font-family: ${fontFamily};
-    font-size: 12px;
 `
 
 const Component = () => {
@@ -145,7 +169,12 @@ const Component = () => {
     const toggleDrawer = useToggleDrawer()
     return (
         <TreeContainer>
-            <Tree data={map} />
+            <TitleWrapper>
+                <Title.Medium>Elements</Title.Medium>
+            </TitleWrapper>
+            <Content>
+                <Tree data={map} />
+            </Content>
         </TreeContainer>
     )
 }

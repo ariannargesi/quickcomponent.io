@@ -4,7 +4,7 @@ import { removeStyle } from "../../redux/slice/app"
 import { ChevronRight, X } from "react-feather"
 import styles from "./styles.module.sass"
 import { RootState, ComponentMember } from "../../types"
-import { Title, Text, bgDark, scrollBarStyle} from '../Styled'
+import { Title, Text, bgDark, scrollBarStyle, TitleWrapper, Content} from '../Styled'
 import styled from 'styled-components'
 interface ItemProps {
     title: string,
@@ -13,9 +13,9 @@ interface ItemProps {
 }
 
 const Container = styled.div`
-    background: ${bgDark};
+    background: #d9d9d9;
     display: inline-flex;
-    align-items: center;
+    align-items: center;    
     margin: 4px;
     padding: 8px;
     box-sizing: border-box;
@@ -35,15 +35,11 @@ const ActiveStylesItem = (props: ItemProps) => {
 
     return (
         <Container >
-                <div>
-                    <Text white={'white'}>{props.cssKey} : </Text>
-                    <Text sucess>{props.cssValue}</Text>
+                <div style={{display: 'flex', alignItems: 'flex-start'}}>
+                    <Text bold>{props.cssKey}: </Text>
+                    <Text bold style={{borderLeft: '1px solid darkgray', marginLeft: '6px', paddingLeft: '6px', maxWidth: '100px', display: 'inline-block', overflow: 'unset', whiteSpace:'unset', textOverflow: 'unset' }}>{props.cssValue}</Text>
                 </div>
-                <div>
-                    <X size={14} onClick={handleRemove} color={'white'} />
-                </div>
-
-          
+                    <X size={14} onClick={handleRemove} />          
         </Container>
     )
 }
@@ -56,11 +52,8 @@ const getStyles = (key: string, html: ComponentMember[]) => {
 
 const Cmp = styled.div`
     background-color: white;
-    height: 50%;
-    border-top: 4px solid #eee;
-    border-right: 4px solid #eee;
-    padding: 12px;
-    overflow: auto;
+    overflow-y: auto;
+
     ${scrollBarStyle}
 `
 
@@ -75,11 +68,13 @@ const ActiveStyles: React.FC = () => {
     }
 
     return (
-        <Cmp>
-            <Title.Medium>Active styles</Title.Medium>
-            <div>
+        <div style={{height: '50%', background: 'white'}}>
+            <TitleWrapper>
+                <Title.Medium>Active styles</Title.Medium>
+            </TitleWrapper>
+            <Content>
                 {styleKeys.length === 0 ? (
-                    <span>You dont have any style at the moment</span>
+                    <Text>You dont have any style at the moment</Text>
                 ) : (
                     styleKeys.map((key) => {
                         const cssKey = cssToCamelCase(key)
@@ -94,8 +89,8 @@ const ActiveStyles: React.FC = () => {
                         )
                     })
                 )}
-            </div>
-        </Cmp>
+            </Content>
+        </div>
     )
 }
 

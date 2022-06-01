@@ -1,4 +1,4 @@
-import { Plus, Trash } from "react-feather"
+import { Plus, Trash, X } from "react-feather"
 import { useDispatch } from "react-redux"
 import styled from 'styled-components'
 import {
@@ -12,8 +12,8 @@ interface Props {
     addChild: boolean
 }
 
-const iconSize = 17
-
+const iconSize = 16
+const iconColor = '#626262'
 
 const Container = styled.div`
     display: flex;
@@ -35,13 +35,14 @@ const Action = (props: Props) => {
 
     function removeElement(event) {
         event.stopPropagation()
+        console.log('key: ', key)
         dispatch(deleteNode({ key }))
     }
 
     return (
         <Container>
-            <Plus size={iconSize} onClick={addElement} />
-            <Trash size={iconSize} onClick={removeElement}/>
+            <Plus size={iconSize} color={iconColor} onClick={addElement} />
+            <X size={iconSize} color={iconColor} onClick={removeElement}/>
         </Container>
     )
 }

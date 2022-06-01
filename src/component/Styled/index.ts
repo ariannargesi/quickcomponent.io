@@ -13,7 +13,7 @@ const BaseText = css`
     color: #3e3e3e;
     font-family: ${fontFamily};
     font-weight: 400;
-    padding: 8px 0;
+   
     margin: 0;
 `
 export const scrollBarStyle = css`
@@ -88,4 +88,18 @@ export const Text = styled.span`
       if (props.white) return "color: white;"
       if (props.bold) return "font-weight: 700"
   }}
+`
+export const TitleWrapper = styled.div`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background: #eee;
+  padding: 0 8px;
+`
+
+export const Content = styled.div`
+  height: calc(100% - 40px);
+  padding: 8px;
+  overflow: scroll;
+  ${scrollBarStyle}
 `

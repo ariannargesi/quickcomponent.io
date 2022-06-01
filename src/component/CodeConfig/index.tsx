@@ -53,6 +53,7 @@ const CompnentConfig = () => {
             />
             <Box title="Do you need a test file?">
                 <Radio
+                    large 
                     type="gray"
                     options={["Yes", "No"]}
                     onChange={(e) => {
@@ -66,6 +67,7 @@ const CompnentConfig = () => {
             </Box>
             <Box title="Do you use typescript for your scripts?">
                 <Radio
+                    large
                     type="gray"
                     options={["Yes", "No, I'm using javascript"]}
                     onChange={(e) => {
@@ -83,6 +85,7 @@ const CompnentConfig = () => {
             </Box>
             <Box title="Do you use SASS for your styles?">
                 <Radio
+                    large
                     type="gray"
                     options={["Yes", "No, I'm using CSS"]}
                     onChange={(e) => {
@@ -100,6 +103,7 @@ const CompnentConfig = () => {
             </Box>
             <Box title="Do you like props distruction?">
                 <Radio
+                    large 
                     type="gray"
                     options={["Yes", "No"]}
                     onChange={(e) => {
