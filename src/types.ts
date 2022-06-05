@@ -66,6 +66,7 @@ export interface Output {
 }
 
 export interface RootState extends Output {
+    errorMessage: string, 
     openDrawer: boolean
     emptyTree: boolean
     treeHash: string

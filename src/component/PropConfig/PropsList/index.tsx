@@ -45,14 +45,6 @@ const PropsList = (props) => {
                     <Item><Text bold>Type</Text></Item> 
                 </Row>
                 <Body>
-                <Row>
-                    <Item><Text bold>Name</Text></Item>
-                    <Item><Text bold>Type</Text></Item>
-                    <Item><Text bold>Type</Text></Item> 
-                    <Item><Trash
-                                    // onClick={() => handleDeleteProp(index)}
-                                /></Item>
-                </Row>
                 {propsList.map((item, index) => {
                     return (
                         <Row key={item.name}>

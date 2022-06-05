@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { cssToCamelCase, findNodeInTree } from "../../helper"
+import { cssToCamelCase, findNodeInTree, getElementParent, isTextBasedTag, isTextNode } from "../../helper"
 import { removeStyle } from "../../redux/slice/app"
 import { ChevronRight, X } from "react-feather"
 import styles from "./styles.module.sass"
@@ -45,7 +45,9 @@ const ActiveStylesItem = (props: ItemProps) => {
 }
 
 const getStyles = (key: string, html: ComponentMember[]) => {
-    const element = findNodeInTree(html, key)
+    let element = findNodeInTree(html, key)
+    if(isTextNode(element))
+        element = getElementParent(html, key)
     if (!element.props.style) return null
     else return element.props.style
 }

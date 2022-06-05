@@ -55,18 +55,19 @@ const Component = (props: {
     label?: string
     onChange: (value: string | number) => void
     options: LabeledValue[]
-    value: string | number
+    value?: string | number
     width?: string,
     inline?: boolean 
 }) => {
-
+    console.log('rende again')
     return (
         <Container inline={props.inline}>
             <Text>{props.label}</Text>
             <Select
+                value={props.value}
                 onChange={(e) => props.onChange(e.target.value)}
             >
-                 <option disabled selected>Please Choose...</option>
+                 <option value=''>Please Choose...</option>
                 {props.options.map((item) => {
                     return <option>{item.label}</option>
                 })}

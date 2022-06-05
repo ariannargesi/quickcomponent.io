@@ -102,7 +102,13 @@ export const updateNodeTitle = (
     value: string
 ): void => {
     const element = findNodeInTree(map, key)
-    element.text = value
+    if(!element.text)
+        element.children.forEach(item => {
+            if(item.text)
+                item.text = value 
+        })
+    else 
+        element.text = value
 }
 
 export const updateClassName = (

@@ -2,20 +2,22 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../types"
 import arrayToComponent from "../../helper/arrayToComponent"
 import styles from "./styles.module.sass"
-import { Title, Button, TitleWrapper } from '../Styled'
+import { Title, Button, TitleWrapper, Text } from '../Styled'
 import { Link } from "react-router-dom"
 import { ChevronRight } from "react-feather"
 const ComponentView = () => {
-    const { map, inputKey, selectedKey } = useSelector(
+    const { map, inputKey, selectedKey, errorMessage } = useSelector(
         (state: RootState) => state
     )
-    const component = arrayToComponent(map, inputKey, selectedKey)
+    const component = arrayToComponent(map, inputKey, selectedKey, errorMessage)
 
     return (
         <div className={styles.wrapper}>
             
                 <TitleWrapper style={{borderLeft: '1px solid darkgray', display: 'flex', justifyContent: 'space-between'}}>
                 <Title.Small>Component view</Title.Small>
+                {errorMessage && <Text error>{errorMessage}</Text>}
+                <Text>{errorMessage}</Text>
                 <Link to='export'>
                     <Button>{'<Export/>'}</Button>
                 </Link>

@@ -24,6 +24,7 @@ import { typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
 
 const initialState: RootState = {
+    errorMessage: null, 
     openDrawer: false,
     selectedKey: initialMap[0].key,
     expandedKey: [],
@@ -77,10 +78,14 @@ const counterSlice = createSlice({
             const key = action.payload.key
             state.treeHash = key
             // select root
-            if (key === state.selectedKey) 
-                state.selectedKey = state.map[0].key
+            if (key === state.selectedKey) state.selectedKey = state.map[0].key
 
             deleteNodeInTree(state.map, key)
+
+            const element = findNodeInTree(state.map, state.selectedKey)
+
+            if(element === null)
+                state.selectedKey = state.map[0].key 
 
             if (state.map.length === 0) state.emptyTree = true
         },
@@ -184,6 +189,13 @@ const counterSlice = createSlice({
         deleteProp: (state, action) => {
             const index1 = action.payload.index 
             state.config.propsList = state.config.propsList.filter((item, index) =>  index != index1 )
+        },
+        showErrorMessage: (state, action) => {
+            const value = action.payload.value 
+            state.errorMessage = value 
+        },
+        clearErrorMessage: (state) => {
+            state.errorMessage = null 
         }
     },
 })
@@ -206,6 +218,8 @@ export const {
     toggleDrawer,
     updateClassName,
     addProp,
-    deleteProp
+    deleteProp,
+    showErrorMessage,
+    clearErrorMessage
 } = counterSlice.actions
 export default counterSlice.reducer

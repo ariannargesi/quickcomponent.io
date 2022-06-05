@@ -70,10 +70,12 @@ const Form = () => {
         dispatch(addProp({value: form}))
         setForm({
             name: '',
-            type: null,
+            type: '',
             required: false,
         })
     }
+
+    console.log(form)
 
     return (
         <>

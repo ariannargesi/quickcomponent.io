@@ -1,23 +1,79 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { ComponentMember } from "../types"
 import {
     updateTreeInputValue,
     changeSelectedElement,
     setInputAtKey,
+    showErrorMessage,
 } from "../redux/slice/app"
-import { isContentEditable } from "."
+import { findNodeInTree, isContentEditable } from "."
 import store from "../redux"
-
+import styled from 'styled-components'
 import styles from "../component/ComponentView/styles.module.sass"
+import { useDispatch } from "react-redux"
+
+const Erorr = styled.span`
+    position: absolute;
+    top: 0;
+`
+
+const Input = () => {
+    const [ffff, setValue] = useState('')
+
+    const handleKeyDown = event => {
+        if (event.key === "Enter" && ffff){
+            store.dispatch(setInputAtKey({key: null}))
+            store.dispatch(
+                updateTreeInputValue({
+                    value: ffff,
+                })
+            )
+        }
+    }
+    
+    const handleChange = (event) => {
+        const inputValue = event.target.value 
+        if(/{|<|>|}/gm.test(inputValue) === false)
+            setValue(inputValue)
+    }
+
+    const handleBlur = () => {
+        console.log('this is output res')
+        console.log(ffff)
+        store.dispatch(setInputAtKey({key: null}))
+        if (ffff) {
+            store.dispatch(
+                updateTreeInputValue({
+                    value: ffff,
+                })
+            )
+        }
+    }
+
+
+    return (
+        <input
+            className={styles.editInnerText}
+            autoFocus
+            value={ffff}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+        />
+    )
+
+}
+
 
 const arrayToComponent = (
     map: ComponentMember[],
     inputKey: string,
-    selectedKey: string
+    selectedKey: string, errorMessage
 ): React.ReactNode => {
-    const component = []
-    let inputValue = ""
-
+  
+    const component = []    
+    
+    
     map.forEach((element) => {
         if (inputKey === element.key) {
             component.push(
@@ -28,35 +84,7 @@ const arrayToComponent = (
                         key: element.key,
                     },
                     [
-                        React.createElement("input", {
-                            key: element.key,
-                            className: styles.editInnerText,
-                            autoFocus: true,
-                            onKeyDown: (event) => {
-                                if (event.key === "Enter" && inputValue)
-                                    store.dispatch(
-                                        updateTreeInputValue({
-                                            value: inputValue,
-                                        })
-                                    )
-                            },
-                            onChange: (
-                                event: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                                const value = event.target.value
-                                inputValue = value
-                            },
-                            onBlur: () => {
-                                store.dispatch(setInputAtKey({key: null}))
-                                if (inputValue) {
-                                    store.dispatch(
-                                        updateTreeInputValue({
-                                            value: inputValue,
-                                        })
-                                    )
-                                }
-                            },
-                        }),
+                        <Input/>
                     ]
                 )
             )
@@ -119,10 +147,11 @@ const arrayToComponent = (
                                 )
                         },
                     },
-                    arrayToComponent(element.children, inputKey, selectedKey)
+                    arrayToComponent(element.children, inputKey, selectedKey, errorMessage)
                 )
             )
     })
+    
     return component
 }
 

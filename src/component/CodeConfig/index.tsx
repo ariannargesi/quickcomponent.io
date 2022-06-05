@@ -137,6 +137,7 @@ const In = styled.input`
 const CheckboxContainer = styled.div`
     display: flex;
     align-items: center;
+    padding: 8px 0;
 `
 
 const Checkbox = (props) => {

@@ -20,8 +20,6 @@ import {
     ChevronDown,
 } from "react-feather"
 import styled from "styled-components"
-// if is a text based element show title and text inline > else show it seperetlay
-
 import store from "../../redux"
 import useToggleDrawer from "../../hooks/useToggleDrawer"
 
@@ -38,7 +36,6 @@ const Item = styled.div`
         background: lightblue;
     }
 `
-
 const FlexAlignCenter = styled.div`
     display: flex;
     align-items: center;
@@ -47,6 +44,83 @@ const FlexAlignCenter = styled.div`
 const Child = styled.div`
     padding-left: 40px;
 `
+
+const Item2 = (props) => {
+    const { item, onClick, onDoubleClick } = props
+    const [open, setOpen] = useState(false)
+    const toggle = () => setOpen(!open)
+
+    const handleClick = () => {
+        setOpen(!open)
+        onClick()
+
+    }
+
+    return (
+        <>
+            <Item
+                key={item.key}
+                onClick={handleClick}
+                onDoubleClick={onDoubleClick}
+            >
+                <div
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        {item.children && (
+                            <>
+                                {open ? (
+                                    <ChevronDown onClick={toggle} size={size} />
+                                ) : (
+                                    <ChevronRight
+                                        onClick={toggle}
+                                        size={size}
+                                    />
+                                )}
+                            </>
+                        )}
+
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            {item.title && <Text bold>{item.title}</Text>}
+                            {item.text && (
+                                <Text
+                                    style={{
+                                        maxWidth: "100px",
+                                        minWidth: "100px",
+                                        width: "100px",
+                                        display: "inline-block",
+                                        paddingLeft: "8px",
+                                    }}
+                                >{` (  ${item.text} ) `}</Text>
+                            )}
+                        </div>
+                    </div>
+                    <Action elementKey={item.key} addChild={!!item.children} />
+                </div>
+            </Item>
+            {open && (
+                <Child>
+                    {item.children && <Tree data={item.children} padding />}
+                </Child>
+            )}
+        </>
+    )
+}
 
 const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
     const [open, setOpen] = useState(false)
@@ -57,19 +131,15 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
     }
 
     const handleClick = (element: ComponentMember) => {
-        setOpen(!open)
-        // if (isTextNode(data)) {
-        //     const res = getElementParent(map, element.key)
-        //     dispatch(changeSelectedElement({ key: res.key }))
-        // } else dispatch(changeSelectedElement({ key: element }))
+            dispatch(changeSelectedElement({ key: element.key }))
     }
 
     const handleDoubleClick = (element: ComponentMember) => {
         if (isTextBasedTag(element.title))
-            dispatch(changeSelectedElement({ key: element.key }))
-        else if (isTextNode(data)) {
+            dispatch(setInputAtKey({ key: element.key }))
+        else if (isTextNode(element)) {
             const res = getElementParent(map, element.key)
-            dispatch(changeSelectedElement({ key: res.key }))
+            dispatch(setInputAtKey({ key: res.key }))
         }
     }
 
@@ -80,76 +150,11 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
             {data.map((item) => {
                 return (
                     <>
-                        <Item
-                            key={item.key}
+                        <Item2
+                            item={item}
                             onClick={() => handleClick(item)}
                             onDoubleClick={() => handleDoubleClick(item)}
-                        >
-                            <div
-                                style={{
-                                    width: "100%",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    {item.children && (
-                                        <>
-                                            {open ? (
-                                                <ChevronDown
-                                                    onClick={toggle}
-                                                    size={size}
-                                                />
-                                            ) : (
-                                                <ChevronRight
-                                                    onClick={toggle}
-                                                    size={size}
-                                                />
-                                            )}
-                                        </>
-                                    )}
-
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        {item.title && (
-                                            <Text bold>{item.title}</Text>
-                                        )}
-                                        {item.text && (
-                                            <Text
-                                                style={{
-                                                    maxWidth: "100px",
-                                                    minWidth: '100px',
-                                                    width: '100px',
-                                                    display: "inline-block",
-                                                    paddingLeft: '8px'
-                                                }}
-                                            >{` (  ${item.text} ) `}</Text>
-                                        )}
-                                    </div>
-                                </div>
-                                <Action
-                                    elementKey={item.key}
-                                    addChild={!!item.children}
-                                />
-                            </div>
-                        </Item>
-                        {open && (
-                            <Child>
-                                {item.children && (
-                                    <Tree data={item.children} padding />
-                                )}
-                            </Child>
-                        )}
+                        />
                     </>
                 )
             })}

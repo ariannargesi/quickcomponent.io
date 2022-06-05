@@ -12,8 +12,8 @@ interface Props {
     addChild: boolean
 }
 
-const iconSize = 16
-const iconColor = '#626262'
+export const iconSize = 16
+export const iconColor = '#626262'
 
 const Container = styled.div`
     display: flex;
@@ -28,14 +28,14 @@ const Action = (props: Props) => {
 
     const key = props.elementKey
 
-    function addElement() {
+    function addElement(event) {
+        event.stopPropagation()
         dispatch(selectElementForAddingChild({ key }))
         toggleDrawer()
     }
 
     function removeElement(event) {
         event.stopPropagation()
-        console.log('key: ', key)
         dispatch(deleteNode({ key }))
     }
 

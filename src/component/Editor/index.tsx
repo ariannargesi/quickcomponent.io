@@ -33,6 +33,7 @@ const Editor = () => {
     return (
         <div className={styles.container}>
             <AceEditor
+                readOnly
                 mode={mode}
                 theme="dracula"
                 value={code}
