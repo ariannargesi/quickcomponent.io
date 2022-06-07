@@ -2,14 +2,13 @@ import ReactDOM from "react-dom"
 import "./styles.sass"
 import App from "./App"
 import store from "./redux"
-import "antd/dist/antd.min.css"
 import { Provider } from "react-redux"
 import { HashRouter, Route, Routes } from "react-router-dom"
 import { useMediaQuery } from "react-responsive"
 import Export from "./component/Export"
-const root = document.getElementById("root")
 
 const Main = () => {
+
     const isBigEnough = useMediaQuery({
         query: "(min-width: 768px)",
     })
@@ -37,5 +36,7 @@ const Main = () => {
         </Provider>
     )
 }
+
+const root = document.getElementById("root")
 
 ReactDOM.render(<Main />, root)

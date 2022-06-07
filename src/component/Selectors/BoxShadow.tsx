@@ -5,7 +5,7 @@ import style from "./styles.module.sass"
 import ColorPicker from "../ColorPicker"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
-
+import { Text } from '../Styled'
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(true)
@@ -52,7 +52,7 @@ const WidthAndHeight = () => {
                     onClick={handleToggle}
                     style={{ display: "flex", alignItems: "center" }}
                 >
-                    <span>Box shadow</span>
+                    <Text>Box shadow</Text>
                     {showMore ? <ChevronDown /> : <ChevronRight />}
                 </div>
                 {showMore && (

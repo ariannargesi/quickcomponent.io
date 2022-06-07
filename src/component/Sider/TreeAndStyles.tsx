@@ -1,23 +1,16 @@
 import { useState } from "react"
-import { Layout } from "antd"
 import { ChevronRight } from "react-feather"
 import HtmlTree from "../HtmlTree"
 import ActiveStyles from "../ActiveStyles"
 
 import styles from "./styles.module.sass"
 
-const { Sider } = Layout
 
 const TreeAndStyles = () => {
     const [visible, setVisible] = useState(true)
 
     return (
-        <Sider
-            trigger={null}
-            style={{ position: "relative", backgroundColor: "#eee" }}
-            collapsible
-            width={visible ? 300 : 0}
-        >
+        <div style={{ width: visible ? "300px" : "0", position: "relative" }}>
             {visible && (
                 <div style={{ height: "100%" }}>
                     <HtmlTree />
@@ -32,7 +25,7 @@ const TreeAndStyles = () => {
             >
                 <ChevronRight />
             </div>
-        </Sider>
+        </div>
     )
 }
 

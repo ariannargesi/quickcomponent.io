@@ -36,7 +36,7 @@ const initialState: RootState = {
         usingTestFile: true,
         scriptType: ScriptFormats.TS,
         scriptFileName: "index",
-        hooksList: [],
+        hooksList: ['useState'],
         propDeclerationType: typesDecleration.Interface,
         styleType: StyleFormats.CSS,
         styleFileName: "style",
@@ -72,8 +72,6 @@ const counterSlice = createSlice({
         },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
-            if (state.inputKey && state.inputKey != state.selectedKey)
-                state.inputKey = null
         },
         deleteNode: (state, action) => {
             const key = action.payload.key
@@ -82,6 +80,11 @@ const counterSlice = createSlice({
             if (key === state.selectedKey) state.selectedKey = state.map[0].key
 
             deleteNodeInTree(state.map, key)
+
+            const element = findNodeInTree(state.map, state.selectedKey)
+
+            if(element === null)
+                state.selectedKey = state.map[0].key 
 
             if (state.map.length === 0) state.emptyTree = true
         },
@@ -162,7 +165,7 @@ const counterSlice = createSlice({
         },
         updateTreeInputValue: (state, action) => {
             updateNodeTitle(state.map, state.selectedKey, action.payload.value)
-            state.inputKey = null
+            // state.inputKey = null
         },
         removeStyle: (state, action) => {
             const property = action.payload
@@ -178,6 +181,42 @@ const counterSlice = createSlice({
             const { value } = action.payload
             changeClassname(state.map, state.selectedKey, value)
         },
+        addProp: (state, action) => {
+            const value = action.payload.value           
+            state.config.propsList.push(value)
+        },
+        deleteProp: (state, action) => {
+            const index1 = action.payload.index 
+            state.config.propsList = state.config.propsList.filter((item, index) =>  index != index1 )
+        },
+        addHook: (state, action) => {
+            const value = action.payload
+            state.config.hooksList.push(value)
+            state.output.script = scriptGenerator({
+                componentName: state.config.componentName,
+                hooksList: state.config.hooksList,
+                map: state.map,
+                type: state.config.propDeclerationType,
+                propsDistruction: state.config.propDisctruction,
+                propsList: state.config.propsList,
+                scriptType: state.config.scriptType,
+                styleType: state.config.styleType,
+            })
+        },
+        removeHook: (state, action) => {
+            const value = action.payload
+            state.config.hooksList = state.config.hooksList.filter(item => item!= value)
+            state.output.script = scriptGenerator({
+                componentName: state.config.componentName,
+                hooksList: state.config.hooksList,
+                map: state.map,
+                type: state.config.propDeclerationType,
+                propsDistruction: state.config.propDisctruction,
+                propsList: state.config.propsList,
+                scriptType: state.config.scriptType,
+                styleType: state.config.styleType,
+            })
+        }
     },
 })
 
@@ -198,5 +237,9 @@ export const {
     updateExpandedkeys,
     toggleDrawer,
     updateClassName,
+    addProp,
+    deleteProp,
+    addHook,
+    removeHook 
 } = counterSlice.actions
 export default counterSlice.reducer

@@ -1,3 +1,4 @@
+import { Title } from '../Styled'
 interface Props {
     children: React.ReactNode
     title: string
@@ -14,7 +15,7 @@ const Box = (props: Props) => {
     }
     return (
         <div style={style.container}>
-            <h2 style={style.title}>{props.title}</h2>
+            <Title.Large>{props.title}</Title.Large>
             {props.children}
         </div>
     )

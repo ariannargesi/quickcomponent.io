@@ -5,7 +5,7 @@ import { StyleFormats, ComponentMember, prop_types } from "../types"
 import elementsList from "../data/html-elements"
 import { nanoid } from "nanoid"
 import { setInputAtKey } from "../redux/slice/app"
-import { current } from "@reduxjs/toolkit"
+
 export const cssToCamelCase = (str: string): string => {
     /*
      * input: "border-radius"
@@ -77,7 +77,10 @@ export const addStyleInNode = (
     propertyName: string,
     prpoertyValue: string
 ): void => {
-    const element = findNodeInTree(map, key)
+    
+    let element = findNodeInTree(map, key)    
+    if(isTextNode(element))
+    element = getElementParent(map, key)
     const style = element.props.style
     if (!element.props.className)
         element.props.className = generateClassName(element.title)
@@ -102,7 +105,13 @@ export const updateNodeTitle = (
     value: string
 ): void => {
     const element = findNodeInTree(map, key)
-    element.text = value
+    if(!element.text)
+        element.children.forEach(item => {
+            if(item.text)
+                item.text = value 
+        })
+    else 
+        element.text = value
 }
 
 export const updateClassName = (
@@ -119,7 +128,9 @@ export const removeStyleFromTree = (
     key: string,
     property: string
 ): void => {
-    const element = findNodeInTree(map, key)
+    let element = findNodeInTree(map, key)
+    if(isTextNode(element))
+    element = getElementParent(map, key)
     delete element.props.style[property]
 }
 
@@ -173,7 +184,7 @@ export const isHtmlTag = (value: string): boolean => {
     return elementsList.filter((item) => item.tag === value).length > 0
 }
 
-export const isTextNode = (value: any): boolean => {
+export const isTextNode = (value): boolean => {
     if (Object.keys(value).length > 2) return false
     if (value["text"].length >= 0 && value["key"]) return true
 }
@@ -195,7 +206,7 @@ export const getElementParent = (
 
 export const genereateElement = (
     name: string,
-    dispatch: any
+    dispatch: (any) => void, 
 ): ComponentMember => {
     // take html element name and return an object with ComponentMember
     name = name.toLowerCase()

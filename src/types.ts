@@ -41,7 +41,6 @@ export interface ComponentMember {
 export interface PropItem {
     name: string
     type: string
-    defaultValue?: string
     required?: boolean
 }
 
@@ -85,6 +84,11 @@ export interface HtmlElement {
     textOnly
 }
 
+export interface SelectType {
+    value: string,
+    label: string
+}
+
 const ts = ["string", "string[]", "number", "number[]", "boolean", "boolean[]"]
 
 const js = [
@@ -100,3 +104,5 @@ export const prop_types = {
     ts,
     js,
 }
+
+

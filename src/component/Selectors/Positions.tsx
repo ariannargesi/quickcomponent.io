@@ -1,11 +1,13 @@
-import { Select } from "antd"
+import Select from "../Select"
 import Slider from "../Slider"
 import style from "./styles.module.sass"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
+import { Text } from "../Styled"
 import styles from "../Selectors/styles.module.sass"
-
+import { useSelector } from "react-redux"
+import { RootState } from "../../types"
 const options = [
     { value: "relative", label: "relative" },
     { value: "absolute", label: "absolute" },
@@ -15,17 +17,25 @@ const options = [
 
 const Positions = () => {
     const applyStyle = useApplyStyle()
+
     const position = useStyleValue("position")
     const top = useStyleValue("top")
     const bottom = useStyleValue("bottom")
     const right = useStyleValue("right")
     const left = useStyleValue("left")
 
+    const isRoot = useSelector((state: RootState) => {
+        if (state.selectedKey === state.map[0].key) return true
+        return false
+    })
+
+    if (isRoot) return null
+
     return (
         <div className={styles.container}>
-            <span className={style.label}>Position</span>
             <Select
-                style={{ width: "120px" }}
+                label="Position"
+                inline
                 value={position}
                 options={options}
                 onChange={(value) => {

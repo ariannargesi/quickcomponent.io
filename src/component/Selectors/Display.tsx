@@ -45,6 +45,7 @@ const Display = () => {
     return (
         <div className={styles.container}>
             <Select
+                inline
                 label="Display"
                 options={displayOptions}
                 value={display}

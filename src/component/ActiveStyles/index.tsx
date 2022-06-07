@@ -1,33 +1,55 @@
 import { useSelector, useDispatch } from "react-redux"
-import { cssToCamelCase, findNodeInTree } from "../../helper"
+import { cssToCamelCase, findNodeInTree, getElementParent, isTextNode } from "../../helper"
 import { removeStyle } from "../../redux/slice/app"
 import { X } from "react-feather"
-import styles from "./styles.module.sass"
 import { RootState, ComponentMember } from "../../types"
+import { Title, Text, TitleWrapper, Content} from '../Styled'
+import styled from 'styled-components'
 
 interface ItemProps {
-    title: string
+    title: string,
+    cssKey: string,
+    cssValue: string
 }
 
+const Container = styled.div`
+    background: #d9d9d9;
+    display: inline-flex;
+    align-items: center;    
+    margin: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    svg {
+        margin-left: 8px;
+        cursor: pointer;
+    }
+`
+
 const ActiveStylesItem = (props: ItemProps) => {
+
     const dispatch = useDispatch()
+    
     const handleRemove = () => {
         const key = props.title.split(":")[0]
         dispatch(removeStyle(key))
     }
 
     return (
-        <div className={styles.item}>
-            <div>
-                <span>{props.title}</span>
-                <X size={12} onClick={handleRemove} />
-            </div>
-        </div>
+        <Container >
+                <div style={{display: 'flex', alignItems: 'flex-start'}}>
+                    <Text bold>{props.cssKey}</Text>
+                    <Text bold style={{borderLeft: '1px solid darkgray', marginLeft: '6px', paddingLeft: '6px', maxWidth: '100px', display: 'inline-block', overflow: 'unset', whiteSpace:'unset', textOverflow: 'unset' }}>{props.cssValue}</Text>
+                </div>
+                    <X size={14} onClick={handleRemove} />          
+        </Container>
     )
 }
 
 const getStyles = (key: string, html: ComponentMember[]) => {
-    const element = findNodeInTree(html, key)
+    let element = findNodeInTree(html, key)
+    if(isTextNode(element))
+        element = getElementParent(html, key)
     if (!element.props.style) return null
     else return element.props.style
 }
@@ -43,24 +65,28 @@ const ActiveStyles: React.FC = () => {
     }
 
     return (
-        <div className={styles.container}>
-            <h2>Active styles</h2>
-            <div>
+        <div style={{height: '50%', background: 'white'}}>
+            <TitleWrapper>
+                <Title.Medium>Active styles</Title.Medium>
+            </TitleWrapper>
+            <Content style={{padding: '0 8px'}}>
                 {styleKeys.length === 0 ? (
-                    <span>You dont have any style at the moment</span>
+                    <Text>You dont have any style at the moment</Text>
                 ) : (
                     styleKeys.map((key) => {
-                        const name = cssToCamelCase(key)
-                        const value = stylesList[key]
+                        const cssKey = cssToCamelCase(key)
+                        const cssValue = stylesList[key]
                         return (
                             <ActiveStylesItem
-                                title={`${name}: ${value}`}
+                                cssKey={cssKey}
+                                cssValue={cssValue}
+                                title={`${cssKey}: ${cssValue}`}
                                 key={key}
                             />
                         )
                     })
                 )}
-            </div>
+            </Content>
         </div>
     )
 }

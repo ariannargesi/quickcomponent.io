@@ -1,115 +1,162 @@
-import { Tree } from "antd"
 import { useSelector, useDispatch } from "react-redux"
-import {
-    updateExpandedkeys,
-    moveElementInTree,
-    changeSelectedElement,
-    setInputAtKey,
-} from "../../redux/slice/app"
+import {changeSelectedElement,setInputAtKey,} from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
-import styles from "./styles.module.sass"
 import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
-import { useEffect, useState } from "react"
-
-// if is a text based element show title and text inline > else show it seperetlay
-
+import { useState } from "react"
+import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
+import {ChevronRight,ChevronDown,} from "react-feather"
+import styled from "styled-components"
 import store from "../../redux"
-const Title = (props: { data: ComponentMember }) => {
-    // This component is responsible for rendering the title of tree members.
-    // If the member is a text node, with clicking on it, the title get replaced with an input
-    // and you can update the inner text
-    // Also when user add a new element, an input apear and you can enter value as inner text for that element
-    const dispatch = useDispatch()
-    const { map } = useSelector((state: RootState) => state)
-    const { data } = props
+
+const size = 16
+
+const Item = styled.div`
+    width: 150px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    &:hover {
+        background: lightblue;
+    }
+`
+
+const Child = styled.div`
+    padding-left: 40px;
+`
+
+const TreeItem = (props) => {
+    const { item, onClick, onDoubleClick } = props
+    const [open, setOpen] = useState(false)
+    const toggle = () => setOpen(!open)
 
     const handleClick = () => {
-        if (isTextNode(data)) {
-            const res = getElementParent(map, data.key)
-            dispatch(changeSelectedElement({ key: res.key }))
-        } else dispatch(changeSelectedElement({ key: data.key }))
+        setOpen(!open)
+        onClick()
+
     }
 
-    const handleDoubleClick = () => {
-        if (isTextBasedTag(data.title))
-            dispatch(setInputAtKey({ key: data.key }))
-        else if (isTextNode(data)) {
-            const res = getElementParent(map, data.key)
+    return (
+        <>
+            <Item
+                key={item.key}
+                onClick={handleClick}
+                onDoubleClick={onDoubleClick}
+            >
+                <div
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        {item.children && (
+                            <>
+                                {open ? (
+                                    <ChevronDown onClick={toggle} size={size} />
+                                ) : (
+                                    <ChevronRight
+                                        onClick={toggle}
+                                        size={size}
+                                    />
+                                )}
+                            </>
+                        )}
+
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            {item.title && <Text bold>{item.title}</Text>}
+                            {item.text && (
+                                <Text
+                                    style={{
+                                        width: "100px",
+                                        display: "inline-block",
+                                        paddingLeft: "8px",
+                                    }}
+                                >{` (  ${item.text} ) `}</Text>
+                            )}
+                        </div>
+                    </div>
+                    <Action elementKey={item.key} addChild={!!item.children} />
+                </div>
+            </Item>
+            {open && (
+                <Child>
+                    {item.children && <Tree data={item.children} padding />}
+                </Child>
+            )}
+        </>
+    )
+}
+
+const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
+    const dispatch = useDispatch()
+    const map = store.getState().map
+
+    const handleClick = (element: ComponentMember) => {
+            dispatch(changeSelectedElement({ key: element.key }))
+    }
+
+    const handleDoubleClick = (element: ComponentMember) => {
+        if (isTextBasedTag(element.title))
+            dispatch(setInputAtKey({ key: element.key }))
+        else if (isTextNode(element)) {
+            const res = getElementParent(map, element.key)
             dispatch(setInputAtKey({ key: res.key }))
         }
     }
 
+    const { data } = props
+
     return (
-        <div onClick={handleClick} onDoubleClick={handleDoubleClick}>
-            <span className={styles.title}>
-                {isTextBasedTag(data.title) ? (
-                    <>
-                        <b>{data.title} </b>
-                        <span>( {data.text} )</span>
-                    </>
-                ) : isTextNode(data) ? (
-                    <span>{data.text}</span>
-                ) : (
-                    <b>{data.title}</b>
-                )}
-            </span>
-            <Action elementKey={data.key} addChild={!data.text} />
-        </div>
+        <>
+            {data.map((item) => {
+                return (
+                    
+                        <TreeItem
+                            key={item.key}
+                            item={item}
+                            onClick={() => handleClick(item)}
+                            onDoubleClick={() => handleDoubleClick(item)}
+                        />
+                )
+            })}
+        </>
     )
 }
 
-const HtmlTree = () => {
-    const [state, setState] = useState([])
-    const treeHash = useSelector((state: RootState) => state.treeHash)
-    const expandedKey = useSelector((state: RootState) => state.expandedKey)
-    const rootKey = useSelector((state: RootState) => state.map[0].key)
+const TreeContainer = styled.div`
+    height: 50%;
+    background: white;
+    font-family: ${fontFamily};
+`
 
-    useEffect(() => {
-        setTimeout(() => {
-            dispatch(updateExpandedkeys([rootKey]))
-            setState(store.getState().map)
-        }, 1000)
-    }, [])
-
-    useEffect(() => {
-        setState(store.getState().map)
-    }, [treeHash])
-
-    const dispatch = useDispatch()
-
-    const handleElementsDragAndDrop = (info) => {
-        const { key: dragKey } = info.dragNode
-        const { key: dropKey } = info.node
-        const { dropPosition, dropToGap } = info
-
-        dispatch(
-            moveElementInTree({
-                dragKey,
-                dropKey,
-                dropPosition,
-                dropToGap,
-            })
-        )
-    }
-
+const Component = () => {
+    const map = useSelector((state: RootState) => state.map)
+    
     return (
-        <div className={styles.container}>
-            <h2>Elements</h2>
-            <Tree
-                treeData={state}
-                expandedKeys={expandedKey}
-                onExpand={(value) => {
-                    dispatch(updateExpandedkeys(value))
-                }}
-                draggable
-                onDrop={handleElementsDragAndDrop}
-                titleRender={(nodeData: ComponentMember) => {
-                    return <Title data={nodeData} />
-                }}
-            />
-        </div>
+        <TreeContainer>
+            <TitleWrapper>
+                <Title.Medium>Elements</Title.Medium>
+            </TitleWrapper>
+            <Content>
+                <Tree data={map} />
+            </Content>
+        </TreeContainer>
     )
 }
 
-export default HtmlTree
+export default Component

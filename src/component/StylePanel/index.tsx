@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux"
 import WidthAndHeight from "../Selectors/WidthAndHeight"
 import BoxShadow from "../Selectors/BoxShadow"
 import Positions from "../Selectors/Positions"
@@ -13,29 +12,37 @@ import BackgroundColor from "../Selectors/Background"
 import Margin from "../Selectors/Margin"
 import Padding from "../Selectors/Padding"
 import UpdateClassname from "../Selectors/UpdateClassname"
+import styled from "styled-components"
+import { scrollBarStyle } from "../Styled"
 
-import styles from "./styles.module.sass"
-
+const Container = styled.div`
+    width: 300px;
+    min-width: 300px;
+    padding: 5px;
+    overflow: auto;
+    background: white;
+    border-right: 4px solid #eee;
+    box-sizing: border-box;
+    ${scrollBarStyle}
+`
 const StylePannel = () => {
     return (
-        <div className={styles.container}>
-            <>
-                <UpdateClassname />
-                <WidthAndHeight />
-                <Margin />
-                <Padding />
-                <Color />
-                <BackgroundColor />
-                <TextAlign />
-                <BoxShadow />
-                <Positions />
-                <Display />
-                <BorderRadius />
-                <Border />
-                <FontSize />
-                <FontWeight />
-            </>
-        </div>
+        <Container>
+            <UpdateClassname />
+            <WidthAndHeight />
+            <Margin />
+            <Padding />
+            <Color />
+            <BackgroundColor />
+            <TextAlign />
+            <BoxShadow />
+            <Positions />
+            <Display />
+            <BorderRadius />
+            <Border />
+            <FontSize />
+            <FontWeight />
+        </Container>
     )
 }
 

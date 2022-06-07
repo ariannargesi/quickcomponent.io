@@ -5,7 +5,8 @@ import { ChevronDown, ChevronUp } from "react-feather"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
-
+import { Text } from '../Styled'
+import ShowMore from "../ShowMore"
 const Margin = () => {
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(false)
@@ -85,10 +86,7 @@ const Margin = () => {
                         handleChange("all", value)
                     }}
                 />
-                <div className={style.alignCenter} onClick={handleToggle}>
-                    <span>more</span>
-                    {showMore ? <ChevronDown /> : <ChevronUp />}
-                </div>
+                <ShowMore onClick={handleToggle} state={showMore} />
                 {showMore && (
                     <div className={style.content}>
                         <Slider
