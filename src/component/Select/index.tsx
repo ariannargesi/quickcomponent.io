@@ -3,15 +3,12 @@ import {
     Text,
     baseHight,
     fontFamily,
-    baseMargin,
-    baseRadius,
-    colorPrimary,
     fontSizeBase,
     baseTextColor,
 } from "../Styled"
 
 import styled from "styled-components"
-
+import { SelectType } from "../../types"
 
 const Container = styled.div`
     width: 100%;
@@ -54,9 +51,8 @@ const Select = styled.select`
 const Component = (props: {
     label?: string
     onChange: (value: string | number) => void
-    options: LabeledValue[]
+    options: SelectType[]
     value?: string | number
-    width?: string,
     inline?: boolean 
 }) => {
     console.log('rende again')
@@ -67,9 +63,9 @@ const Component = (props: {
                 value={props.value}
                 onChange={(e) => props.onChange(e.target.value)}
             >
-                 <option value=''>Please Choose...</option>
+                <option value=''>Please Choose...</option>
                 {props.options.map((item) => {
-                    return <option>{item.label}</option>
+                    return <option key={item.value}>{item.label}</option>
                 })}
             </Select>
         </Container>

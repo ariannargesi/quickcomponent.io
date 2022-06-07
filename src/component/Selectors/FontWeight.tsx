@@ -1,12 +1,10 @@
 import Select from "../Select"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
-import styles from "./styles.module.sass"
-import { Text } from "../Styled"
 
 const options = [
-    { label: "400", value: 400 },
-    { label: "700", value: 700 },
+    { label: "400", value: '400' },
+    { label: "700", value: '700' },
 ]
 
 const FontWeight = () => {
@@ -23,7 +21,6 @@ const FontWeight = () => {
         >
                 <Select
                     inline
-                    width='150px'
                     label="Font weight"
                     value={fontWeight}
                     options={options}

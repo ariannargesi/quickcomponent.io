@@ -1,22 +1,16 @@
 import { useState } from "react"
-import { Layout } from "antd"
 import { ChevronRight } from "react-feather"
 import HtmlTree from "../HtmlTree"
 import ActiveStyles from "../ActiveStyles"
 
 import styles from "./styles.module.sass"
 
-const { Sider } = Layout
-
-
 
 const TreeAndStyles = () => {
     const [visible, setVisible] = useState(true)
 
     return (
-        <div
-            style={{width: visible ? '300px' : '0', position: 'relative'}}
-        >
+        <div style={{ width: visible ? "300px" : "0", position: "relative" }}>
             {visible && (
                 <div style={{ height: "100%" }}>
                     <HtmlTree />

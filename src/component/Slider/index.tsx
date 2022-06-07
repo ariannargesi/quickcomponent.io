@@ -1,6 +1,6 @@
 import Slider from "@mui/material/Slider"
-import styles from "../Selectors/styles.module.sass"
 import {Text} from '../Styled'
+
 interface Props {
     label?: string
     value: number

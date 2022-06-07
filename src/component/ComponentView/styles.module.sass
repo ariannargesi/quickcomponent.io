@@ -6,7 +6,6 @@
     .header 
         height: 60px
         display: flex 
-        justify-content: space-between
         background: #eee 
         align-items: center 
         padding: 0 16px
@@ -14,10 +13,10 @@
             margin: 0!important   
     .container
         display: flex 
-        overflow: scroll
+        overflow: auto
         height: calc(100% - 40px)
-        padding: 16px 
         .content 
+            padding: 16px
             margin: auto
             *   
                 all: revert
@@ -33,12 +32,3 @@
                 outline: none 
                 border: none 
                 &:hover 
-                    outline: none!important
-
-
-
-        
-
-
-
-

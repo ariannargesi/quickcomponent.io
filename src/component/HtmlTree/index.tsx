@@ -1,27 +1,13 @@
 import { useSelector, useDispatch } from "react-redux"
-import {
-    updateExpandedkeys,
-    moveElementInTree,
-    changeSelectedElement,
-    setInputAtKey,
-} from "../../redux/slice/app"
+import {changeSelectedElement,setInputAtKey,} from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
-import styles from "./styles.module.sass"
 import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
-import {
-    MinusSquare,
-    PlusSquare,
-    Plus,
-    Trash,
-    ChevronRight,
-    ChevronDown,
-} from "react-feather"
+import {ChevronRight,ChevronDown,} from "react-feather"
 import styled from "styled-components"
 import store from "../../redux"
-import useToggleDrawer from "../../hooks/useToggleDrawer"
 
 const size = 16
 
@@ -36,16 +22,12 @@ const Item = styled.div`
         background: lightblue;
     }
 `
-const FlexAlignCenter = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-`
+
 const Child = styled.div`
     padding-left: 40px;
 `
 
-const Item2 = (props) => {
+const TreeItem = (props) => {
     const { item, onClick, onDoubleClick } = props
     const [open, setOpen] = useState(false)
     const toggle = () => setOpen(!open)
@@ -100,8 +82,6 @@ const Item2 = (props) => {
                             {item.text && (
                                 <Text
                                     style={{
-                                        maxWidth: "100px",
-                                        minWidth: "100px",
                                         width: "100px",
                                         display: "inline-block",
                                         paddingLeft: "8px",
@@ -123,12 +103,8 @@ const Item2 = (props) => {
 }
 
 const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
-    const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
     const map = store.getState().map
-    const toggle = () => {
-        setOpen(!open)
-    }
 
     const handleClick = (element: ComponentMember) => {
             dispatch(changeSelectedElement({ key: element.key }))
@@ -143,19 +119,19 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
         }
     }
 
-    const { data, padding } = props
+    const { data } = props
 
     return (
         <>
             {data.map((item) => {
                 return (
-                    <>
-                        <Item2
+                    
+                        <TreeItem
+                            key={item.key}
                             item={item}
                             onClick={() => handleClick(item)}
                             onDoubleClick={() => handleDoubleClick(item)}
                         />
-                    </>
                 )
             })}
         </>
@@ -164,14 +140,13 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
 
 const TreeContainer = styled.div`
     height: 50%;
-    // overflow: scroll;
     background: white;
     font-family: ${fontFamily};
 `
 
 const Component = () => {
     const map = useSelector((state: RootState) => state.map)
-    const toggleDrawer = useToggleDrawer()
+    
     return (
         <TreeContainer>
             <TitleWrapper>

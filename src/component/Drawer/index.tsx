@@ -5,11 +5,10 @@ import { addNodeInTree } from "../../redux/slice/app"
 import elementsList from "../../data/html-elements"
 import useClickoutside from "../../hooks/useClickoutside"
 import useToggleDrawer from "../../hooks/useToggleDrawer"
-import { RootState, HtmlElement } from "../../types"
+import { RootState } from "../../types"
 import styled from "styled-components"
 import { scrollBarStyle, Text, Title } from "../Styled"
 import { genereateElement } from "../../helper"
-import "./styles.sass"
 
 const List = styled.ul`
     list-style: none;
@@ -42,6 +41,7 @@ const PageWrapper = styled.div`
     left: 0;
 `
 const Drawer = () => {
+
     const drawerRef = useRef(null)
 
     const dispatch = useDispatch()
@@ -78,7 +78,6 @@ const Drawer = () => {
                     style={{
                         width: "300px",
                         height: "100%",
-                        
                         background: "white",
                     }}
                 >
@@ -92,6 +91,7 @@ const Drawer = () => {
                         {dataSource.map((item) => {
                             return (
                                 <Item
+                                    key={item.tag}
                                     onClick={() => handleAddingChild(item.tag)}
                                 >
                                     <Text>{item.tag}</Text>

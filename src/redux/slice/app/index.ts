@@ -24,7 +24,6 @@ import { typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
 
 const initialState: RootState = {
-    errorMessage: null, 
     openDrawer: false,
     selectedKey: initialMap[0].key,
     expandedKey: [],
@@ -37,7 +36,7 @@ const initialState: RootState = {
         usingTestFile: true,
         scriptType: ScriptFormats.TS,
         scriptFileName: "index",
-        hooksList: [],
+        hooksList: ['useState'],
         propDeclerationType: typesDecleration.Interface,
         styleType: StyleFormats.CSS,
         styleFileName: "style",
@@ -190,12 +189,33 @@ const counterSlice = createSlice({
             const index1 = action.payload.index 
             state.config.propsList = state.config.propsList.filter((item, index) =>  index != index1 )
         },
-        showErrorMessage: (state, action) => {
-            const value = action.payload.value 
-            state.errorMessage = value 
+        addHook: (state, action) => {
+            const value = action.payload
+            state.config.hooksList.push(value)
+            state.output.script = scriptGenerator({
+                componentName: state.config.componentName,
+                hooksList: state.config.hooksList,
+                map: state.map,
+                type: state.config.propDeclerationType,
+                propsDistruction: state.config.propDisctruction,
+                propsList: state.config.propsList,
+                scriptType: state.config.scriptType,
+                styleType: state.config.styleType,
+            })
         },
-        clearErrorMessage: (state) => {
-            state.errorMessage = null 
+        removeHook: (state, action) => {
+            const value = action.payload
+            state.config.hooksList = state.config.hooksList.filter(item => item!= value)
+            state.output.script = scriptGenerator({
+                componentName: state.config.componentName,
+                hooksList: state.config.hooksList,
+                map: state.map,
+                type: state.config.propDeclerationType,
+                propsDistruction: state.config.propDisctruction,
+                propsList: state.config.propsList,
+                scriptType: state.config.scriptType,
+                styleType: state.config.styleType,
+            })
         }
     },
 })
@@ -219,7 +239,7 @@ export const {
     updateClassName,
     addProp,
     deleteProp,
-    showErrorMessage,
-    clearErrorMessage
+    addHook,
+    removeHook 
 } = counterSlice.actions
 export default counterSlice.reducer

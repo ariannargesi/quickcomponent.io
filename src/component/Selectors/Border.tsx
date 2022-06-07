@@ -12,12 +12,14 @@ const borderStyleOptions = [
 ]
 
 const Border = () => {
+
     const applyStyle = useApplyStyle()
     const borderString = useStyleValue("border") || "1px solid #eee"
     const borderSplit = borderString.split(" ")
     let borderWidth: string = borderSplit[0]
     let borderStyle: string = borderSplit[1]
     let borderColor: string = borderSplit.slice(2, borderSplit.length).join(" ")
+
     const handleChange = (index: number, value): void => {
         switch (index) {
             case 0:
@@ -30,6 +32,7 @@ const Border = () => {
                 borderColor = value
                 break
         }
+        
         const finalBorderValue = `${borderWidth} ${borderStyle} ${borderColor}`
         applyStyle("border", finalBorderValue)
     }

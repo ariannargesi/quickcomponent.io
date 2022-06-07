@@ -98,8 +98,9 @@ export const TitleWrapper = styled.div`
 `
 
 export const Content = styled.div`
-  height: calc(100% - 40px);
-  padding: 8px;
-  overflow: scroll;
+  height: calc(100% - 42px);
+  width: 100%
+  border: 1px solid red;
+  overflow: auto;
   ${scrollBarStyle}
 `

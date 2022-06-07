@@ -2,20 +2,18 @@ import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
 import { ChevronLeft } from "react-feather"
 import Radio from "../Radio"
-import { updateConfig } from "../../redux/slice/app"
+import { addHook, removeHook, updateConfig } from "../../redux/slice/app"
 import { RootState } from "../../types"
 import Box from "./Box"
 import { ScriptFormats, StyleFormats } from "../../types"
 import PropConfig from "../PropConfig"
-import styles from "./styles.module.sass"
 import styled from "styled-components"
-import { Label, Text } from "../Styled"
-import { style } from "@mui/system"
-import { useEffect, useRef, useState } from "react"
+import { Label } from "../Styled"
 import { scrollBarStyle } from "../Styled"
+
 const Container = styled.div`
     background: white;
-    width: 50%;
+    width: 50vw;
     box-shadow: 0px -5px 100px -3px rgba(0,0,0,0.1);
     padding: 0 16px;
     height: 100vh;
@@ -24,6 +22,7 @@ const Container = styled.div`
 `
 
 const CompnentConfig = () => {
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const config = useSelector((state: RootState) => state.config)
@@ -40,8 +39,6 @@ const CompnentConfig = () => {
             })
         )
     }
-
- 
 
     return (
         <Container>
@@ -116,21 +113,13 @@ const CompnentConfig = () => {
                 />
             </Box>
             <Box title="Select your hooks (import statment)">
-                {/* <CheckboxGroup
-                    options={hooksList}
-                    value={config.hooksList}
-                    onChange={handleHooksListChange}
-                /> */}
-                <HooksConfig onChange={value => {
-                    
-                    dispatch(handleChange("hooksList", value))  
-                  }}/>
+                <HooksConfig />
             </Box>
         </Container>
     )
 }
 
-const In = styled.input`
+const Input = styled.input`
     height: 20px;
     width: 20px;
 `
@@ -141,18 +130,15 @@ const CheckboxContainer = styled.div`
 `
 
 const Checkbox = (props) => {
-    const [state, setState] = useState(false)
-
-    const { label, id } = props
-
+    const { label, id, value, onChange } = props
+    
     const toggle = () => {
-        setState(!state)
-        props.onChange(state)
+        onChange(!value)        
     }
 
     return (
-        <CheckboxContainer onClick={toggle}>
-            <In type="checkbox" id={id} checked={state} />
+        <CheckboxContainer>
+            <Input type="checkbox" id={id} checked={value} onChange={toggle} />
             <Label htmlFor={id} style={{ paddingLeft: "8px" }}>
                 {label}
             </Label>
@@ -162,27 +148,37 @@ const Checkbox = (props) => {
 
 const hooksList = ["useState", "useEffect", "useRef", "useCallback", "useMemo"]
 
-const HooksConfig = (props: {onChange}) => {
-    const [list, setList] = useState([])
+const HooksConfig = () => {
+
+
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(updateConfig({key: 'hooksList', value: list}))
-    }, [list])
+    const alreadySelectedHooks = useSelector((state: RootState) => state.config.hooksList)
+
+    console.log('Render: ' + alreadySelectedHooks)
+
+    const handleAdd = (value) => {
+        dispatch(addHook(value))
+    }
+
+    const handleRemove = (value) => {
+        dispatch(removeHook(value))
+    }
 
     return (
         <div>
             {hooksList.map((item) => {
                 return (
                     <Checkbox
+                        value={alreadySelectedHooks.indexOf(item) >= 0}
                         label={item}
                         key={item}
                         id={item}
-                        onChange={() => {
-                            if(list.indexOf(item) < 0)
-                                setList((prev) => [...prev, item])
-                            else setList(prev => prev.filter(el => el!= item))
-
+                        onChange={value => {
+                            if(value)
+                                handleAdd(item)                
+                            else 
+                                handleRemove(item)
 
                         }}
                     />

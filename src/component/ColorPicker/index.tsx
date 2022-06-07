@@ -1,6 +1,7 @@
 import { useState } from "react"
 import styles from "./styles.module.sass"
 import { Text } from '../Styled'
+
 interface PickerProps {
     label: string
     onChange: (value: string) => void
@@ -9,8 +10,6 @@ interface PickerProps {
 }
 
 const ColorPicker = (props: PickerProps) => {
-    const [showPicker, setShowPicker] = useState(false)
-    const [showGradient, setShowGradient] = useState(false)
 
     const handleChange = ({ style }) => {
         props.onChange(style)

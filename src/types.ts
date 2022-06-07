@@ -66,7 +66,6 @@ export interface Output {
 }
 
 export interface RootState extends Output {
-    errorMessage: string, 
     openDrawer: boolean
     emptyTree: boolean
     treeHash: string
@@ -85,6 +84,11 @@ export interface HtmlElement {
     textOnly
 }
 
+export interface SelectType {
+    value: string,
+    label: string
+}
+
 const ts = ["string", "string[]", "number", "number[]", "boolean", "boolean[]"]
 
 const js = [
@@ -100,3 +104,5 @@ export const prop_types = {
     ts,
     js,
 }
+
+

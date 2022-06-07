@@ -17,15 +17,15 @@ const TextAlign = () => {
             <div className={style.buttons}>
                 <AlignLeft
                     onClick={() => handleClick("left")}
-                    className={textAlign === "left" ? style.active : ""}
+                    className={textAlign === "left" ? style.active : undefined}
                 />
                 <AlignCenter
                     onClick={() => handleClick("center")}
-                    className={textAlign === "center" ? style.active : ""}
+                    className={textAlign === "center" ? style.active : undefined}
                 />
                 <AlignRight
                     onClick={() => handleClick("right")}
-                    className={textAlign === "right" ? style.active : ""}
+                    className={textAlign === "right" ? style.active : undefined}
                 />
             </div>
         </div>

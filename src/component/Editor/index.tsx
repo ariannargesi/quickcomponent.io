@@ -10,11 +10,15 @@ import "ace-builds/src-noconflict/mode-sass"
 import "ace-builds/src-noconflict/theme-dracula"
 
 const Editor = () => {
+
+
     const editorView = useSelector((state: RootState) => state.editorView)
 
     const config = useSelector((state: RootState) => state.config)
+
+    console.log(config.hooksList)
+
     const code = useSelector((state: RootState) => {
-        // get code depend on eidtor view
         if (state.editorView === EditorView.Script)
             return formatScript(state.output.script)
         else return formatStyle(state.output.style, config.styleType)
@@ -33,11 +37,9 @@ const Editor = () => {
     return (
         <div className={styles.container}>
             <AceEditor
-                readOnly
                 mode={mode}
                 theme="dracula"
                 value={code}
-                className={'shit'}
                 name="text-editor"
                 fontSize={15}
                 highlightActiveLine

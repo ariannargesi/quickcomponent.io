@@ -17,6 +17,7 @@ const Container = styled.div`
 `
 
 const ShowMore = (props: Props) => {
+    
     return (
         <Container onClick={props.onClick}>
             <Text>More</Text>

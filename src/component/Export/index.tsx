@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux"
 import Output from "../Output"
 import CodeConfig from "../CodeConfig"
 import { generateCode } from "../../redux/slice/app"
+
 const style = {
     container: {
-        width: "1200px",
+        maxWIdth: "1200px",
         margin: "0 auto",
     },
     flex: {
@@ -14,6 +15,7 @@ const style = {
 }
 
 const Export = () => {
+    
     const dispatch = useDispatch()
 
     useEffect(() => {

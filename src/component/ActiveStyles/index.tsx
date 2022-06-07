@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from "react-redux"
-import { cssToCamelCase, findNodeInTree, getElementParent, isTextBasedTag, isTextNode } from "../../helper"
+import { cssToCamelCase, findNodeInTree, getElementParent, isTextNode } from "../../helper"
 import { removeStyle } from "../../redux/slice/app"
-import { ChevronRight, X } from "react-feather"
-import styles from "./styles.module.sass"
+import { X } from "react-feather"
 import { RootState, ComponentMember } from "../../types"
-import { Title, Text, bgDark, scrollBarStyle, TitleWrapper, Content} from '../Styled'
+import { Title, Text, TitleWrapper, Content} from '../Styled'
 import styled from 'styled-components'
+
 interface ItemProps {
     title: string,
     cssKey: string,
@@ -27,7 +27,9 @@ const Container = styled.div`
 `
 
 const ActiveStylesItem = (props: ItemProps) => {
+
     const dispatch = useDispatch()
+    
     const handleRemove = () => {
         const key = props.title.split(":")[0]
         dispatch(removeStyle(key))
@@ -36,7 +38,7 @@ const ActiveStylesItem = (props: ItemProps) => {
     return (
         <Container >
                 <div style={{display: 'flex', alignItems: 'flex-start'}}>
-                    <Text bold>{props.cssKey}: </Text>
+                    <Text bold>{props.cssKey}</Text>
                     <Text bold style={{borderLeft: '1px solid darkgray', marginLeft: '6px', paddingLeft: '6px', maxWidth: '100px', display: 'inline-block', overflow: 'unset', whiteSpace:'unset', textOverflow: 'unset' }}>{props.cssValue}</Text>
                 </div>
                     <X size={14} onClick={handleRemove} />          
@@ -51,13 +53,6 @@ const getStyles = (key: string, html: ComponentMember[]) => {
     if (!element.props.style) return null
     else return element.props.style
 }
-
-const Cmp = styled.div`
-    background-color: white;
-    overflow-y: auto;
-
-    ${scrollBarStyle}
-`
 
 const ActiveStyles: React.FC = () => {
     const stylesList = useSelector((state: RootState) => {
@@ -74,7 +69,7 @@ const ActiveStyles: React.FC = () => {
             <TitleWrapper>
                 <Title.Medium>Active styles</Title.Medium>
             </TitleWrapper>
-            <Content>
+            <Content style={{padding: '0 8px'}}>
                 {styleKeys.length === 0 ? (
                     <Text>You dont have any style at the moment</Text>
                 ) : (
