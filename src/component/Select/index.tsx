@@ -1,4 +1,3 @@
-import { LabeledValue } from "antd/lib/select"
 import {
     Text,
     baseHight,

@@ -2,10 +2,8 @@ import { useState } from "react"
 import { colorPrimary } from "../Styled"
 
 import styled from "styled-components"
-import { minHeight } from "@mui/system"
 
 const Container = styled.div`
-    height: ${minHeight};
     display: flex;
     align-items: center;
     margin: 8px 0;

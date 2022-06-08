@@ -5,7 +5,7 @@ import style from "./styles.module.sass"
 import ColorPicker from "../ColorPicker"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
-import { Text } from '../Styled'
+import { Text } from "../Styled"
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(true)
@@ -92,18 +92,29 @@ const WidthAndHeight = () => {
                                     updateShadow(3, value)
                                 }}
                             />
+                            <UpdateColor
+                                color={color}
+                                updateShadow={updateShadow}
+                            />
                         </div>
-                        <ColorPicker
-                            label="Shadow color"
-                            value={color}
-                            onChange={(value) => {
-                                updateShadow(4, value)
-                            }}
-                        />
                     </>
                 )}
             </div>
         </>
+    )
+}
+
+const UpdateColor = (props) => {
+    const { color, updateShadow } = props
+
+    return (
+        <ColorPicker
+            label="Shadow color"
+            value={color}
+            onChange={(value) => {
+                updateShadow(4, value)
+            }}
+        />
     )
 }
 

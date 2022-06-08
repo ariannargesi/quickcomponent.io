@@ -21,7 +21,7 @@ const Container = styled.div`
     padding: 5px;
     overflow: auto;
     background: white;
-    border-right: 4px solid #eee;
+    border-right: 1px solid lightgray;
     box-sizing: border-box;
     ${scrollBarStyle}
 `

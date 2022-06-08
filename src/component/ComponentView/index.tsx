@@ -14,7 +14,7 @@ const ComponentView = () => {
 
     return (
         <div className={styles.wrapper}>
-                <TitleWrapper style={{borderLeft: '1px solid darkgray', display: 'flex', justifyContent: 'space-between'}}>
+                <TitleWrapper style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Title.Small>Component view</Title.Small>
                 <Link to='export'>
                     <Button>{'<Export/>'}</Button>

@@ -10,12 +10,12 @@ const TreeAndStyles = () => {
     const [visible, setVisible] = useState(true)
 
     return (
-        <div style={{ width: visible ? "300px" : "0", position: "relative" }}>
+        <div style={{ width: visible ? "300px" : "0", position: "relative", borderRight: '1px solid lightgray' }}>
             {visible && (
-                <div style={{ height: "100%" }}>
+                <>
                     <HtmlTree />
                     <ActiveStyles />
-                </div>
+                </>
             )}
             <div
                 className={styles.siderControl}

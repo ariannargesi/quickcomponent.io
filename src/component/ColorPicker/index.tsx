@@ -1,4 +1,3 @@
-import { useState } from "react"
 import styles from "./styles.module.sass"
 import { Text } from '../Styled'
 
@@ -19,7 +18,7 @@ const ColorPicker = (props: PickerProps) => {
         <div className={styles.container}>
             <div className={styles.header}>
                 <Text>{props.label}</Text>
-                <input type='color' onChange={event => {
+                <input type='color' value={props.value}onChange={event => {
                   handleChange({style: event.target.value})
                   console.log(event.target.value)
               }}/>  
