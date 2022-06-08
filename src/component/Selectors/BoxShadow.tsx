@@ -6,6 +6,7 @@ import ColorPicker from "../ColorPicker"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { Text } from "../Styled"
+
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(true)
