@@ -18,7 +18,8 @@ const BaseText = css`
 `
 export const scrollBarStyle = css`
     &::-webkit-scrollbar {
-      width: 4px
+      width: 4px;
+      height: 4px
     }
 
     &::-webkit-scrollbar-thumb{
