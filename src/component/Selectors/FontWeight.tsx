@@ -3,8 +3,8 @@ import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 
 const options = [
-    { label: "400", value: '400' },
-    { label: "700", value: '700' },
+    { label: "400", value: "400" },
+    { label: "700", value: "700" },
 ]
 
 const FontWeight = () => {
@@ -19,15 +19,15 @@ const FontWeight = () => {
                 justifyContent: "space-between",
             }}
         >
-                <Select
-                    inline
-                    label="Font weight"
-                    value={fontWeight}
-                    options={options}
-                    onChange={(e) => {
-                        applyStyle("fontWeight", e)
-                    }}
-                />
+            <Select
+                inline
+                label="Font weight"
+                value={fontWeight}
+                options={options}
+                onChange={(e) => {
+                    applyStyle("fontWeight", e)
+                }}
+            />
         </div>
     )
 }

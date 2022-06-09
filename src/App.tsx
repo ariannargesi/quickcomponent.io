@@ -8,7 +8,6 @@ import EmptyTree from "./component/EmptyTree"
 import TreeAndStyles from "./component/Sider/TreeAndStyles"
 
 function App() {
-
     const treeIsEmpty = useSelector((state: RootState) => state.emptyTree)
 
     if (treeIsEmpty)

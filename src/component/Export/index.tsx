@@ -15,7 +15,6 @@ const style = {
 }
 
 const Export = () => {
-    
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -24,7 +23,7 @@ const Export = () => {
 
     return (
         <div style={style.container}>
-            <div style={style.flex}>                
+            <div style={style.flex}>
                 <CodeConfig />
                 <div style={{ width: "50vw", height: "100vh" }}>
                     <Output />

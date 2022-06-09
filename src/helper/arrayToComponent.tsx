@@ -10,34 +10,30 @@ import store from "../redux"
 import styles from "../component/ComponentView/styles.module.sass"
 import { useDispatch } from "react-redux"
 
-
 const Input = () => {
     const dispatch = useDispatch()
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState("")
 
     const dispatchValue = () => {
-        dispatch(updateTreeInputValue({value}))
+        dispatch(updateTreeInputValue({ value }))
     }
 
-    const handleKeyDown = event => {
-        if (event.key === "Enter" && value){
-            dispatch(setInputAtKey({key: null}))
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter" && value) {
+            dispatch(setInputAtKey({ key: null }))
             dispatchValue()
         }
     }
-    
+
     const handleChange = (event) => {
-        const inputValue = event.target.value 
-        if(/{|<|>|}/gm.test(inputValue) === false)
-            setValue(inputValue)
+        const inputValue = event.target.value
+        if (/{|<|>|}/gm.test(inputValue) === false) setValue(inputValue)
     }
 
     const handleBlur = () => {
-        dispatch(setInputAtKey({key: null}))
-        if (value) 
-            dispatchValue()
+        dispatch(setInputAtKey({ key: null }))
+        if (value) dispatchValue()
     }
-
 
     return (
         <input
@@ -49,17 +45,14 @@ const Input = () => {
             onBlur={handleBlur}
         />
     )
-
 }
-
 
 const arrayToComponent = (
     map: ComponentMember[],
     inputKey: string,
     selectedKey: string
 ): React.ReactNode => {
-  
-    const component = []    
+    const component = []
 
     map.forEach((element) => {
         if (inputKey === element.key) {
@@ -70,9 +63,7 @@ const arrayToComponent = (
                         style: element.props.style,
                         key: element.key,
                     },
-                    [
-                        <Input key={element.key}/>
-                    ]
+                    [<Input key={element.key} />]
                 )
             )
         } else if (element.text) {
@@ -138,7 +129,7 @@ const arrayToComponent = (
                 )
             )
     })
-    
+
     return component
 }
 

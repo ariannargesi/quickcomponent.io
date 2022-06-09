@@ -10,8 +10,6 @@ import "ace-builds/src-noconflict/mode-sass"
 import "ace-builds/src-noconflict/theme-dracula"
 
 const Editor = () => {
-
-
     const editorView = useSelector((state: RootState) => state.editorView)
 
     const config = useSelector((state: RootState) => state.config)

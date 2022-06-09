@@ -11,8 +11,8 @@ import { SelectType } from "../../types"
 
 const Container = styled.div`
     width: 100%;
-    ${props => {
-        if(props.inline)
+    ${(props) => {
+        if (props.inline)
             return `
                 display: flex;
                 align-items: center;
@@ -43,7 +43,7 @@ const Select = styled.select`
     padding: 0 10px;
     border: 1px solid #d9d9d9;
     &: hover {
-        border-color: #40a9ff
+        border-color: #40a9ff;
     }
 `
 
@@ -52,9 +52,9 @@ const Component = (props: {
     onChange: (value: string | number) => void
     options: SelectType[]
     value?: string | number
-    inline?: boolean 
+    inline?: boolean
 }) => {
-    console.log('rende again')
+    console.log("rende again")
     return (
         <Container inline={props.inline}>
             <Text>{props.label}</Text>
@@ -62,7 +62,7 @@ const Component = (props: {
                 value={props.value}
                 onChange={(e) => props.onChange(e.target.value)}
             >
-                <option value=''>Please Choose...</option>
+                <option value="">Please Choose...</option>
                 {props.options.map((item) => {
                     return <option key={item.value}>{item.label}</option>
                 })}

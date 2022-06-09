@@ -2,11 +2,10 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../types"
 import arrayToComponent from "../../helper/arrayToComponent"
 import styles from "./styles.module.sass"
-import { Title, Button, TitleWrapper } from '../Styled'
+import { Title, Button, TitleWrapper } from "../Styled"
 import { Link } from "react-router-dom"
 
 const ComponentView = () => {
-
     const { map, inputKey, selectedKey } = useSelector(
         (state: RootState) => state
     )
@@ -14,12 +13,18 @@ const ComponentView = () => {
 
     return (
         <div className={styles.wrapper}>
-                <TitleWrapper style={{borderLeft: '1px solid darkgray', display: 'flex', justifyContent: 'space-between'}}>
+            <TitleWrapper
+                style={{
+                    borderLeft: "1px solid darkgray",
+                    display: "flex",
+                    justifyContent: "space-between",
+                }}
+            >
                 <Title.Small>Component view</Title.Small>
-                <Link to='export'>
-                    <Button>{'<Export/>'}</Button>
+                <Link to="export">
+                    <Button>{"<Export/>"}</Button>
                 </Link>
-                </TitleWrapper>                
+            </TitleWrapper>
             <div className={styles.container}>
                 <div className={styles.content}>{component}</div>
             </div>

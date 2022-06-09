@@ -64,7 +64,6 @@ const list = [
         textOnly: true,
         contentEditable: true,
     },
-    
 ]
 
 export default list

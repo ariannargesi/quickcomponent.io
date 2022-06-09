@@ -14,7 +14,7 @@ import { scrollBarStyle } from "../Styled"
 const Container = styled.div`
     background: white;
     width: 50vw;
-    box-shadow: 0px -5px 100px -3px rgba(0,0,0,0.1);
+    box-shadow: 0px -5px 100px -3px rgba(0, 0, 0, 0.1);
     padding: 0 16px;
     height: 100vh;
     overflow: auto;
@@ -22,7 +22,6 @@ const Container = styled.div`
 `
 
 const CompnentConfig = () => {
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const config = useSelector((state: RootState) => state.config)
@@ -42,11 +41,11 @@ const CompnentConfig = () => {
 
     return (
         <Container>
-            <ChevronLeft onClick={goBack} style={{margin: '16px 0'}} />
-            <PropConfig/>
+            <ChevronLeft onClick={goBack} style={{ margin: "16px 0" }} />
+            <PropConfig />
             <Box title="Do you need a test file?">
                 <Radio
-                    large 
+                    large
                     type="gray"
                     options={["Yes", "No"]}
                     onChange={(e) => {
@@ -96,7 +95,7 @@ const CompnentConfig = () => {
             </Box>
             <Box title="Do you like props distruction?">
                 <Radio
-                    large 
+                    large
                     type="gray"
                     options={["Yes", "No"]}
                     onChange={(e) => {
@@ -127,9 +126,9 @@ const CheckboxContainer = styled.div`
 
 const Checkbox = (props) => {
     const { label, id, value, onChange } = props
-    
+
     const toggle = () => {
-        onChange(!value)        
+        onChange(!value)
     }
 
     return (
@@ -145,13 +144,13 @@ const Checkbox = (props) => {
 const hooksList = ["useState", "useEffect", "useRef", "useCallback", "useMemo"]
 
 const HooksConfig = () => {
-
-
     const dispatch = useDispatch()
 
-    const alreadySelectedHooks = useSelector((state: RootState) => state.config.hooksList)
+    const alreadySelectedHooks = useSelector(
+        (state: RootState) => state.config.hooksList
+    )
 
-    console.log('Render: ' + alreadySelectedHooks)
+    console.log("Render: " + alreadySelectedHooks)
 
     const handleAdd = (value) => {
         dispatch(addHook(value))
@@ -170,12 +169,9 @@ const HooksConfig = () => {
                         label={item}
                         key={item}
                         id={item}
-                        onChange={value => {
-                            if(value)
-                                handleAdd(item)                
-                            else 
-                                handleRemove(item)
-
+                        onChange={(value) => {
+                            if (value) handleAdd(item)
+                            else handleRemove(item)
                         }}
                     />
                 )

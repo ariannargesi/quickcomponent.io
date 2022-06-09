@@ -1,4 +1,4 @@
-import { Title } from '../Styled'
+import { Title } from "../Styled"
 interface Props {
     children: React.ReactNode
     title: string

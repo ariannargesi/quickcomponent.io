@@ -77,10 +77,8 @@ export const addStyleInNode = (
     propertyName: string,
     prpoertyValue: string
 ): void => {
-    
-    let element = findNodeInTree(map, key)    
-    if(isTextNode(element))
-    element = getElementParent(map, key)
+    let element = findNodeInTree(map, key)
+    if (isTextNode(element)) element = getElementParent(map, key)
     const style = element.props.style
     if (!element.props.className)
         element.props.className = generateClassName(element.title)
@@ -105,13 +103,11 @@ export const updateNodeTitle = (
     value: string
 ): void => {
     const element = findNodeInTree(map, key)
-    if(!element.text)
-        element.children.forEach(item => {
-            if(item.text)
-                item.text = value 
+    if (!element.text)
+        element.children.forEach((item) => {
+            if (item.text) item.text = value
         })
-    else 
-        element.text = value
+    else element.text = value
 }
 
 export const updateClassName = (
@@ -129,8 +125,7 @@ export const removeStyleFromTree = (
     property: string
 ): void => {
     let element = findNodeInTree(map, key)
-    if(isTextNode(element))
-    element = getElementParent(map, key)
+    if (isTextNode(element)) element = getElementParent(map, key)
     delete element.props.style[property]
 }
 
@@ -206,7 +201,7 @@ export const getElementParent = (
 
 export const genereateElement = (
     name: string,
-    dispatch: (any) => void, 
+    dispatch: (any) => void
 ): ComponentMember => {
     // take html element name and return an object with ComponentMember
     name = name.toLowerCase()

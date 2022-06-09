@@ -35,13 +35,12 @@ const Header = styled.div`
 const PageWrapper = styled.div`
     width: 100%;
     height: 100%;
-    background: rgba(127,127,127, 0.2);
+    background: rgba(127, 127, 127, 0.2);
     position: absolute;
     top: 0;
     left: 0;
 `
 const Drawer = () => {
-
     const drawerRef = useRef(null)
 
     const dispatch = useDispatch()

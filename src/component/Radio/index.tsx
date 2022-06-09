@@ -29,8 +29,6 @@ const Item = styled.div`
 `
 
 const Radio = (props: Props) => {
-
-
     return (
         <Container large={props.large}>
             {props.options.map((item) => (

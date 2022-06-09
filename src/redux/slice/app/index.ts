@@ -36,7 +36,7 @@ const initialState: RootState = {
         usingTestFile: true,
         scriptType: ScriptFormats.TS,
         scriptFileName: "index",
-        hooksList: ['useState'],
+        hooksList: ["useState"],
         propDeclerationType: typesDecleration.Interface,
         styleType: StyleFormats.CSS,
         styleFileName: "style",
@@ -83,8 +83,7 @@ const counterSlice = createSlice({
 
             const element = findNodeInTree(state.map, state.selectedKey)
 
-            if(element === null)
-                state.selectedKey = state.map[0].key 
+            if (element === null) state.selectedKey = state.map[0].key
 
             if (state.map.length === 0) state.emptyTree = true
         },
@@ -182,12 +181,14 @@ const counterSlice = createSlice({
             changeClassname(state.map, state.selectedKey, value)
         },
         addProp: (state, action) => {
-            const value = action.payload.value           
+            const value = action.payload.value
             state.config.propsList.push(value)
         },
         deleteProp: (state, action) => {
-            const index1 = action.payload.index 
-            state.config.propsList = state.config.propsList.filter((item, index) =>  index != index1 )
+            const index1 = action.payload.index
+            state.config.propsList = state.config.propsList.filter(
+                (item, index) => index != index1
+            )
         },
         addHook: (state, action) => {
             const value = action.payload
@@ -205,7 +206,9 @@ const counterSlice = createSlice({
         },
         removeHook: (state, action) => {
             const value = action.payload
-            state.config.hooksList = state.config.hooksList.filter(item => item!= value)
+            state.config.hooksList = state.config.hooksList.filter(
+                (item) => item != value
+            )
             state.output.script = scriptGenerator({
                 componentName: state.config.componentName,
                 hooksList: state.config.hooksList,
@@ -216,7 +219,7 @@ const counterSlice = createSlice({
                 scriptType: state.config.scriptType,
                 styleType: state.config.styleType,
             })
-        }
+        },
     },
 })
 
@@ -240,6 +243,6 @@ export const {
     addProp,
     deleteProp,
     addHook,
-    removeHook 
+    removeHook,
 } = counterSlice.actions
 export default counterSlice.reducer

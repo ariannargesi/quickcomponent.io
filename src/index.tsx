@@ -8,7 +8,6 @@ import { useMediaQuery } from "react-responsive"
 import Export from "./component/Export"
 
 const Main = () => {
-
     const isBigEnough = useMediaQuery({
         query: "(min-width: 768px)",
     })

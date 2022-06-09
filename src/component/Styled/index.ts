@@ -13,20 +13,19 @@ const BaseText = css`
     color: #3e3e3e;
     font-family: ${fontFamily};
     font-weight: 400;
-   
+
     margin: 0;
 `
 export const scrollBarStyle = css`
     &::-webkit-scrollbar {
-      width: 4px;
-      height: 4px
+        width: 4px;
+        height: 4px;
     }
 
-    &::-webkit-scrollbar-thumb{
-      background-color: rgb(131, 131, 131)
+    &::-webkit-scrollbar-thumb {
+        background-color: rgb(131, 131, 131);
     }
 `
-
 
 // #6e6e6e
 const Large = styled.h2`
@@ -41,18 +40,18 @@ const Small = styled.h4`
 export const Title = { Large, Medium, Small }
 
 export const Button = styled.button`
-  font-family: ${fontFamily};
-  font-size: 16px;
-  height: ${baseHight};
-  border-radius: ${baseRadius};
-  padding: 0px 20px;
-  background: ${colorPrimary};
-  cursor: pointer;
-  margin: 8px 0;
-  border: none;
-  color: white;
-  ${(props) => props.full && "width: 100%"};
-  ${(props) => props.disabled && "background: lightgray"};
+    font-family: ${fontFamily};
+    font-size: 16px;
+    height: ${baseHight};
+    border-radius: ${baseRadius};
+    padding: 0px 20px;
+    background: ${colorPrimary};
+    cursor: pointer;
+    margin: 8px 0;
+    border: none;
+    color: white;
+    ${(props) => props.full && "width: 100%"};
+    ${(props) => props.disabled && "background: lightgray"};
 `
 export const Input = styled.input`
     width: 100%;
@@ -91,11 +90,11 @@ export const Text = styled.span`
   }}
 `
 export const TitleWrapper = styled.div`
-  height: 40px;
-  display: flex;
-  align-items: center;
-  background: #eee;
-  padding: 0 8px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background: #eee;
+    padding: 0 8px;
 `
 
 export const Content = styled.div`

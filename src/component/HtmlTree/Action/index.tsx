@@ -1,6 +1,6 @@
 import { Plus, X } from "react-feather"
 import { useDispatch } from "react-redux"
-import styled from 'styled-components'
+import styled from "styled-components"
 import {
     deleteNode,
     selectElementForAddingChild,
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const iconSize = 16
-export const iconColor = '#626262'
+export const iconColor = "#626262"
 
 const Container = styled.div`
     display: flex;
@@ -42,7 +42,7 @@ const Action = (props: Props) => {
     return (
         <Container>
             <Plus size={iconSize} color={iconColor} onClick={addElement} />
-            <X size={iconSize} color={iconColor} onClick={removeElement}/>
+            <X size={iconSize} color={iconColor} onClick={removeElement} />
         </Container>
     )
 }

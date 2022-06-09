@@ -12,7 +12,6 @@ const borderStyleOptions = [
 ]
 
 const Border = () => {
-
     const applyStyle = useApplyStyle()
     const borderString = useStyleValue("border") || "1px solid #eee"
     const borderSplit = borderString.split(" ")
@@ -32,7 +31,7 @@ const Border = () => {
                 borderColor = value
                 break
         }
-        
+
         const finalBorderValue = `${borderWidth} ${borderStyle} ${borderColor}`
         applyStyle("border", finalBorderValue)
     }

@@ -1,11 +1,11 @@
 import { useState, useRef } from "react"
 import { baseRadius, Button } from "../Styled"
-import useClickoutsdie from '../../hooks/useClickoutside'
+import useClickoutsdie from "../../hooks/useClickoutside"
 import { X } from "react-feather"
 import styled from "styled-components"
 import { Title } from "../Styled"
-import Form from './Form'
-import PropsList from './PropsList'
+import Form from "./Form"
+import PropsList from "./PropsList"
 
 const Header = styled.div`
     display: flex;
@@ -47,13 +47,13 @@ const PageWrapper = styled.div`
 
 const PropConfig = () => {
     const [modal, setModal] = useState(false)
-      
+
     const modalRef = useRef(null)
 
     useClickoutsdie(modalRef, () => {
         setModal(false)
     })
-    
+
     const toggle = () => setModal(!modal)
 
     const closeModal = () => {
@@ -62,27 +62,27 @@ const PropConfig = () => {
 
     return (
         <div>
-            <Button full onClick={toggle}>Open props settings</Button>
+            <Button full onClick={toggle}>
+                Open props settings
+            </Button>
             {modal && (
                 <PageWrapper>
                     <ModalContainer ref={modalRef}>
                         <Header>
                             <Title.Medium>Props config</Title.Medium>
-                            <X onClick={closeModal}/>
+                            <X onClick={closeModal} />
                         </Header>
                         <ModalContent>
-                            <Form/>
+                            <Form />
                             <div>
-                                <PropsList/>
+                                <PropsList />
                             </div>
                         </ModalContent>
-                      
                     </ModalContainer>
                 </PageWrapper>
             )}
         </div>
     )
 }
-
 
 export default PropConfig

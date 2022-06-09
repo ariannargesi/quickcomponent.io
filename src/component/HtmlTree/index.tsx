@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from "react-redux"
-import {changeSelectedElement,setInputAtKey,} from "../../redux/slice/app"
+import { changeSelectedElement, setInputAtKey } from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
 import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
 import { useState } from "react"
 import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
-import {ChevronRight,ChevronDown,} from "react-feather"
+import { ChevronRight, ChevronDown } from "react-feather"
 import styled from "styled-components"
 import store from "../../redux"
 
@@ -35,7 +35,6 @@ const TreeItem = (props) => {
     const handleClick = () => {
         setOpen(!open)
         onClick()
-
     }
 
     return (
@@ -107,7 +106,7 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
     const map = store.getState().map
 
     const handleClick = (element: ComponentMember) => {
-            dispatch(changeSelectedElement({ key: element.key }))
+        dispatch(changeSelectedElement({ key: element.key }))
     }
 
     const handleDoubleClick = (element: ComponentMember) => {
@@ -125,13 +124,12 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
         <>
             {data.map((item) => {
                 return (
-                    
-                        <TreeItem
-                            key={item.key}
-                            item={item}
-                            onClick={() => handleClick(item)}
-                            onDoubleClick={() => handleDoubleClick(item)}
-                        />
+                    <TreeItem
+                        key={item.key}
+                        item={item}
+                        onClick={() => handleClick(item)}
+                        onDoubleClick={() => handleDoubleClick(item)}
+                    />
                 )
             })}
         </>
@@ -146,7 +144,7 @@ const TreeContainer = styled.div`
 
 const Component = () => {
     const map = useSelector((state: RootState) => state.map)
-    
+
     return (
         <TreeContainer>
             <TitleWrapper>

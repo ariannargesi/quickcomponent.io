@@ -85,7 +85,7 @@ export interface HtmlElement {
 }
 
 export interface SelectType {
-    value: string,
+    value: string
     label: string
 }
 
@@ -104,5 +104,3 @@ export const prop_types = {
     ts,
     js,
 }
-
-

@@ -14,7 +14,6 @@ const FormContainer = styled.div`
     align-items: flex-end;
 `
 const Form = () => {
-    
     const [errorMessage, setErrorMessage] = useState("")
 
     const propsList = useSelector((state: RootState) => state.config.propsList)
@@ -56,10 +55,12 @@ const Form = () => {
         handleChange({ name: e.target.value })
         const isValidName = isVarName(value)
         if (isValidName) {
-            setErrorMessage('')
+            setErrorMessage("")
         } else {
             if (value)
-            setErrorMessage("Your prop name must be a valid javascript name")
+                setErrorMessage(
+                    "Your prop name must be a valid javascript name"
+                )
         }
     }
 
