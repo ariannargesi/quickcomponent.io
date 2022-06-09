@@ -15,7 +15,6 @@ const ComponentView = () => {
         <div className={styles.wrapper}>
             <TitleWrapper
                 style={{
-                    borderLeft: "1px solid darkgray",
                     display: "flex",
                     justifyContent: "space-between",
                 }}
