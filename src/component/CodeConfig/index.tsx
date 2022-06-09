@@ -43,11 +43,7 @@ const CompnentConfig = () => {
     return (
         <Container>
             <ChevronLeft onClick={goBack} style={{margin: '16px 0'}} />
-            <PropConfig
-                onConfirm={(value) => {
-                    handleChange("propsList", value)
-                }}
-            />
+            <PropConfig/>
             <Box title="Do you need a test file?">
                 <Radio
                     large 

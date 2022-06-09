@@ -1,20 +1,11 @@
 import { useState, useRef } from "react"
-import { baseRadius, Button, Input } from "../Styled"
+import { baseRadius, Button } from "../Styled"
 import useClickoutsdie from '../../hooks/useClickoutside'
-import { useSelector } from "react-redux"
-import isVarName from "is-var-name"
-import { Trash, X } from "react-feather"
-import { PropItem, RootState, ScriptFormats, prop_types } from "../../types"
-import styles from "./styles.module.sass"
+import { X } from "react-feather"
 import styled from "styled-components"
-import Select from "../Select"
-import Switch from "../Switch"
-import { Text, Title } from "../Styled"
+import { Title } from "../Styled"
 import Form from './Form'
 import PropsList from './PropsList'
-interface Prop {
-    onConfirm: (list: PropItem[]) => void
-}
 
 const Header = styled.div`
     display: flex;
@@ -54,26 +45,15 @@ const PageWrapper = styled.div`
     z-index: 999;
 `
 
-const PropConfig = (props: Prop) => {
+const PropConfig = () => {
     const [modal, setModal] = useState(false)
-   
-
-
-
- 
-
-   
+      
     const modalRef = useRef(null)
 
     useClickoutsdie(modalRef, () => {
         setModal(false)
     })
     
-
-    
-
-   
-
     const toggle = () => setModal(!modal)
 
     const closeModal = () => {

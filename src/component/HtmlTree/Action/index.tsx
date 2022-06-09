@@ -1,4 +1,4 @@
-import { Plus, Trash, X } from "react-feather"
+import { Plus, X } from "react-feather"
 import { useDispatch } from "react-redux"
 import styled from 'styled-components'
 import {

@@ -1,11 +1,9 @@
 import { useState } from "react"
 import Slider from "../Slider"
 import style from "./styles.module.sass"
-import { ChevronDown, ChevronUp } from "react-feather"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { getNumbericValue } from "../../helper"
-import { Text } from '../Styled'
 import ShowMore from "../ShowMore"
 const Margin = () => {
     const applyStyle = useApplyStyle()
