@@ -75,17 +75,18 @@ const counterSlice = createSlice({
         },
         deleteNode: (state, action) => {
             const key = action.payload.key
+            const rootKey = state.map[0].key
             state.treeHash = key
-            // select root
-            if (key === state.selectedKey) state.selectedKey = state.map[0].key
-
-            deleteNodeInTree(state.map, key)
-
-            const element = findNodeInTree(state.map, state.selectedKey)
-
-            if (element === null) state.selectedKey = state.map[0].key
-
-            if (state.map.length === 0) state.emptyTree = true
+            
+            if(key === rootKey){
+                deleteNodeInTree(state.map, key)
+                state.emptyTree = true 
+            }            
+            else {
+                deleteNodeInTree(state.map, key)
+                const element = findNodeInTree(state.map, state.selectedKey)
+                if (element === null) state.selectedKey = state.map[0].key
+            }    
         },
         applyStyle: (state, action) => {
             const { key, value } = action.payload
