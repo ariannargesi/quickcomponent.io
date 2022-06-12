@@ -143,7 +143,9 @@ const TreeContainer = styled.div`
 `
 
 const Component = () => {
-    const map = useSelector((state: RootState) => state.map)
+    
+    const map = store.getState().map
+    useSelector((state: RootState) => state.treeHash)
 
     return (
         <TreeContainer>
