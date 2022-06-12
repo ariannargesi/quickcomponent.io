@@ -20,6 +20,7 @@ const Container = styled.div`
     align-items: center;
     width: 40px;
     justify-content: space-between;
+
 `
 
 const Action = (props: Props) => {
@@ -41,8 +42,8 @@ const Action = (props: Props) => {
 
     return (
         <Container>
-            <Plus size={iconSize} color={iconColor} onClick={addElement} />
             <X size={iconSize} color={iconColor} onClick={removeElement} />
+            {props.addChild && <Plus size={iconSize} color={iconColor} onClick={addElement} />}
         </Container>
     )
 }
