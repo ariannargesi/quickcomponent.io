@@ -150,8 +150,6 @@ const HooksConfig = () => {
         (state: RootState) => state.config.hooksList
     )
 
-    console.log("Render: " + alreadySelectedHooks)
-
     const handleAdd = (value) => {
         dispatch(addHook(value))
     }

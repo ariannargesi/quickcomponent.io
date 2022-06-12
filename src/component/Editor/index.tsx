@@ -14,8 +14,6 @@ const Editor = () => {
 
     const config = useSelector((state: RootState) => state.config)
 
-    console.log(config.hooksList)
-
     const code = useSelector((state: RootState) => {
         if (state.editorView === EditorView.Script)
             return formatScript(state.output.script)

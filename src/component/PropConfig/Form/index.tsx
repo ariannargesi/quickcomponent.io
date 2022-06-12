@@ -73,8 +73,6 @@ const Form = () => {
         })
     }
 
-    console.log(form)
-
     return (
         <>
             <FormContainer>
