@@ -29,7 +29,10 @@ const justifyContentOptions = [
 const Display = () => {
     const dispatch = useDispatch()
 
-    const display = useStyleValue("display")
+    const display = useStyleValue("display") || ''
+
+    console.log('This is getting re render')
+    console.log("Display: ", display)
     const alignItems = useStyleValue("alignItems")
     const justifyContent = useStyleValue("justifyContent")
     const flexDirection = useStyleValue("flexDirection")

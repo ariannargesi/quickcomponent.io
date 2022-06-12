@@ -13,11 +13,11 @@ const borderStyleOptions = [
 
 const Border = () => {
     const applyStyle = useApplyStyle()
-    const borderString = useStyleValue("border") || "1px solid #eee"
+    const borderString = useStyleValue("border") || ''
     const borderSplit = borderString.split(" ")
-    let borderWidth: string = borderSplit[0]
-    let borderStyle: string = borderSplit[1]
-    let borderColor: string = borderSplit.slice(2, borderSplit.length).join(" ")
+    let borderWidth: string = borderSplit && borderSplit[0]
+    let borderStyle: string = borderSplit && borderSplit[1]
+    let borderColor: string = borderSplit && borderSplit.slice(2, borderSplit.length).join(" ")
 
     const handleChange = (index: number, value): void => {
         switch (index) {

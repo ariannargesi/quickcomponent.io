@@ -9,7 +9,7 @@ const options = [
 
 const FontWeight = () => {
     const applyStyle = useApplyStyle()
-    const fontWeight = useStyleValue("fontWeight") || 400
+    const fontWeight = useStyleValue("fontWeight")
 
     return (
         <div
