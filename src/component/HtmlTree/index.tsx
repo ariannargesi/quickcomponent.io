@@ -60,7 +60,7 @@ const TreeItem = (props) => {
                             alignItems: "center",
                         }}
                     >
-                        {item.children && (
+                        {item.children && item.children.length > 0 && (
                             <>
                                 {open ? (
                                     <ChevronDown onClick={toggle} size={size} />
@@ -150,7 +150,7 @@ const Component = () => {
     const map = store.getState().map
     useSelector((state: RootState) => state.treeHash)
     const selectedKey = useSelector((state: RootState) => state.selectedKey)
-    
+
     return (
         <TreeContainer>
             <TitleWrapper>
