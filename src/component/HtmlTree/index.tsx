@@ -12,6 +12,7 @@ import store from "../../redux"
 const size = 16
 
 const Item = styled.div`
+    ${props => props.active && 'background-color: lightblue;'}
     width: 150px;
     display: flex;
     align-items: center;
@@ -19,7 +20,7 @@ const Item = styled.div`
     padding: 4px 8px;
     cursor: pointer;
     &:hover {
-        background: lightblue;
+        background: #bfedff;
     }
 `
 
@@ -43,6 +44,7 @@ const TreeItem = (props) => {
                 key={item.key}
                 onClick={handleClick}
                 onDoubleClick={onDoubleClick}
+                active={props.selectedKey === item.key}
             >
                 <div
                     style={{
@@ -94,14 +96,14 @@ const TreeItem = (props) => {
             </Item>
             {open && (
                 <Child>
-                    {item.children && <Tree data={item.children} padding />}
+                    {item.children && <Tree data={item.children} padding selectedKey={props.selectedKey} />}
                 </Child>
             )}
         </>
     )
 }
 
-const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
+const Tree = (props: { data: ComponentMember[]; padding?: boolean, selectedKey: string }) => {
     const dispatch = useDispatch()
     const map = store.getState().map
 
@@ -127,6 +129,7 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean }) => {
                     <TreeItem
                         key={item.key}
                         item={item}
+                        selectedKey={props.selectedKey}
                         onClick={() => handleClick(item)}
                         onDoubleClick={() => handleDoubleClick(item)}
                     />
@@ -143,17 +146,18 @@ const TreeContainer = styled.div`
 `
 
 const Component = () => {
-    
+
     const map = store.getState().map
     useSelector((state: RootState) => state.treeHash)
-
+    const selectedKey = useSelector((state: RootState) => state.selectedKey)
+    
     return (
         <TreeContainer>
             <TitleWrapper>
                 <Title.Medium>Elements</Title.Medium>
             </TitleWrapper>
             <Content>
-                <Tree data={map} />
+                <Tree data={map} selectedKey={selectedKey} />
             </Content>
         </TreeContainer>
     )
