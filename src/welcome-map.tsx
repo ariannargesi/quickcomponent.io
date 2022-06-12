@@ -10,7 +10,7 @@ const map: ComponentMember[] = [
                 width: "500px",
                 background: "rgba(255, 255, 255, 1)",
                 borderRadius: "64px",
-                boxShadow: "2px 2px 43px 0px rgba(128,154,145, 0.5)",
+                boxShadow: "2px 2px 43px 0px #999999",
                 padding: "42px",
                 textAlign: "left",
             },
@@ -67,7 +67,7 @@ const map: ComponentMember[] = [
                         props: {
                             className: "button_B-tI26",
                             style: {
-                                backgroundColor: "rgba(89, 242, 112, 1)",
+                                backgroundColor: "#64ff4f",
                                 fontSize: "24px",
                                 width: "149px",
                                 padding: "8px",

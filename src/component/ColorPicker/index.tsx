@@ -1,9 +1,10 @@
-import styles from "./styles.module.sass"
+import styles from "../Selectors/styles.module.sass"
 import { Text } from "../Styled"
 interface PickerProps {
     label: string
     onChange: (value: string) => void
-    value?: string
+    value?: string,
+    noPadding?: boolean,
     allowGradient?: boolean
 }
 
@@ -12,9 +13,10 @@ const ColorPicker = (props: PickerProps) => {
         props.onChange(style)
     }
 
+    const classname = [props.noPadding ? undefined : styles.container, styles.header].join(' ')
+
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
+        <div className={classname}>
                 <Text>{props.label}</Text>
                 <input
                     type="color"
@@ -22,7 +24,6 @@ const ColorPicker = (props: PickerProps) => {
                         handleChange({ style: event.target.value })
                     }}
                 />
-            </div>
         </div>
     )
 }

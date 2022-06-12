@@ -7,18 +7,17 @@ import useApplyStyle from "../../hooks/useApplyStyle"
 import useStyleValue from "../../hooks/useStyleValue"
 import { Text } from "../Styled"
 
-const WidthAndHeight = () => {
+const BoxShadow = () => {
     const applyStyle = useApplyStyle()
     const [showMore, setShowMore] = useState(true)
-    const shadow =
-        useStyleValue("boxShadow") || "2px 2px 2px 4px rgba(128,154,145, 0.5)"
+    const shadow = useStyleValue("boxShadow") || "2px 2px 2px 4px #696969"
     const shadowPieces: string[] = shadow.split("px")
 
     const horzontalOffest = Number(shadowPieces[0])
     const verticalOffste = Number(shadowPieces[1])
     const blurRadius = Number(shadowPieces[2])
     const spreadRadius = Number(shadowPieces[3])
-    const color = shadowPieces[4]
+    const color = shadowPieces[4].trim()
 
     const handleToggle = () => setShowMore(!showMore)
 
@@ -112,6 +111,7 @@ const UpdateColor = (props) => {
         <ColorPicker
             label="Shadow color"
             value={color}
+            noPadding
             onChange={(value) => {
                 updateShadow(4, value)
             }}
@@ -119,4 +119,4 @@ const UpdateColor = (props) => {
     )
 }
 
-export default WidthAndHeight
+export default BoxShadow

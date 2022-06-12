@@ -55,9 +55,6 @@ const Component = (props: {
     inline?: boolean
 }) => {
 
-
-    console.log("selected re render")
-
     return (
         <Container inline={props.inline}>
             <Text>{props.label}</Text>

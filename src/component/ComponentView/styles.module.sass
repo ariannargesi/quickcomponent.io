@@ -15,11 +15,12 @@
         display: flex 
         overflow: auto
         height: calc(100% - 40px)
-        opacity: 1;
-        background-image: radial-gradient(#d2d2d2 1.35px, #ffffff 1.35px);
-        background-size: 27px 27px;
-        padding: 16px
+        opacity: 1
+        background-image:  linear-gradient(#f3f3f3 2.2px, transparent 2.2px), linear-gradient(90deg, #f3f3f3 2.2px, transparent 2.2px), linear-gradient(#f3f3f3 1.1px, transparent 1.1px), linear-gradient(90deg, #f3f3f3 1.1px, #ffffff 1.1px)
+        background-size: 55px 55px, 55px 55px, 11px 11px, 11px 11px
+        background-position: -2.2px -2.2px, -2.2px -2.2px, -1.1px -1.1px, -1.1px -1.1px
         .content 
+            padding: 16px
             margin: auto
             *   
                 all: revert

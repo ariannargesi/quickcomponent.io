@@ -14,10 +14,11 @@ const borderStyleOptions = [
 const Border = () => {
     const applyStyle = useApplyStyle()
     const borderString = useStyleValue("border") || ''
-    const borderSplit = borderString.split(" ")
-    let borderWidth: string = borderSplit && borderSplit[0]
-    let borderStyle: string = borderSplit && borderSplit[1]
-    let borderColor: string = borderSplit && borderSplit.slice(2, borderSplit.length).join(" ")
+    const borderSplit = borderString.length > 0 &&  borderString.split(" ")
+    let borderWidth = borderSplit[0] 
+    let borderStyle: string = borderSplit[1]
+    let borderColor: string = borderSplit[2]
+
 
     const handleChange = (index: number, value): void => {
         switch (index) {
@@ -32,7 +33,7 @@ const Border = () => {
                 break
         }
 
-        const finalBorderValue = `${borderWidth} ${borderStyle} ${borderColor}`
+        const finalBorderValue = `${borderWidth ? borderWidth : ''} ${borderStyle ? borderStyle : ''} ${borderColor ? borderColor: ''}`
         applyStyle("border", finalBorderValue)
     }
 

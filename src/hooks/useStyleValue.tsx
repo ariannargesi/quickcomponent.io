@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../types"
 import { findNodeInTree, getElementParent, isTextNode } from "../helper"
 
-const useStyleValue = (name: string): string | null => {
+const useStyleValue = (name: string): string => {
     const styleValue = useSelector((state: RootState) => {
         let res = findNodeInTree(state.map, state.selectedKey)
         if (isTextNode(res))
