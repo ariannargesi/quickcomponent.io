@@ -20,7 +20,10 @@ const Container = styled.div`
     align-items: center;
     width: 40px;
     justify-content: space-between;
-
+    opacity: 0.4;
+    &: hover {
+        opacity: 1;
+    }
 `
 
 const Action = (props: Props) => {
