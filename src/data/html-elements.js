@@ -7,7 +7,7 @@ const list = [
     {
         tag: "button",
         textOnly: false,
-        contentEditable: true,
+        contentEditable: false,
     },
     {
         tag: "h1",
@@ -57,7 +57,7 @@ const list = [
     {
         tag: "li",
         textOnly: false,
-        contentEditable: false,
+        contentEditable: true,
     },
     {
         tag: "text",

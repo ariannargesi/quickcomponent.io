@@ -45,7 +45,7 @@ const Drawer = () => {
 
     const dispatch = useDispatch()
     const toggleDrawer = useToggleDrawer()
-    const { visible, empty } = useSelector((state: RootState) => {
+    const { visible } = useSelector((state: RootState) => {
         return {
             visible: state.openDrawer,
             empty: state.emptyTree,
@@ -61,9 +61,8 @@ const Drawer = () => {
         toggleDrawer()
     }
 
-    const dataSource = empty
-        ? elementsList.filter((element) => element.tag != "text")
-        : elementsList
+    const dataSource = elementsList.filter((element) => element.tag != "text")
+        
 
     useClickoutside(drawerRef, () => {
         toggleDrawer()

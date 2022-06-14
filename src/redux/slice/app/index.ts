@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, current } from "@reduxjs/toolkit"
 import {
     findNodeInTree,
     deleteNodeInTree,
@@ -6,10 +6,7 @@ import {
     addNodeInTree as addNode,
     addStyleInNode,
     removeStyleFromTree,
-    updateNodeTitle,
     updateClassName as changeClassname,
-    isTextNode,
-    getElementParent,
     convertProps,
 } from "../../../helper"
 
@@ -26,8 +23,6 @@ import initialMap from "../../../welcome-map"
 const initialState: RootState = {
     openDrawer: false,
     selectedKey: initialMap[0].key,
-    expandedKey: [],
-    addChildTo: null,
     treeHash: null,
     emptyTree: false,
     inputKey: null,
@@ -57,19 +52,6 @@ const counterSlice = createSlice({
     name: "map",
     initialState,
     reducers: {
-        moveElementInTree: (state, action) => {
-            const { dragKey, dropKey, dropPosition, dropToGap } = action.payload
-            state.treeHash = dragKey
-            const dragNode = findNodeInTree(state.map, dragKey)
-            deleteNodeInTree(state.map, dragKey)
-            addNodeInPosition(
-                state.map,
-                dropKey,
-                dropPosition,
-                dragNode,
-                dropToGap
-            )
-        },
         changeSelectedElement: (state, action) => {
             state.selectedKey = action.payload.key
         },
@@ -137,9 +119,6 @@ const counterSlice = createSlice({
         toggleEditorView: (state, action) => {
             state.editorView = action.payload.value
         },
-        selectElementForAddingChild: (state, action) => {
-            state.addChildTo = action.payload.key
-        },
         addNodeInTree: (state, action) => {
             const element = action.payload.element
             state.treeHash = element.key
@@ -148,14 +127,9 @@ const counterSlice = createSlice({
                 state.map.push(element)
                 state.emptyTree = false
             } else {
-                state.expandedKey.push(state.addChildTo, element.key)
-                addNode(state.map, state.addChildTo, element)
+                addNode(state.map, state.selectedKey, element)
             }
-
-            if (isTextNode(element)) {
-                const el = getElementParent(state.map, element.key)
-                state.selectedKey = el.key
-            } else state.selectedKey = element.key
+            state.selectedKey = element.key
         },
         setInputAtKey: (state, action) => {
             state.inputKey = action.payload.key
@@ -164,15 +138,17 @@ const counterSlice = createSlice({
             state.inputKey = null
         },
         updateTreeInputValue: (state, action) => {
-            updateNodeTitle(state.map, state.selectedKey, action.payload.value)
-            // state.inputKey = null
+            const element = findNodeInTree(state.map, state.selectedKey)   
+            if(element.title === 'button'){
+                const res = element.children.find(item => item.key === state.inputKey)
+                res.text = action.payload.value
+            }
+            else element.text = action.payload.value 
+            state.inputKey = null
         },
         removeStyle: (state, action) => {
             const property = action.payload
             removeStyleFromTree(state.map, state.selectedKey, property)
-        },
-        updateExpandedkeys: (state, action) => {
-            state.expandedKey = action.payload
         },
         toggleDrawer: (state) => {
             state.openDrawer = !state.openDrawer
@@ -225,20 +201,17 @@ const counterSlice = createSlice({
 })
 
 export const {
-    moveElementInTree,
     changeSelectedElement,
     applyStyle,
     updateConfig,
     toggleEditorView,
     deleteNode,
     addNodeInTree,
-    selectElementForAddingChild,
     setInputAtKey,
     clearInputAtKey,
     updateTreeInputValue,
     generateCode,
     removeStyle,
-    updateExpandedkeys,
     toggleDrawer,
     updateClassName,
     addProp,

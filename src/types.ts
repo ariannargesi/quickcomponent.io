@@ -28,8 +28,9 @@ export interface TextObject {
     key: string
 }
 export interface ComponentMemberProp {
+    is?: string,
     className?: string
-    style?: object
+    style?: object,
 }
 export interface ComponentMember {
     title?: string
@@ -70,9 +71,7 @@ export interface RootState extends Output {
     emptyTree: boolean
     treeHash: string
     selectedKey: string
-    expandedKey: string[]
     config: Config
-    addChildTo: string
     inputKey: string
     map: ComponentMember[]
     editorView: EditorView

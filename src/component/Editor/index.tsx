@@ -1,13 +1,20 @@
-import AceEditor from "react-ace"
 import { useSelector } from "react-redux"
 import { RootState } from "../../types"
 import { StyleFormats, EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
-import styles from "./styles.module.sass"
-import "ace-builds/src-noconflict/mode-javascript"
-import "ace-builds/src-noconflict/mode-css"
-import "ace-builds/src-noconflict/mode-sass"
-import "ace-builds/src-noconflict/theme-dracula"
+import { scrollBarStyle } from "../Styled"
+import styled from 'styled-components'
+
+const Container = styled.div`
+    background: #282a36;
+    color: #00d4f0;
+    height: calc(100vh - 40px);
+    padding: 0 16px;
+    font-size: 16px;
+    line-height: 30px;
+    overflow: scroll;
+    ${scrollBarStyle}
+`
 
 const Editor = () => {
     const editorView = useSelector((state: RootState) => state.editorView)
@@ -31,18 +38,11 @@ const Editor = () => {
     // Show copy icon when user update config or change view
 
     return (
-        <div className={styles.container}>
-            <AceEditor
-                readOnly
-                setOptions={{ useWorker: false }}
-                mode={mode}
-                theme="dracula"
-                value={code}
-                name="text-editor"
-                fontSize={15}
-                highlightActiveLine
-            />
-        </div>
+        <Container>
+            <pre style={{margin: 0}}>
+            {code}
+            </pre>
+        </Container>
     )
 }
 

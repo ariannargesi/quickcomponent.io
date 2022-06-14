@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { changeSelectedElement, setInputAtKey } from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
-import { isTextNode, getElementParent, isTextBasedTag } from "../../helper"
+import { isTextNode, isTextBasedTag } from "../../helper"
 import { useState } from "react"
 import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
 import { ChevronRight, ChevronDown } from "react-feather"
@@ -105,8 +105,6 @@ const TreeItem = (props) => {
 
 const Tree = (props: { data: ComponentMember[]; padding?: boolean, selectedKey: string }) => {
     const dispatch = useDispatch()
-    const map = store.getState().map
-
     const handleClick = (element: ComponentMember) => {
         dispatch(changeSelectedElement({ key: element.key }))
     }
@@ -114,10 +112,7 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean, selectedKey: 
     const handleDoubleClick = (element: ComponentMember) => {
         if (isTextBasedTag(element.title))
             dispatch(setInputAtKey({ key: element.key }))
-        else if (isTextNode(element)) {
-            const res = getElementParent(map, element.key)
-            dispatch(setInputAtKey({ key: res.key }))
-        }
+        
     }
 
     const { data } = props

@@ -97,19 +97,6 @@ export const addNodeInTree = (
     element.children.push(node)
 }
 
-export const updateNodeTitle = (
-    map: ComponentMember[],
-    key: string,
-    value: string
-): void => {
-    const element = findNodeInTree(map, key)
-    if (!element.text)
-        element.children.forEach((item) => {
-            if (item.text) item.text = value
-        })
-    else element.text = value
-}
-
 export const updateClassName = (
     map: ComponentMember[],
     key: string,
@@ -160,7 +147,7 @@ export const formatStyle = (str: string, format: StyleFormats): string => {
     else return prettier.format(str, { parser: "css", plugins: [css] })
 }
 
-const elements = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "label"]
+const elements = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "label", 'text']
 
 export const isTextBasedTag = (tag: string): boolean => {
     return elements.indexOf(tag) >= 0
@@ -180,8 +167,7 @@ export const isHtmlTag = (value: string): boolean => {
 }
 
 export const isTextNode = (value): boolean => {
-    if (Object.keys(value).length > 2) return false
-    if (value["text"].length >= 0 && value["key"]) return true
+    return value.title === 'text'
 }
 
 export const getElementParent = (
@@ -208,15 +194,28 @@ export const genereateElement = (
     const elementKey = nanoid()
     const innerKey = nanoid()
 
-    if (isTextBasedTag(name) || name === "button")
+    if (isTextBasedTag(name))
         dispatch(setInputAtKey({ key: elementKey }))
-    if (name === "text") {
+    if(name === 'button'){
+        dispatch(setInputAtKey({key: innerKey}))
         return {
-            text: "text",
+            title: "button",
+            props: {
+                className: "button_B-tI26",
+                is: "text"
+            },
             key: elementKey,
+            children: [
+                {
+                    title: 'text',
+                    text: "Button",
+                    key: innerKey,
+                },
+            ],
         }
     }
-    if (isTextBasedTag(name))
+    
+    else if (isTextBasedTag(name))
         return {
             title: name,
             props: {
@@ -232,7 +231,7 @@ export const genereateElement = (
                 className: generateClassName(name),
             },
             key: elementKey,
-            children: [{ text: "Text", key: innerKey }],
+            children: [{ title: 'text', text: "Text", key: innerKey }],
         }
     }
 }

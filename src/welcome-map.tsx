@@ -53,35 +53,24 @@ const map: ComponentMember[] = [
                 text: "- copy or download your code with your custom settings",
             },
             {
-                title: "div",
+                title: "button",
                 props: {
-                    className: "div_6Hy3cW",
+                    className: "button_B-tI26",
                     style: {
-                        textAlign: "center",
+                        backgroundColor: "#64ff4f",
+                        fontSize: "24px",
+                        width: "149px",
+                        padding: "8px",
+                        borderRadius: "30px",
+                        margin: "65px 0px 0px 0px",
                     },
                 },
                 key: nanoid(),
                 children: [
                     {
-                        title: "button",
-                        props: {
-                            className: "button_B-tI26",
-                            style: {
-                                backgroundColor: "#64ff4f",
-                                fontSize: "24px",
-                                width: "149px",
-                                padding: "8px",
-                                borderRadius: "30px",
-                                margin: "65px 0px 0px 0px",
-                            },
-                        },
+                        title: 'text',
+                        text: "Button",
                         key: nanoid(),
-                        children: [
-                            {
-                                text: "Button",
-                                key: nanoid(),
-                            },
-                        ],
                     },
                 ],
             },

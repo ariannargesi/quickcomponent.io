@@ -2,8 +2,8 @@ import { Plus, X } from "react-feather"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import {
+    changeSelectedElement,
     deleteNode,
-    selectElementForAddingChild,
 } from "../../../redux/slice/app"
 import useToggleDrawer from "../../../hooks/useToggleDrawer"
 
@@ -33,13 +33,15 @@ const Action = (props: Props) => {
     const key = props.elementKey
 
     function addElement(event) {
-        event.stopPropagation()
-        dispatch(selectElementForAddingChild({ key }))
+        if(event.stopPropagation)
+            event.stopPropagation()
+        dispatch(changeSelectedElement({key}))
         toggleDrawer()
     }
 
     function removeElement(event) {
-        event.stopPropagation()
+        if(event.stopPropagation)
+            event.stopPropagation()
         dispatch(deleteNode({ key }))
     }
 

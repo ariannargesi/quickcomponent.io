@@ -13,7 +13,7 @@ const CodeView = () => {
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state)
     const scriptFileName =
-        app.config.scriptFileName + "." + app.config.scriptType
+        app.config.scriptFileName + "." + app.config.scriptType +'x'
     const styleFileName = app.config.styleFileName + "." + app.config.styleType
     const { scriptType, componentName, usingTestFile } = app.config
 

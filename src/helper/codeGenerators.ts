@@ -220,9 +220,9 @@ const generateSASS = (map: ComponentMember[], indent = 0): string => {
 export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {
-        if (!el.title && el.text) {
-            value += el.text
-        } else {
+        if(el.title === 'text')
+            value+= el.text
+         else {
             const className =
                 el.props.className && el.props.style
                     ? `className='${el.props.className}'`
