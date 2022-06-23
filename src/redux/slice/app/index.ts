@@ -138,13 +138,16 @@ const counterSlice = createSlice({
             state.inputKey = null
         },
         updateTreeInputValue: (state, action) => {
+
+            const value = action.payload.value 
             const element = findNodeInTree(state.map, state.selectedKey)   
             if(element.title === 'button'){
                 const res = element.children.find(item => item.key === state.inputKey)
-                res.text = action.payload.value
+                res.text = value 
             }
-            else element.text = action.payload.value 
+            else element.text = value 
             state.inputKey = null
+            state.treeHash = value
         },
         removeStyle: (state, action) => {
             const property = action.payload

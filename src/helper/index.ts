@@ -19,20 +19,46 @@ export const cssToCamelCase = (str: string): string => {
     return chars.filter((char) => char != "-").join("")
 }
 
-export const findNodeInTree = (
-    map: ComponentMember[],
-    key: string
-): ComponentMember => {
-    let result
-    if (!Array.isArray(map)) return map
-    map.some(
-        (o) =>
-            (result = (o.key === key && o) || findNodeInTree(o.children, key))
-    )
-    return result || null
+export const findNodeInTree = (map: ComponentMember[], key: string): ComponentMember => {
+
+    let result = null 
+
+    for(let c = 0; c < map.length; c++){
+        if(map[c].key === key){
+            result = map[c]
+            break 
+        }
+        else {
+            if(map[c].children)
+                result = findNodeInTree(map[c].children, key)
+        }
+    }
+    return result 
 }
 
-//   CLEAN
+export const getElementParent = (
+    map: ComponentMember[],
+    key: string,
+    item = null
+): ComponentMember => {
+
+    let result = null 
+    if(!map)
+        return result 
+  
+    for(let c = 0; c < map.length; c++){
+        if(map[c].key === key){
+            result = item 
+            
+            break 
+        }
+        else {
+            result = getElementParent(map[c].children, key, map[c])
+        }
+    }
+    return result 
+}
+
 export const deleteNodeInTree = (map: ComponentMember[], key: string): void => {
     if (key === map[0].key) {
         map.splice(0, 1)
@@ -170,20 +196,7 @@ export const isTextNode = (value): boolean => {
     return value.title === 'text'
 }
 
-export const getElementParent = (
-    map: ComponentMember[],
-    key: string,
-    item = null
-): ComponentMember => {
-    let result
-    if (!Array.isArray(map)) return map
-    map.some(
-        (o) =>
-            (result =
-                (o.key === key && item) || getElementParent(o.children, key, o))
-    )
-    return result || null
-}
+
 
 export const genereateElement = (
     name: string,
