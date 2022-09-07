@@ -1,8 +1,7 @@
-import { createSlice, current } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import {
     findNodeInTree,
     deleteNodeInTree,
-    addNodeInPosition,
     addNodeInTree as addNode,
     addStyleInNode,
     removeStyleFromTree,
@@ -19,7 +18,6 @@ import {
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
 import { typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
-import { assert } from "console"
 
 const initialState: RootState = {
     openDrawer: false,
@@ -133,6 +131,8 @@ const counterSlice = createSlice({
             state.treeHash = element.key
 
             if (state.map.length === 0) {
+                    if(element.title === 'div')
+                        element.props.style  = {position: 'relative'}
                 state.map.push(element)
                 state.emptyTree = false
             } else {
