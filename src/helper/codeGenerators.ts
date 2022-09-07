@@ -241,11 +241,11 @@ export const arrayToJSX = (map: ComponentMember[]) => {
                     if(el.title === 'img'){{
                         // @ts-ignore
                         if(el.props.src.startsWith('blob')){
-                            value+= `<img src={require("./assets/${el.name}")}  />`
+                            value+= `<img src={require("./assets/${el.name}")}  ${className} />`
                         }
                         else 
                         // @ts-ignore 
-                        value += `<${el.title}  src="${el.props.src}"  />`
+                        value += `<${el.title}  src="${el.props.src}"  ${className}  />`
                     }
 
                     }

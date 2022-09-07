@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "./types"
 import Header from "./component/Header"
 import ComponentView from "./component/ComponentView"
-import StylePanel from "./component/StylePanel"
+import SelectorsPanel from "./component/SelectorsPanel"
 import Drawer from "./component/Drawer"
 import EmptyTree from "./component/EmptyTree"
 import TreeAndStyles from "./component/Sider/TreeAndStyles"
@@ -23,7 +23,7 @@ function App() {
         <div className="App">
             <Header />
             <div className="main-container">
-                <StylePanel />
+                <SelectorsPanel />
                 <TreeAndStyles />
                 <ComponentView />
             </div>
