@@ -19,6 +19,7 @@ import {
 import { styleGenerator, scriptGenerator } from "../../../helper/codeGenerators"
 import { typesDecleration, RootState } from "../../../types"
 import initialMap from "../../../welcome-map"
+import { assert } from "console"
 
 const initialState: RootState = {
     openDrawer: false,
@@ -27,6 +28,7 @@ const initialState: RootState = {
     emptyTree: false,
     inputKey: null,
     map: initialMap,
+    assets: [],
     config: {
         usingTestFile: true,
         scriptType: ScriptFormats.TS,
@@ -60,6 +62,13 @@ const counterSlice = createSlice({
             const rootKey = state.map[0].key
             state.treeHash = key
             
+            const nodeToDelete = findNodeInTree(state.map, key)
+
+            if(nodeToDelete.title === 'img') {
+                // @ts-ignore 
+                state.assets = state.assets.filter(asset => asset.src != nodeToDelete.props.src )
+            }
+
             if(key === rootKey){
                 deleteNodeInTree(state.map, key)
                 state.emptyTree = true 
@@ -138,7 +147,6 @@ const counterSlice = createSlice({
             state.inputKey = null
         },
         updateTreeInputValue: (state, action) => {
-
             const value = action.payload.value 
             const element = findNodeInTree(state.map, state.selectedKey)   
             if(element.title === 'button'){
@@ -200,6 +208,15 @@ const counterSlice = createSlice({
                 styleType: state.config.styleType,
             })
         },
+        updateSelectedElementProp: (state, action) => {
+                const result = findNodeInTree(state.map, state.selectedKey)
+                state.assets.push(action.payload)
+                result.name = action.payload.name 
+                result.props = {
+                    ...result.props,
+                    ...action.payload 
+                }
+        }
     },
 })
 
@@ -221,5 +238,6 @@ export const {
     deleteProp,
     addHook,
     removeHook,
+    updateSelectedElementProp
 } = counterSlice.actions
 export default counterSlice.reducer

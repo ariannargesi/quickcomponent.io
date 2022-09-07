@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components"
 
 export const baseTextColor = "#3e3e3e"
-export const fontSizeBase = "12px"
+export const fontSizeBase = "15px"
 export const fontFamily = "Open sans"
-export const colorPrimary = "#1976d2"
+export const colorPrimary = "#4f94d8"
 export const baseMargin = "8px"
 export const baseRadius = "2px"
-export const baseHight = "30px"
+export const baseHight = "40px"
 export const bgDark = "#2a2a2a"
 
 const BaseText = css`
@@ -41,7 +41,7 @@ export const Title = { Large, Medium, Small }
 
 export const Button = styled.button`
     font-family: ${fontFamily};
-    font-size: 16px;
+    font-size: 15px;
     height: ${baseHight};
     border-radius: ${baseRadius};
     padding: 0px 20px;
@@ -50,8 +50,18 @@ export const Button = styled.button`
     margin: 8px 0;
     border: none;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    ${(props) => !props.disabled && (
+        `&:active {
+            transform: scale(0.97)
+        }`
+    )}
     ${(props) => props.full && "width: 100%"};
     ${(props) => props.disabled && "background: lightgray"};
+    
 `
 export const Input = styled.input`
     width: 100%;
@@ -89,6 +99,7 @@ export const Text = styled.span`
       if (props.bold) return "font-weight: 700"
   }}
 `
+
 export const TitleWrapper = styled.div`
     height: 40px;
     display: flex;

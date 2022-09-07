@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { changeSelectedElement, setInputAtKey } from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
-import { isTextNode, isTextBasedTag } from "../../helper"
+import {  isTextBasedTag } from "../../helper"
 import { useState } from "react"
 import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
 import { ChevronRight, ChevronDown } from "react-feather"
@@ -138,6 +138,7 @@ const TreeContainer = styled.div`
     height: 50%;
     background: white;
     font-family: ${fontFamily};
+    user-select: none;
 `
 
 const Component = () => {

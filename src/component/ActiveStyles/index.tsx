@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import {
     cssToCamelCase,
     findNodeInTree,
-    getElementParent,
+    getParentNode,
     isTextNode,
 } from "../../helper"
 import { removeStyle } from "../../redux/slice/app"
@@ -66,8 +66,12 @@ const ActiveStylesItem = (props: ItemProps) => {
 
 const getStyles = (key: string, html: ComponentMember[]) => {
     let element = findNodeInTree(html, key)
-    if (isTextNode(element)) element = getElementParent(html, key)
-    if (!element.props.style) return null
+    if (isTextNode(element)) {
+        element = getParentNode(html, key)    
+    } 
+
+    if (!element.props.style) {
+        return null}
     else return element.props.style
 }
 

@@ -8,26 +8,48 @@ import { toggleEditorView } from "../../redux/slice/app"
 import { RootState } from "../../types"
 import { EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
+import { Z_PARTIAL_FLUSH } from "zlib"
 
 const CodeView = () => {
     const dispatch = useDispatch()
     const app = useSelector((state: RootState) => state)
     const scriptFileName =
-        app.config.scriptFileName + "." + app.config.scriptType +'x'
+        app.config.scriptFileName + "." + app.config.scriptType + "x"
     const styleFileName = app.config.styleFileName + "." + app.config.styleType
     const { scriptType, componentName, usingTestFile } = app.config
 
-    const downloadFiles = () => {
+    const downloadFiles = async () => {
         const zip = new jszip()
+
         zip.file(scriptFileName, formatScript(app.output.script))
         zip.file(
             styleFileName,
             formatStyle(app.output.style, app.config.styleType)
         )
         if (usingTestFile) zip.file(`index.test.${scriptType}`, "")
-        zip.generateAsync({ type: "blob" }).then(function (content) {
-            Filesaver.saveAs(content, `${componentName}.zip`)
-        })
+
+        if (app.assets.length) {
+            // TODO : Convert files to images and put them into assets folder
+            zip.folder('assets')
+            
+            for(let counter = 0; counter < app.assets.length; counter++){
+                // @ts-ignore
+                const fetchPromise = await fetch(app.assets[counter].src)
+                const blobPormise = fetchPromise.blob();
+                const blob = await blobPormise;
+                const file = new File([blob],  `file`)
+                // @ts-ignore 
+                zip.file(`assets/${app.assets[counter].name}`, file)
+                // @ts-ignore
+                // URL.revokeObjectURL(app.assets[counter].src)
+            }    
+            
+            zip.generateAsync({ type: "blob" }).then(function (content) {
+               
+                Filesaver.saveAs(content, `${componentName}.zip`)
+            })
+        }
+
     }
 
     const showScript = () => {

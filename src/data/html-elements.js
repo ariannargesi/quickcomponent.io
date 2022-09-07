@@ -10,6 +10,12 @@ const list = [
         contentEditable: false,
     },
     {
+        tag:  'img',
+        textOnly:  false,
+        contentEditable: false, 
+        selfClosing: true 
+    },
+    {
         tag: "h1",
         textOnly: true,
         contentEditable: true,

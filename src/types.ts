@@ -33,6 +33,7 @@ export interface ComponentMemberProp {
     style?: object,
 }
 export interface ComponentMember {
+    name?: string,
     title?: string
     text?: string
     key: string
@@ -70,7 +71,8 @@ export interface RootState extends Output {
     openDrawer: boolean
     emptyTree: boolean
     treeHash: string
-    selectedKey: string
+    selectedKey: string,
+    assets: string[],
     config: Config
     inputKey: string
     map: ComponentMember[]

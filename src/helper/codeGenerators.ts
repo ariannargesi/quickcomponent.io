@@ -1,4 +1,4 @@
-import { isEmptyObject } from "./"
+import { isEmptyObject, isTextNode } from "./"
 
 import {
     ComponentMember,
@@ -217,19 +217,44 @@ const generateSASS = (map: ComponentMember[], indent = 0): string => {
     return value
 }
 
+function isSelfClodingTag (tagName: string): boolean {
+    const selfClosingTags = ['img']
+
+    if(selfClosingTags.indexOf(tagName) > - 1)
+        return true 
+    return false 
+}
+
 export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {
-        if(el.title === 'text')
+        if(isTextNode(el))
             value+= el.text
          else {
+
+
             const className =
                 el.props.className && el.props.style
                     ? `className='${el.props.className}'`
                     : ""
-            value += `<${el.title} ${className}>${
-                el.text ? el.text : arrayToJSX(el.children)
-            }</${el.title}>`
+
+                    if(el.title === 'img'){{
+                        // @ts-ignore
+                        if(el.props.src.startsWith('blob')){
+                            value+= `<img src={require("./assets/${el.name}")}  />`
+                        }
+                        else 
+                        // @ts-ignore 
+                        value += `<${el.title}  src="${el.props.src}"  />`
+                    }
+
+                    }
+                        
+                    else {
+                        value += `<${el.title} ${className}>${
+                            el.text ? el.text : arrayToJSX(el.children)
+                        }</${el.title}>`
+                    }
         }
     })
     return value
