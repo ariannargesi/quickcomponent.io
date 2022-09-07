@@ -217,14 +217,6 @@ const generateSASS = (map: ComponentMember[], indent = 0): string => {
     return value
 }
 
-function isSelfClodingTag (tagName: string): boolean {
-    const selfClosingTags = ['img']
-
-    if(selfClosingTags.indexOf(tagName) > - 1)
-        return true 
-    return false 
-}
-
 export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {

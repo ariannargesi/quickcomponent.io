@@ -14,7 +14,7 @@ import Padding from "../Selectors/Padding"
 import UpdateClassname from "../Selectors/UpdateClassname"
 import ImageSelector from "../Selectors/ImageSelector"
 import styled from "styled-components"
-import { scrollBarStyle, Title } from "../Styled"
+import { scrollBarStyle } from "../Styled"
 import useSelectedElement from "../../hooks/useSelectedElement"
 import Accordion from "../UI/Accordion"
 
