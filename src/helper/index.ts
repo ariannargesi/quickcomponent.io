@@ -100,8 +100,8 @@ export const addNodeInPosition = (
         }
 }
 
-export const generateClassName = (name = "class_", length = 6): string => {
-        return name + nanoid(length)
+export const generateClassName = (name, length = 6): string => {
+        return name + "_" + nanoid(length)
 }
 
 export const addStyleInNode = (
