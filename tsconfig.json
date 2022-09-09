@@ -1,6 +1,26 @@
 {
-    "compilerOptions": {
-        "jsx": "react-jsx",
-        "esModuleInterop": true
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    // "strict": true,
+    // "forceConsistentCasingInFileNames": true,
+    // "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ES6",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    // "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "public": ["public"],
+      "@app": ["./src"],
+      // "*": ["./src/*"]
     }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

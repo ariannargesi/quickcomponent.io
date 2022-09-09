@@ -1,253 +1,268 @@
-import { isEmptyObject, isTextNode } from "./"
+import { isEmptyObject, isTextNode } from './';
 
 import {
-    ComponentMember,
-    PropItem,
-    StyleFormats,
-    ScriptFormats,
-    typesDecleration,
-} from "../types"
-import { CSSProperties } from "react"
+  ComponentMember,
+  PropItem,
+  StyleFormats,
+  ScriptFormats,
+  typesDecleration,
+} from '../types';
+import { CSSProperties } from 'react';
 interface ScriptGeneratorConfig {
-    componentName: string
-    propsList: PropItem[]
-    scriptType: ScriptFormats
-    styleType: StyleFormats
-    propsDistruction: boolean
-    type: typesDecleration
-    hooksList: string[]
-    map: ComponentMember[]
+  componentName: string;
+  propsList: PropItem[];
+  scriptType: ScriptFormats;
+  styleType: StyleFormats;
+  propsDistruction: boolean;
+  type: typesDecleration;
+  hooksList: string[];
+  map: ComponentMember[];
 }
 
 const generateHooksList = (list: string[]): string => {
-    // prettier automaticlly remove comma from last imported item
-    return list.join(", ")
-}
+  // prettier automaticlly remove comma from last imported item
+  return list.join(', ');
+};
 
-const generateTypeSscriptProps = (list: PropItem[]): string => {
-    let value = "interface Prop {"
-    list.forEach((item) => {
-        value += `${item.name} ${item.required ? "" : "?"}: ${item.type};`
-    })
-    value += "}"
-    return value
-}
+const generateTypeSscriptProps = (
+  list: PropItem[]
+): string => {
+  let value = 'interface Prop {';
+  list.forEach((item) => {
+    value += `${item.name} ${item.required ? '' : '?'}: ${
+      item.type
+    };`;
+  });
+  value += '}';
+  return value;
+};
 
-const generateJavascriptProps = (list: PropItem[]): string => {
-    const componentName = "App"
+const generateJavascriptProps = (
+  list: PropItem[]
+): string => {
+  const componentName = 'App';
 
-    let value = ""
-    value += `${componentName}.propTypes  = {`
-    value += "\n"
-    list.forEach((item) => {
-        value += `${item.name}: ${item.type}${
-            item.required ? ".isRequired" : ""
-        },`
-        value += "\n"
-    })
-    value += "}"
-    return value
-}
+  let value = '';
+  value += `${componentName}.propTypes  = {`;
+  value += '\n';
+  list.forEach((item) => {
+    value += `${item.name}: ${item.type}${
+      item.required ? '.isRequired' : ''
+    },`;
+    value += '\n';
+  });
+  value += '}';
+  return value;
+};
 
-const extractItemsFromProps = (list: PropItem[]): string => {
-    // prettier automaticlly remove comma from last imported item
-    let value = "const {"
-    list.forEach((item) => {
-        value += item.name + ","
-    })
-    value += "} = props"
-    return value
-}
+const extractItemsFromProps = (
+  list: PropItem[]
+): string => {
+  // prettier automaticlly remove comma from last imported item
+  let value = 'const {';
+  list.forEach((item) => {
+    value += item.name + ',';
+  });
+  value += '} = props';
+  return value;
+};
 
-export const scriptGenerator = (config: ScriptGeneratorConfig): string => {
-    const {
-        componentName,
-        propsList,
-        scriptType,
-        styleType,
-        propsDistruction,
-        hooksList,
-        map,
-    } = config
+export const scriptGenerator = (
+  config: ScriptGeneratorConfig
+): string => {
+  const {
+    componentName,
+    propsList,
+    scriptType,
+    styleType,
+    propsDistruction,
+    hooksList,
+    map,
+  } = config;
 
-    let componentString = ""
+  let componentString = '';
 
-    const newLine = (): void => {
-        componentString += "\n"
-    }
+  const newLine = (): void => {
+    componentString += '\n';
+  };
 
-    const noHook = hooksList.length === 0
-    const propsExsit = propsList.length > 0
+  const noHook = hooksList.length === 0;
+  const propsExsit = propsList.length > 0;
 
-    // Start: Import section
-    if (noHook) componentString += `import React from 'react'`
-    else
-        componentString += `import React, {${generateHooksList(
-            hooksList
-        )}} from 'react'`
+  // Start: Import section
+  if (noHook)
+    componentString += `import React from 'react'`;
+  else
+    componentString += `import React, {${generateHooksList(
+      hooksList
+    )}} from 'react'`;
 
-    newLine()
+  newLine();
 
-    if (scriptType === ScriptFormats.JS && propsExsit) {
-        componentString += `import PropTypes from "prop-types"`
-        newLine()
-    }
+  if (scriptType === ScriptFormats.JS && propsExsit) {
+    componentString += `import PropTypes from "prop-types"`;
+    newLine();
+  }
 
-    switch (styleType) {
-        case StyleFormats.SASS:
-            componentString += `import "./style.sass"`
-            break
-        case StyleFormats.CSS:
-            componentString += `import "./style.css"`
-    }
+  switch (styleType) {
+    case StyleFormats.SASS:
+      componentString += `import "./style.sass"`;
+      break;
+    case StyleFormats.CSS:
+      componentString += `import "./style.css"`;
+  }
 
-    newLine()
+  newLine();
 
-    // Typescript props
-    if (scriptType === ScriptFormats.TS && propsExsit) {
-        newLine()
-        componentString += generateTypeSscriptProps(propsList)
-        newLine()
-    }
+  // Typescript props
+  if (scriptType === ScriptFormats.TS && propsExsit) {
+    newLine();
+    componentString += generateTypeSscriptProps(propsList);
+    newLine();
+  }
 
-    newLine()
+  newLine();
 
-    // Main component
-    componentString += `const ${componentName} = (props${
-        scriptType === "ts" ? ":Props" : ""
-    })${scriptType === "ts" ? ":React.ReactNode" : ""} => {`
+  // Main component
+  componentString += `const ${componentName} = (props${
+    scriptType === 'ts' ? ':Props' : ''
+  })${scriptType === 'ts' ? ':React.ReactNode' : ''} => {`;
 
-    newLine()
+  newLine();
 
-    if (propsDistruction) componentString += extractItemsFromProps(propsList)
+  if (propsDistruction)
+    componentString += extractItemsFromProps(propsList);
 
-    newLine()
+  newLine();
 
-    componentString += `return (${arrayToJSX(map)})}`
+  componentString += `return (${arrayToJSX(map)})}`;
 
-    newLine()
+  newLine();
 
-    componentString += `export default ${componentName}`
+  componentString += `export default ${componentName}`;
 
-    newLine()
+  newLine();
 
-    // Javascript props
-    if (scriptType === ScriptFormats.JS && propsExsit) {
-        newLine()
-        componentString += generateJavascriptProps(propsList)
-    }
-    return componentString
-}
+  // Javascript props
+  if (scriptType === ScriptFormats.JS && propsExsit) {
+    newLine();
+    componentString += generateJavascriptProps(propsList);
+  }
+  return componentString;
+};
 
 const indentGenerator = (num: number): string => {
-    let value = ""
-    for (let c = 1; c <= num; c++) value += "\xa0"
-    return value
-}
+  let value = '';
+  for (let c = 1; c <= num; c++) value += '\xa0';
+  return value;
+};
 
 const objectToStyle = (
-    object: CSSProperties,
-    semi: boolean,
-    indent = null
+  object: CSSProperties,
+  semi: boolean,
+  indent = null
 ): string => {
-    /*
+  /*
     input: borderRadius: "40px"
     output: border-radius: 40px 
     * */
-    const keys = Object.keys(object)
-    const values = Object.values(object)
-    let value = ""
-    keys.forEach((key, index) => {
-        let currentLine = ""
-        if (indent != null) value += indentGenerator(indent)
-        key.split("").forEach((char) => {
-            if (char === char.toUpperCase())
-                currentLine += "-" + char.toLowerCase()
-            else currentLine += char
-        })
-        currentLine += ": "
-        currentLine += values[index]
-        if (semi) currentLine += ";"
-        currentLine += "\n"
-        value += currentLine
-    })
-    return value
-}
+  const keys = Object.keys(object);
+  const values = Object.values(object);
+  let value = '';
+  keys.forEach((key, index) => {
+    let currentLine = '';
+    if (indent != null) value += indentGenerator(indent);
+    key.split('').forEach((char) => {
+      if (char === char.toUpperCase())
+        currentLine += '-' + char.toLowerCase();
+      else currentLine += char;
+    });
+    currentLine += ': ';
+    currentLine += values[index];
+    if (semi) currentLine += ';';
+    currentLine += '\n';
+    value += currentLine;
+  });
+  return value;
+};
 
 export const styleGenerator = (
-    map: ComponentMember[],
-    styleType: StyleFormats
+  map: ComponentMember[],
+  styleType: StyleFormats
 ): string => {
-    if (styleType === StyleFormats.SASS) return generateSASS(map)
-    else if (styleType === StyleFormats.CSS) return generateCSS(map)
-}
+  if (styleType === StyleFormats.SASS)
+    return generateSASS(map);
+  else if (styleType === StyleFormats.CSS)
+    return generateCSS(map);
+};
 
 const generateCSS = (map: ComponentMember[]): string => {
-    let value = ""
-    map.forEach((el) => {
-        if (el.props === undefined) return
-        if (el.props.style && isEmptyObject(el.props.style)) {
-            value +=
-                "." +
-                el.props.className +
-                "{\n" +
-                objectToStyle(el.props.style, true) +
-                "}"
-        }
-        if (el.children) value += generateCSS(el.children)
-    })
-    return value
-}
+  let value = '';
+  map.forEach((el) => {
+    if (el.props === undefined) return;
+    if (el.props.style && isEmptyObject(el.props.style)) {
+      value +=
+        '.' +
+        el.props.className +
+        '{\n' +
+        objectToStyle(el.props.style, true) +
+        '}';
+    }
+    if (el.children) value += generateCSS(el.children);
+  });
+  return value;
+};
 
-const generateSASS = (map: ComponentMember[], indent = 0): string => {
-    let value = ""
-    map.forEach((el) => {
-        const indentStr = indentGenerator(indent)
-        if (el.props === undefined) return
-        if (el.props.style && isEmptyObject(el.props.style)) {
-            value += `${indentStr}.${el.props.className}\n${objectToStyle(
-                el.props.style,
-                false,
-                indent + 4
-            )}`
-        }
-        if (el.children) value += generateSASS(el.children, indent + 4)
-    })
+const generateSASS = (
+  map: ComponentMember[],
+  indent = 0
+): string => {
+  let value = '';
+  map.forEach((el) => {
+    const indentStr = indentGenerator(indent);
+    if (el.props === undefined) return;
+    if (el.props.style && isEmptyObject(el.props.style)) {
+      value += `${indentStr}.${
+        el.props.className
+      }\n${objectToStyle(
+        el.props.style,
+        false,
+        indent + 4
+      )}`;
+    }
+    if (el.children)
+      value += generateSASS(el.children, indent + 4);
+  });
 
-    return value
-}
+  return value;
+};
 
 export const arrayToJSX = (map: ComponentMember[]) => {
-    let value = ""
-    map.forEach((el) => {
-        if(isTextNode(el))
-            value+= el.text
-         else {
+  let value = '';
+  map.forEach((el) => {
+    if (isTextNode(el)) value += el.text;
+    else {
+      const className =
+        el.props.className && el.props.style
+          ? `className='${el.props.className}'`
+          : '';
 
-
-            const className =
-                el.props.className && el.props.style
-                    ? `className='${el.props.className}'`
-                    : ""
-
-                    if(el.title === 'img'){{
-                        // @ts-ignore
-                        if(el.props.src.startsWith('blob')){
-                            value+= `<img src={require("./assets/${el.name}")}  ${className} />`
-                        }
-                        else 
-                        // @ts-ignore 
-                        value += `<${el.title}  src="${el.props.src}"  ${className}  />`
-                    }
-
-                    }
-                        
-                    else {
-                        value += `<${el.title} ${className}>${
-                            el.text ? el.text : arrayToJSX(el.children)
-                        }</${el.title}>`
-                    }
+      if (el.title === 'img') {
+        {
+          // @ts-ignore
+          if (el.props.src.startsWith('blob')) {
+            value += `<img src={require("./assets/${el.name}")}  ${className} />`;
+          }
+          else
+          // @ts-ignore
+            value += `<${el.title}  src="${el.props.src}"  ${className}  />`;
         }
-    })
-    return value
-}
+      } else {
+        value += `<${el.title} ${className}>${
+          el.text ? el.text : arrayToJSX(el.children)
+        }</${el.title}>`;
+      }
+    }
+  });
+  return value;
+};
