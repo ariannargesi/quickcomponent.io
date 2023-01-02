@@ -6,6 +6,8 @@ import styled from "styled-components"
 import { Title } from "../Styled"
 import Form from "./Form"
 import PropsList from "./PropsList"
+import { useDispatch } from "react-redux"
+import { generateCode } from "../../redux/slice/app"
 
 const Header = styled.div`
     display: flex;
@@ -47,7 +49,7 @@ const PageWrapper = styled.div`
 
 const PropConfig = () => {
     const [modal, setModal] = useState(false)
-
+    const dispatch = useDispatch()
     const modalRef = useRef(null)
 
     useClickoutsdie(modalRef, () => {
@@ -58,6 +60,7 @@ const PropConfig = () => {
 
     const closeModal = () => {
         setModal(false)
+        dispatch(generateCode())
     }
 
     return (
