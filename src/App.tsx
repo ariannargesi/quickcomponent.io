@@ -1,35 +1,19 @@
-import { useSelector } from "react-redux"
-import { RootState } from "./types"
-import Header from "./component/Header"
-import ComponentView from "./component/ComponentView"
-import SelectorsPanel from "./component/SelectorsPanel"
-import Drawer from "./component/Drawer"
-import EmptyTree from "./component/EmptyTree"
-import TreeAndStyles from "./component/Sider/TreeAndStyles"
+import { Suspense, lazy } from 'react'
+import { useMediaQuery } from 'react-responsive'
+const Application = lazy(() => import('./component/ApplicationRouter'))
+const MobileMessage = lazy(() => import('./component/MobileMessage'))
 
-function App() {
-    const treeIsEmpty = useSelector((state: RootState) => state.emptyTree)
+const App = () => {
 
-    if (treeIsEmpty)
-        return (
-            <div className="App">
-                <Header />
-                <EmptyTree />
-                <Drawer />
-            </div>
-        )
+    const isBigEnough = useMediaQuery({
+        query: "(min-width: 768px)",
+    })
 
     return (
-        <div className="App">
-            <Header />
-            <div className="main-container">
-                <SelectorsPanel />
-                <TreeAndStyles />
-                <ComponentView />
-            </div>
-            <Drawer />
-        </div>
+        <Suspense fallback='Loading...'>
+            {isBigEnough ? <Application/> : <MobileMessage/>}
+        </Suspense>
     )
 }
 
-export default App
+export default App 

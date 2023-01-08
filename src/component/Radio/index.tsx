@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { fontFamily } from "../Styled"
+
 interface Props {
     options: string[]
     onChange: (value: string) => void

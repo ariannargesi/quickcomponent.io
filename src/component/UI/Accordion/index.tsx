@@ -4,8 +4,8 @@ import { ChevronUp, ChevronDown } from "react-feather"
 import { fontFamily } from "../../Styled"
 
 const Container = styled.div`
-        background: #eee;
-        padding: 4px;
+
+        border-bottom: 1px solid #eee;
         font-family: ${fontFamily};
         & > div:first-child {
                 background: white;
@@ -19,6 +19,7 @@ const Container = styled.div`
 `
 const ChildsContainer = styled.div`
         padding: 16px 8px;
+        
 `
 
 interface Props {
