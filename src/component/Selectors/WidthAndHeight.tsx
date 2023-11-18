@@ -5,7 +5,7 @@ import { Text } from "../Styled"
 import useStyleValue from "../../hooks/useStyleValue"
 import useApplyStyle from "../../hooks/useApplyStyle"
 import { getUnit, getNumbericValue as getValue } from "../../helper"
-const units = ["px", "rem"]
+const units = ["px", "rem", "%", "em"]
 
 const WidthAndHeight = () => {
     const applyStyle = useApplyStyle()
@@ -31,7 +31,7 @@ const WidthAndHeight = () => {
                 <div className={style.body}>
                     <Slider
                         min={0}
-                        max={500}
+                        max={widthUnit === "%" ? 100 : (widthUnit === "em" ? 50 : 500)}
                         value={widthValue}
                         onChange={(value) => {
                             applyStyle("width", value + widthUnit)
@@ -53,7 +53,7 @@ const WidthAndHeight = () => {
                 <div className={style.body}>
                     <Slider
                         min={0}
-                        max={500}
+                        max={heightUnit === "%" ? 100 : (heightUnit === "em" ? 50 : 500)}
                         value={heightValue}
                         onChange={(value) => {
                             applyStyle("height", value + heightUnit)
