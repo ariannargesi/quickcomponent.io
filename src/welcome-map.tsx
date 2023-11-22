@@ -8,6 +8,7 @@ const map: ComponentMember[] = [
             className: "container",
             style: {
                 width: "500px",
+                height: "400px",
                 background: "rgba(255, 255, 255, 1)",
                 borderRadius: "64px",
                 boxShadow: "2px 2px 43px 0px #999999",
