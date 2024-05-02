@@ -220,33 +220,28 @@ const generateSASS = (map: ComponentMember[], indent = 0): string => {
 export const arrayToJSX = (map: ComponentMember[]) => {
     let value = ""
     map.forEach((el) => {
-        if(isTextNode(el))
-            value+= el.text
-         else {
-
-
+        if (isTextNode(el)) value += el.text
+        else {
             const className =
                 el.props.className && el.props.style
                     ? `className='${el.props.className}'`
                     : ""
 
-                    if(el.title === 'img'){{
-                        // @ts-ignore
-                        if(el.props.src.startsWith('blob')){
-                            value+= `<img src={require("./assets/${el.name}")}  ${className} />`
-                        }
-                        else 
-                        // @ts-ignore 
+            if (el.title === "img") {
+                {
+                    // @ts-ignore
+                    if (el.props.src.startsWith("blob")) {
+                        value += `<img src={require("./assets/${el.name}")}  ${className} />`
+                    }
+                    // @ts-ignore
+                    else
                         value += `<${el.title}  src="${el.props.src}"  ${className}  />`
-                    }
-
-                    }
-                        
-                    else {
-                        value += `<${el.title} ${className}>${
-                            el.text ? el.text : arrayToJSX(el.children)
-                        }</${el.title}>`
-                    }
+                }
+            } else {
+                value += `<${el.title} ${className}>${
+                    el.text ? el.text : arrayToJSX(el.children)
+                }</${el.title}>`
+            }
         }
     })
     return value

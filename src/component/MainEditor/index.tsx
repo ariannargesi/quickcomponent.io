@@ -23,8 +23,7 @@ function MainEditor() {
         <div className="App">
             <Header />
             <div className="main-container">
-                
-                    <SelectorsPanel />
+                <SelectorsPanel />
                 <TreeAndStyles />
                 <ComponentView />
             </div>

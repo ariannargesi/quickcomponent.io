@@ -3,7 +3,7 @@ import { RootState } from "../../types"
 import { StyleFormats, EditorView } from "../../types"
 import { formatScript, formatStyle } from "../../helper"
 import { scrollBarStyle } from "../Styled"
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const Container = styled.div`
     background: #282a36;
@@ -39,9 +39,7 @@ const Editor = () => {
 
     return (
         <Container>
-            <pre style={{margin: 0}}>
-            {code}
-            </pre>
+            <pre style={{ margin: 0 }}>{code}</pre>
         </Container>
     )
 }

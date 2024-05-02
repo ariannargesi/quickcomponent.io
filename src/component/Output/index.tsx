@@ -30,26 +30,24 @@ const CodeView = () => {
 
         if (app.assets.length) {
             // TODO : Convert files to images and put them into assets folder
-            zip.folder('assets')
-            
-            for(let counter = 0; counter < app.assets.length; counter++){
+            zip.folder("assets")
+
+            for (let counter = 0; counter < app.assets.length; counter++) {
                 // @ts-ignore
                 const fetchPromise = await fetch(app.assets[counter].src)
-                const blobPormise = fetchPromise.blob();
-                const blob = await blobPormise;
-                const file = new File([blob],  `file`)
-                // @ts-ignore 
+                const blobPormise = fetchPromise.blob()
+                const blob = await blobPormise
+                const file = new File([blob], `file`)
+                // @ts-ignore
                 zip.file(`assets/${app.assets[counter].name}`, file)
                 // @ts-ignore
                 // URL.revokeObjectURL(app.assets[counter].src)
-            }    
-            
+            }
+
             zip.generateAsync({ type: "blob" }).then(function (content) {
-               
                 Filesaver.saveAs(content, `${componentName}.zip`)
             })
         }
-
     }
 
     const showScript = () => {

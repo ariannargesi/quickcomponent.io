@@ -27,9 +27,8 @@ const justifyContentOptions = [
 ]
 
 const Display = () => {
-
     const dispatch = useDispatch()
-    const display = useStyleValue("display") || ''
+    const display = useStyleValue("display") || ""
     const alignItems = useStyleValue("alignItems")
     const justifyContent = useStyleValue("justifyContent")
     const flexDirection = useStyleValue("flexDirection")

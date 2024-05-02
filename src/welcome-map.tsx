@@ -13,7 +13,7 @@ const map: ComponentMember[] = [
                 boxShadow: "2px 2px 43px 0px #999999",
                 padding: "42px",
                 textAlign: "left",
-                position: "relative"
+                position: "relative",
             },
         },
         key: nanoid(),
@@ -69,7 +69,7 @@ const map: ComponentMember[] = [
                 key: nanoid(),
                 children: [
                     {
-                        title: 'text',
+                        title: "text",
                         text: "Button",
                         key: nanoid(),
                     },

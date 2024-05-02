@@ -1,10 +1,7 @@
 import { Plus, X } from "react-feather"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import {
-    changeSelectedElement,
-    deleteNode,
-} from "../../../redux/slice/app"
+import { changeSelectedElement, deleteNode } from "../../../redux/slice/app"
 import useToggleDrawer from "../../../hooks/useToggleDrawer"
 
 interface Props {
@@ -33,22 +30,22 @@ const Action = (props: Props) => {
     const key = props.elementKey
 
     function addElement(event) {
-        if(event.stopPropagation)
-            event.stopPropagation()
-        dispatch(changeSelectedElement({key}))
+        if (event.stopPropagation) event.stopPropagation()
+        dispatch(changeSelectedElement({ key }))
         toggleDrawer()
     }
 
     function removeElement(event) {
-        if(event.stopPropagation)
-            event.stopPropagation()
+        if (event.stopPropagation) event.stopPropagation()
         dispatch(deleteNode({ key }))
     }
 
     return (
         <Container>
             <X size={iconSize} color={iconColor} onClick={removeElement} />
-            {props.addChild && <Plus size={iconSize} color={iconColor} onClick={addElement} />}
+            {props.addChild && (
+                <Plus size={iconSize} color={iconColor} onClick={addElement} />
+            )}
         </Container>
     )
 }

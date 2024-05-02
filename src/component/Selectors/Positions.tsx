@@ -17,7 +17,7 @@ const options = [
 const Positions = () => {
     const applyStyle = useApplyStyle()
 
-    const position = useStyleValue("position") || ''
+    const position = useStyleValue("position") || ""
 
     const top = useStyleValue("top")
     const bottom = useStyleValue("bottom")

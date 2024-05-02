@@ -11,15 +11,14 @@ import {
 } from "../../helper"
 import styles from "./styles.module.sass"
 
-const UpdateClassname = () => { 
+const UpdateClassname = () => {
     const selectedKey = useSelector((state: RootState) => {
         return state.selectedKey
     })
 
     const defaultValue = useSelector((state: RootState) => {
         let res = findNodeInTree(state.map, state.selectedKey)
-        if (isTextNode(res))
-            res = getParentNode(state.map, state.selectedKey)
+        if (isTextNode(res)) res = getParentNode(state.map, state.selectedKey)
         return res.props.className || ""
     })
 
@@ -37,7 +36,9 @@ const UpdateClassname = () => {
     }
 
     const handleBlur = () => {
-        dispatch(updateClassName({ value: value || generateClassName('class') }))
+        dispatch(
+            updateClassName({ value: value || generateClassName("class") })
+        )
     }
 
     return (

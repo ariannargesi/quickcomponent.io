@@ -62,7 +62,6 @@ const Drawer = () => {
     }
 
     const dataSource = elementsList.filter((element) => element.tag != "text")
-        
 
     useClickoutside(drawerRef, () => {
         toggleDrawer()

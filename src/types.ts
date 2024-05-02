@@ -28,12 +28,12 @@ export interface TextObject {
     key: string
 }
 export interface ComponentMemberProp {
-    is?: string,
+    is?: string
     className?: string
-    style?: object,
+    style?: object
 }
 export interface ComponentMember {
-    name?: string,
+    name?: string
     title?: string
     text?: string
     key: string
@@ -71,8 +71,8 @@ export interface RootState extends Output {
     openDrawer: boolean
     emptyTree: boolean
     treeHash: string
-    selectedKey: string,
-    assets: string[],
+    selectedKey: string
+    assets: string[]
     config: Config
     inputKey: string
     map: ComponentMember[]

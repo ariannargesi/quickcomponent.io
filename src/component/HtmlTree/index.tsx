@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { changeSelectedElement, setInputAtKey } from "../../redux/slice/app"
 import Action from "./Action"
 import { RootState, ComponentMember } from "../../types"
-import {  isTextBasedTag } from "../../helper"
+import { isTextBasedTag } from "../../helper"
 import { useState } from "react"
 import { fontFamily, Text, Title, TitleWrapper, Content } from "../Styled"
 import { ChevronRight, ChevronDown } from "react-feather"
@@ -12,7 +12,7 @@ import store from "../../redux"
 const size = 16
 
 const Item = styled.div`
-    ${props => props.active && 'background-color: lightblue;'}
+    ${(props) => props.active && "background-color: lightblue;"}
     width: 150px;
     display: flex;
     align-items: center;
@@ -96,14 +96,24 @@ const TreeItem = (props) => {
             </Item>
             {open && (
                 <Child>
-                    {item.children && <Tree data={item.children} padding selectedKey={props.selectedKey} />}
+                    {item.children && (
+                        <Tree
+                            data={item.children}
+                            padding
+                            selectedKey={props.selectedKey}
+                        />
+                    )}
                 </Child>
             )}
         </>
     )
 }
 
-const Tree = (props: { data: ComponentMember[]; padding?: boolean, selectedKey: string }) => {
+const Tree = (props: {
+    data: ComponentMember[]
+    padding?: boolean
+    selectedKey: string
+}) => {
     const dispatch = useDispatch()
     const handleClick = (element: ComponentMember) => {
         dispatch(changeSelectedElement({ key: element.key }))
@@ -112,7 +122,6 @@ const Tree = (props: { data: ComponentMember[]; padding?: boolean, selectedKey: 
     const handleDoubleClick = (element: ComponentMember) => {
         if (isTextBasedTag(element.title))
             dispatch(setInputAtKey({ key: element.key }))
-        
     }
 
     const { data } = props
@@ -142,7 +151,6 @@ const TreeContainer = styled.div`
 `
 
 const Component = () => {
-
     const map = store.getState().map
     useSelector((state: RootState) => state.treeHash)
     const selectedKey = useSelector((state: RootState) => state.selectedKey)

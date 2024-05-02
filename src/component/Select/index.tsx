@@ -54,7 +54,6 @@ const Component = (props: {
     value?: string | number
     inline?: boolean
 }) => {
-
     return (
         <Container inline={props.inline}>
             <Text>{props.label}</Text>

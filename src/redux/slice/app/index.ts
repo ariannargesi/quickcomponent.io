@@ -59,23 +59,24 @@ const counterSlice = createSlice({
             const key = action.payload.key
             const rootKey = state.map[0].key
             state.treeHash = key
-            
+
             const nodeToDelete = findNodeInTree(state.map, key)
 
-            if(nodeToDelete.title === 'img') {
-                // @ts-ignore 
-                state.assets = state.assets.filter(asset => asset.src != nodeToDelete.props.src )
+            if (nodeToDelete.title === "img") {
+                // @ts-ignore
+                state.assets = state.assets.filter(
+                    (asset) => asset.src != nodeToDelete.props.src
+                )
             }
 
-            if(key === rootKey){
+            if (key === rootKey) {
                 deleteNodeInTree(state.map, key)
-                state.emptyTree = true 
-            }            
-            else {
+                state.emptyTree = true
+            } else {
                 deleteNodeInTree(state.map, key)
                 const element = findNodeInTree(state.map, state.selectedKey)
                 if (element === null) state.selectedKey = state.map[0].key
-            }    
+            }
         },
         applyStyle: (state, action) => {
             const { key, value } = action.payload
@@ -131,8 +132,8 @@ const counterSlice = createSlice({
             state.treeHash = element.key
 
             if (state.map.length === 0) {
-                    if(element.title === 'div')
-                        element.props.style  = {position: 'relative'}
+                if (element.title === "div")
+                    element.props.style = { position: "relative" }
                 state.map.push(element)
                 state.emptyTree = false
             } else {
@@ -147,13 +148,14 @@ const counterSlice = createSlice({
             state.inputKey = null
         },
         updateTreeInputValue: (state, action) => {
-            const value = action.payload.value 
-            const element = findNodeInTree(state.map, state.selectedKey)   
-            if(element.title === 'button'){
-                const res = element.children.find(item => item.key === state.inputKey)
-                res.text = value 
-            }
-            else element.text = value 
+            const value = action.payload.value
+            const element = findNodeInTree(state.map, state.selectedKey)
+            if (element.title === "button") {
+                const res = element.children.find(
+                    (item) => item.key === state.inputKey
+                )
+                res.text = value
+            } else element.text = value
             state.inputKey = null
             state.treeHash = value
         },
@@ -209,14 +211,14 @@ const counterSlice = createSlice({
             })
         },
         updateSelectedElementProp: (state, action) => {
-                const result = findNodeInTree(state.map, state.selectedKey)
-                state.assets.push(action.payload)
-                result.name = action.payload.name 
-                result.props = {
-                    ...result.props,
-                    ...action.payload 
-                }
-        }
+            const result = findNodeInTree(state.map, state.selectedKey)
+            state.assets.push(action.payload)
+            result.name = action.payload.name
+            result.props = {
+                ...result.props,
+                ...action.payload,
+            }
+        },
     },
 })
 
@@ -238,6 +240,6 @@ export const {
     deleteProp,
     addHook,
     removeHook,
-    updateSelectedElementProp
+    updateSelectedElementProp,
 } = counterSlice.actions
 export default counterSlice.reducer

@@ -3,8 +3,8 @@ import { Text } from "../Styled"
 interface PickerProps {
     label: string
     onChange: (value: string) => void
-    value?: string,
-    noPadding?: boolean,
+    value?: string
+    noPadding?: boolean
     allowGradient?: boolean
 }
 
@@ -13,17 +13,20 @@ const ColorPicker = (props: PickerProps) => {
         props.onChange(style)
     }
 
-    const classname = [props.noPadding ? undefined : styles.container, styles.header].join(' ')
+    const classname = [
+        props.noPadding ? undefined : styles.container,
+        styles.header,
+    ].join(" ")
 
     return (
         <div className={classname}>
-                <Text>{props.label}</Text>
-                <input
-                    type="color"
-                    onChange={(event) => {
-                        handleChange({ style: event.target.value })
-                    }}
-                />
+            <Text>{props.label}</Text>
+            <input
+                type="color"
+                onChange={(event) => {
+                    handleChange({ style: event.target.value })
+                }}
+            />
         </div>
     )
 }

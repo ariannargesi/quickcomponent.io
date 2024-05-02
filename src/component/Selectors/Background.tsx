@@ -4,7 +4,7 @@ import useStyleValue from "../../hooks/useStyleValue"
 
 const BackgroundColor = () => {
     const applyStyle = useApplyStyle()
-    const color = useStyleValue("background") || ''
+    const color = useStyleValue("background") || ""
 
     return (
         <ColorPicker

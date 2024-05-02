@@ -53,15 +53,14 @@ export const Button = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    ${(props) => !props.disabled && (
+
+    ${(props) =>
+        !props.disabled &&
         `&:active {
             transform: scale(0.97)
-        }`
-    )}
+        }`}
     ${(props) => props.full && "width: 100%"};
     ${(props) => props.disabled && "background: lightgray"};
-    
 `
 export const Input = styled.input`
     width: 100%;

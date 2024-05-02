@@ -67,12 +67,12 @@ const ActiveStylesItem = (props: ItemProps) => {
 const getStyles = (key: string, html: ComponentMember[]) => {
     let element = findNodeInTree(html, key)
     if (isTextNode(element)) {
-        element = getParentNode(html, key)    
-    } 
+        element = getParentNode(html, key)
+    }
 
     if (!element.props.style) {
-        return null}
-    else return element.props.style
+        return null
+    } else return element.props.style
 }
 
 const ActiveStyles: React.FC = () => {

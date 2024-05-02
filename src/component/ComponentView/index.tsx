@@ -20,7 +20,7 @@ const ComponentView = () => {
                 }}
             >
                 <Title.Small>Component view</Title.Small>
-                <Link to="/export" style={{textDecoration: 'none'}}>
+                <Link to="/export" style={{ textDecoration: "none" }}>
                     <Button>{"<Export/>"}</Button>
                 </Link>
             </TitleWrapper>
